@@ -79,18 +79,29 @@ openclaw gateway restart
 
 ### 7. Use Tools
 
-```bash
-# From chat (Telegram, WhatsApp, Discord, etc.)
-/gan_build "Build a todo app"
-/code_review
-/e2e
-/dispatch 帮我审查这个 PR
+**ECC tools are called by agents, not directly by users.**
 
-# From shell
+```bash
+# From chat - via Dispatcher (recommended)
+/dispatch 帮我做一个待办应用
+/dispatch 审查一下这个 PR
+/dispatch 运行 E2E 测试
+
+# From chat - let main agent choose tools
+帮我做一个待办应用           # Main agent calls gan_build
+审查一下代码                 # Main agent calls code_review
+
+# From shell (hooks)
 gpush              # Git push with checks
 tmux-dev "npm run dev"  # Dev server in tmux
 cost-tracker       # Track token usage
 ```
+
+**How it works:**
+- User sends message → Main agent or Dispatcher analyzes intent
+- Agent calls ECC tool (`gan_build`, `code_review`, etc.)
+- ECC tool spawns workspace agent to execute task
+- Result returned to user
 
 ### 8. Verify Installation
 
@@ -101,8 +112,8 @@ openclaw plugins list | grep -E "ecc|dispatcher"
 # List agents
 openclaw agents list
 
-# Test a tool
-openclaw agent --agent main --message "/gan_build test"
+# Test a tool (via main agent)
+openclaw agent --agent main --message "帮我运行 gan_build test"
 ```
 
 ## What's Included
@@ -123,8 +134,23 @@ openclaw agent --agent main --message "/gan_build test"
 
 The core ECC plugin with 86 tools for GAN development, code review, testing, and more.
 
+**Tools are called by agents, not directly by users.**
+
 ```bash
 openclaw plugins list | grep ecc
+```
+
+**Example usage:**
+```
+User: /dispatch 帮我审查代码
+  ↓
+Dispatcher Agent: 用户想要 code_review
+  ↓
+Calls ECC tool: code_review()
+  ↓
+Spawns reviewer agent
+  ↓
+Returns review results
 ```
 
 ### Dispatcher Plugin (`dispatcher`)
@@ -139,20 +165,22 @@ Intent-based command router. Use `/dispatch` to let the agent choose the right t
 
 ---
 
-## Available Tools
+## Available Tools (Called by Agents)
+
+**Note**: These tools are called by agents automatically. Users don't call them directly.
 
 ### High Priority (8)
 
 | Tool | Agent | Description |
 |---------|-------|-------------|
-| `/gan_build` | planner | GAN development loop |
-| `/gan_design` | architect | GAN design loop |
-| `/code_review` | reviewer | Code review |
-| `/e2e` | e2e-runner | E2E testing |
-| `/checkpoint` | main | Session checkpoint |
-| `/eval` | gan-evaluator | Evaluation |
-| `/tdd` | tdd-guide | TDD workflow |
-| `/refactor_clean` | refactor-cleaner | Refactoring |
+| `gan_build` | planner | GAN development loop |
+| `gan_design` | architect | GAN design loop |
+| `code_review` | reviewer | Code review |
+| `e2e` | e2e-runner | E2E testing |
+| `checkpoint` | main | Session checkpoint |
+| `eval` | gan-evaluator | Evaluation |
+| `tdd` | tdd-guide | TDD workflow |
+| `refactor_clean` | refactor-cleaner | Refactoring |
 
 ### Language-Specific (24)
 
@@ -327,8 +355,8 @@ openclaw agents list
 # List plugins
 openclaw plugins list
 
-# Test command
-openclaw agent --agent main --message "/gan_build test"
+# Test tools (via main agent)
+openclaw agent --agent main --message "帮我运行 gan_build 测试项目"
 
 # Test hooks
 ~/.openclaw/hooks/pre-commit-check.sh  # Should run checks
@@ -385,7 +413,7 @@ ls -la .git/hooks/pre-commit
    ```typescript
    api.registerTool({ name: "my_tool", ... })
    ```
-3. Test: `/my_tool`
+3. Test: Let agent call it or via `/dispatch 使用 my_tool`
 
 ### Add New Dispatcher Routes
 

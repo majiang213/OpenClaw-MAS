@@ -94,8 +94,8 @@ openclaw agents list
 # Check plugin
 openclaw plugins list | grep ecc
 
-# Test command
-openclaw agent --agent main --message "/gan_build test"
+# Test tools (via agent)
+openclaw agent --agent main --message "帮我运行 gan_build 测试"
 ```
 
 ## Agent Conversion
@@ -284,19 +284,19 @@ Plugins (X/Y loaded)
 ### Test Tools
 
 ```bash
-# Test high-priority tools
-openclaw agent --agent main --message "/gan_build test"
-openclaw agent --agent main --message "/code_review"
-openclaw agent --agent main --message "/e2e"
+# Test high-priority tools (via agent)
+openclaw agent --agent main --message "帮我运行 gan_build 测试"
+openclaw agent --agent main --message "帮我 code_review"
+openclaw agent --agent main --message "帮我运行 e2e 测试"
 
-# Test language-specific tools
-openclaw agent --agent main --message "/cpp_build ."
-openclaw agent --agent main --message "/go_review"
-openclaw agent --agent main --message "/python_test"
+# Test language-specific tools (via agent)
+openclaw agent --agent main --message "帮我 cpp_build 当前项目"
+openclaw agent --agent main --message "帮我 go_review"
+openclaw agent --agent main --message "帮我 python_test"
 
-# Test tools
-openclaw agent --agent main --message "/security_scan"
-openclaw agent --agent main --message "/checkpoint"
+# Test tools (via agent)
+openclaw agent --agent main --message "帮我 security_scan"
+openclaw agent --agent main --message "帮我 checkpoint"
 openclaw agent --agent main --message "/context_budget"
 ```
 
