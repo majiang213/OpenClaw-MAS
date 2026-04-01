@@ -1,6 +1,6 @@
 {
-  "id": "ecc-commands",
-  "name": "ECC Commands",
+  "id": "openclaw-commands",
+  "name": "OpenClaw Commands",
   "description": "Everything Claude Code commands for OpenClaw",
   "configSchema": {
     "type": "object",
