@@ -4,45 +4,105 @@ Run Everything Claude Code in OpenClaw - a multi-channel gateway (WhatsApp, Tele
 
 ## Quick Start
 
-### 1. Install Plugin
+### 1. Sync Assets from ECC Project
 
 ```bash
-openclaw plugins install ./openclaw/plugin
+# From ECC project root
+cd ~/path/to/everything-claude-code
+
+# Copy plugin
+cp -r openclaw/plugin ~/.openclaw/plugins/ecc
+
+# Copy dispatcher plugin
+cp -r openclaw/dispatcher ~/.openclaw/plugins/dispatcher
+
+# Copy skills (142 skills)
+cp -r skills/* ~/.openclaw/skills/
+
+# Copy rules (14 languages)
+cp -r rules/* ~/.openclaw/rules/
+
+# Copy commands (68 command definitions)
+cp -r commands/* ~/.openclaw/commands/
 ```
 
-### 2. Create Agents
+### 2. Install Plugin Dependencies
+
+```bash
+# ECC plugin
+cd ~/.openclaw/plugins/ecc
+npm install
+npx tsc
+
+# Dispatcher plugin
+cd ~/.openclaw/plugins/dispatcher
+npm install
+npx tsc
+```
+
+### 3. Create Agents
 
 ```bash
 ./openclaw/agents/create-agents.sh
 ```
 
-### 3. Install Hooks (Optional)
+### 4. Install Hooks (Optional)
 
 ```bash
 ./openclaw/hooks/install-hooks.sh
-source ~/.zshrc  # or ~/.bashrc
+source ~/.zshrc  # or ~/.zshrc
 ```
 
-### 4. Restart Gateway
+### 5. Update OpenClaw Config
+
+Edit `~/.openclaw/openclaw.json`:
+
+```json
+{
+  "plugins": {
+    "allow": ["ecc", "dispatcher", ...],
+    "load": {
+      "paths": [
+        "~/.openclaw/plugins/ecc",
+        "~/.openclaw/plugins/dispatcher"
+      ]
+    }
+  }
+}
+```
+
+### 6. Restart Gateway
 
 ```bash
 openclaw gateway restart
 ```
 
-### 5. Use Commands
+### 7. Use Tools
 
 ```bash
-# From chat
+# From chat (Telegram, WhatsApp, Discord, etc.)
 /gan_build "Build a todo app"
 /code_review
 /e2e
-/console_check
-/typecheck
+/dispatch 帮我审查这个 PR
 
 # From shell
 gpush              # Git push with checks
 tmux-dev "npm run dev"  # Dev server in tmux
 cost-tracker       # Track token usage
+```
+
+### 8. Verify Installation
+
+```bash
+# List plugins
+openclaw plugins list | grep -E "ecc|dispatcher"
+
+# List agents
+openclaw agents list
+
+# Test a tool
+openclaw agent --agent main --message "/gan_build test"
 ```
 
 ## What's Included
