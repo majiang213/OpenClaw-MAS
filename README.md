@@ -48,17 +48,17 @@ cost-tracker       # Track token usage
 ## What's Included
 
 - **37 Agents**: Each ECC agent becomes an independent OpenClaw agent
-- **86 Commands**: All ECC commands available as OpenClaw plugin commands
+- **86 Tools**: All ECC commands available as OpenClaw agent tools
 - **7 Hooks**: Converted from ECC hooks (4 shell scripts + 2 skills + internal)
-- **Direct Mapping**: ECC `commands/*.md` → OpenClaw `api.registerCommand()`
+- **Direct Mapping**: ECC `commands/*.md` → OpenClaw `api.registerTool()`
 
 ---
 
-## Available Commands
+## Available Tools
 
 ### High Priority (8)
 
-| Command | Agent | Description |
+| Tool | Agent | Description |
 |---------|-------|-------------|
 | `/gan_build` | planner | GAN development loop |
 | `/gan_design` | architect | GAN design loop |
@@ -154,7 +154,7 @@ cp agents/planner.md ~/.openclaw/workspace-planner/AGENTS.md
 // ECC: commands/gan-build.md
 // OpenClaw: plugin/index.ts
 
-api.registerCommand({
+api.registerTool({
   name: "gan_build",  // kebab-case → snake_case
   description: "GAN 式开发循环",
   parameters: Type.Object({
@@ -163,7 +163,7 @@ api.registerCommand({
   }),
   async execute(_id, params) {
     const command = readCommand("gan-build");
-    const result = await api.runtime.sessions_spawn({
+    const result = await api.runtime.sessionsSpawn({
       agentId: "planner",
       task: `${command}\n\nBrief: ${params.brief}`,
       label: "gan-build",
@@ -212,7 +212,7 @@ tmux-dev "npm run dev"                 # Should suggest tmux
 openclaw agents add <name> --workspace "~/.openclaw/workspace-<name>"
 ```
 
-### Command not recognized
+### Tool not recognized
 ```bash
 openclaw plugins list | grep ecc
 openclaw gateway restart
@@ -244,14 +244,14 @@ ls -la .git/hooks/pre-commit
 
 ## Contributing
 
-### Add New Commands
+### Add New Tools
 
 1. Create `commands/my-command.md`
 2. Add to `plugin/index.ts`:
    ```typescript
-   api.registerCommand({ name: "my_command", ... })
+   api.registerTool({ name: "my_tool", ... })
    ```
-3. Test: `/my_command`
+3. Test: `/my_tool`
 
 ### Add New Hooks
 
