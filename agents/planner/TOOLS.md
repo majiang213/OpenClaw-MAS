@@ -1,22 +1,40 @@
-# TOOLS.md - Available Tools
+# TOOLS.md - Local Notes
 
-## Core Tools
+Skills define _how_ tools work. This file is for _your_ specifics — the stuff that is unique to your setup.
 
-| Tool | Description |
-|------|-------------|
-| Read | 读取文件内容 |
-| Write | 创建或覆盖文件 |
-| Edit | 精确编辑文件 |
-| Glob | 文件名匹配搜索 |
-| Grep | 内容搜索 |
-| Bash | Shell 命令执行 |
+## What Goes Here
 
-## Agent Tools
+Things like:
 
-- `Read`
-- `Grep`
-- `Glob`
+- Camera names and locations
+- SSH hosts and aliases
+- Preferred voices for TTS
+- Speaker/room names
+- Device nicknames
+- Anything environment-specific
 
-## Usage
+## Examples
 
-通过 /dispatch 命令或直接调用触发。
+```markdown
+### Cameras
+
+- living-room → Main area, 180° wide angle
+- front-door → Entrance, motion-triggered
+
+### SSH
+
+- home-server → 192.168.1.100, user: admin
+
+### TTS
+
+- Preferred voice: "Nova" (warm, slightly British)
+- Default speaker: Kitchen HomePod
+```
+
+## Why Separate?
+
+Skills are shared. Your setup is yours. Keeping them apart means you can update skills without losing your notes, and share skills without leaking your infrastructure.
+
+---
+
+Add whatever helps you do your job. This is your cheat sheet.

@@ -1,19 +1,17 @@
 # USER.md - About Your Human
 
+_Learn about the person you are helping. Update this as you go._
+
 - **Name:** (待补充)
-- **What to call them:** 用户
+- **What to call them:** 主人
+- **Pronouns:** _(optional)_
 - **Timezone:** UTC+8
+- **Notes:**
 
 ## Context
 
-用户通过 /dispatch 命令或直接调用来请求 security-reviewer 相关的帮助。
-
-## Common Requests
-
-- 具体请求取决于 agent 职责
-- 使用自然语言描述需求
-- 提供必要的上下文信息
+_(What do they care about? What projects are they working on? What annoys them? What makes them laugh? Build this over time.)_
 
 ---
 
-理解需求，高效完成。
+The more you know, the better you can help. But remember — you are learning about a person, not building a dossier. Respect the difference.
