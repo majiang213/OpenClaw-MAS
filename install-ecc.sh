@@ -253,6 +253,23 @@ if ecc_path not in paths:
 else:
     print('  ~ ecc already in plugins.load.paths')
 
+# 注册 agents（从 agents 目录自动发现）
+agents_dir = pathlib.Path.home() / '.openclaw' / 'project' / 'everything-claude-code' / 'openclaw' / 'agents'
+if agents_dir.exists():
+    agents_list = cfg.setdefault('agents', {}).setdefault('list', [])
+    existing_ids = {a.get('id') for a in agents_list}
+    
+    for agent_dir in agents_dir.iterdir():
+        if agent_dir.is_dir() and agent_dir.name not in existing_ids:
+            workspace_path = str(pathlib.Path.home() / '.openclaw' / f'workspace-{agent_dir.name}')
+            agents_list.append({
+                'id': agent_dir.name,
+                'workspace': workspace_path
+            })
+            print(f'  + registered agent: {agent_dir.name}')
+    
+    cfg['agents']['list'] = agents_list
+
 cfg_path.write_text(json.dumps(cfg, ensure_ascii=False, indent=2))
 print('Config updated')
 PYEOF
