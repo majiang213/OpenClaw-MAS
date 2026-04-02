@@ -92,8 +92,8 @@ backup_existing() {
 create_workspaces() {
   info "创建 Agent Workspace..."
   
-  # 从 agents 目录读取所有 agent
-  AGENTS_DIR="$REPO_DIR/agents"
+  # 从 openclaw/agents 目录读取所有 agent
+  AGENTS_DIR="$REPO_DIR/openclaw/agents"
   if [ ! -d "$AGENTS_DIR" ]; then
     error "未找到 agents 目录：$AGENTS_DIR"
     exit 1
@@ -106,10 +106,12 @@ create_workspaces() {
       ws="$OC_HOME/workspace-$agent_name"
       mkdir -p "$ws"
       
-      # 复制 AGENTS.md
-      if [ -f "$agent_dir/AGENTS.md" ]; then
-        cp "$agent_dir/AGENTS.md" "$ws/AGENTS.md"
-      fi
+      # 复制所有 agent 文件（AGENTS.md, SOUL.md, IDENTITY.md 等）
+      for file in "$agent_dir"/*; do
+        if [ -f "$file" ]; then
+          cp "$file" "$ws/"
+        fi
+      done
       
       COUNT=$((COUNT + 1))
     fi
