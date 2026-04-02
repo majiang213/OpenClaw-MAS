@@ -92,30 +92,132 @@ backup_existing() {
 create_workspaces() {
   info "创建 Agent Workspace..."
   
-  # 从 openclaw/agents 目录读取所有 agent
+  # 1. 从 openclaw/agents 目录读取完整格式的 agent
   AGENTS_DIR="$REPO_DIR/openclaw/agents"
-  if [ ! -d "$AGENTS_DIR" ]; then
-    error "未找到 agents 目录：$AGENTS_DIR"
-    exit 1
-  fi
-
   COUNT=0
-  for agent_dir in "$AGENTS_DIR"/*/; do
-    if [ -d "$agent_dir" ]; then
-      agent_name=$(basename "$agent_dir")
-      ws="$OC_HOME/workspace-$agent_name"
-      mkdir -p "$ws"
-      
-      # 复制所有 agent 文件（AGENTS.md, SOUL.md, IDENTITY.md 等）
-      for file in "$agent_dir"/*; do
-        if [ -f "$file" ]; then
-          cp "$file" "$ws/"
+  
+  if [ -d "$AGENTS_DIR" ]; then
+    for agent_dir in "$AGENTS_DIR"/*/; do
+      if [ -d "$agent_dir" ]; then
+        agent_name=$(basename "$agent_dir")
+        ws="$OC_HOME/workspace-$agent_name"
+        mkdir -p "$ws"
+        
+        # 复制所有 agent 文件（AGENTS.md, SOUL.md, IDENTITY.md 等）
+        for file in "$agent_dir"/*; do
+          if [ -f "$file" ]; then
+            cp "$file" "$ws/"
+          fi
+        done
+        
+        COUNT=$((COUNT + 1))
+      fi
+    done
+  fi
+  
+  # 2. 从 agents/*.md 转换 ECC 格式的 agent
+  ECC_AGENTS_DIR="$REPO_DIR/agents"
+  if [ -d "$ECC_AGENTS_DIR" ]; then
+    for agent_file in "$ECC_AGENTS_DIR"/*.md; do
+      if [ -f "$agent_file" ]; then
+        agent_name=$(basename "$agent_file" .md)
+        ws="$OC_HOME/workspace-$agent_name"
+        
+        # 跳过已创建的 agent
+        if [ -d "$ws" ]; then
+          continue
         fi
-      done
-      
-      COUNT=$((COUNT + 1))
-    fi
-  done
+        
+        mkdir -p "$ws"
+        
+        # 从 ECC .md 文件提取内容生成 OpenClaw 格式
+        # 提取 name 和 description
+        agent_title=$(grep -m1 "^name:" "$agent_file" | cut -d: -f2 | xargs)
+        agent_desc=$(grep -m1 "^description:" "$agent_file" | cut -d: -f2- | xargs)
+        
+        # 生成 AGENTS.md
+        cat > "$ws/AGENTS.md" << EOF
+# AGENTS.md - ${agent_title:-$agent_name}
+
+## Role
+
+${agent_desc:-Expert agent for $agent_name tasks.}
+
+## Responsibilities
+
+- Follow the instructions in the agent definition
+- Use available tools effectively
+- Complete tasks efficiently
+
+## Notes
+
+- Converted from ECC agents/$agent_name.md
+EOF
+        
+        # 生成 SOUL.md (通用模板)
+        cat > "$ws/SOUL.md" << 'EOF'
+# SOUL.md - Who You Are
+
+_You are a helpful AI assistant._
+
+## Core Truths
+
+**Be genuinely helpful.** Skip filler words — just help.
+
+**Be resourceful.** Try to figure things out before asking.
+
+**Earn trust through competence.** Be careful with external actions.
+
+## Boundaries
+
+- Private things stay private.
+- When in doubt, ask before acting externally.
+
+## Continuity
+
+These files are your memory. Read them. Update them.
+EOF
+        
+        # 生成 IDENTITY.md
+        cat > "$ws/IDENTITY.md" << EOF
+# IDENTITY.md - Who Am I?
+
+- **Name:** ${agent_title:-$agent_name}
+- **Role:** ${agent_desc:-Specialist agent}
+- **Emoji:** 🤖
+
+## Purpose
+
+Complete tasks related to $agent_name effectively.
+EOF
+        
+        # 生成 TOOLS.md
+        cat > "$ws/TOOLS.md" << 'EOF'
+# TOOLS.md - Available Tools
+
+- Read, Write, Edit - File operations
+- Glob, Grep - Code search
+- Bash - Shell commands (when allowed)
+EOF
+        
+        # 生成 USER.md
+        cat > "$ws/USER.md" << 'EOF'
+# USER.md - About Your Human
+
+- **Name:** (待补充)
+- **Timezone:** UTC+8
+EOF
+        
+        # 生成 HEARTBEAT.md
+        echo "# HEARTBEAT.md\n\n# No periodic tasks configured." > "$ws/HEARTBEAT.md"
+        
+        # 生成 BOOTSTRAP.md
+        echo "[MISSING]" > "$ws/BOOTSTRAP.md"
+        
+        COUNT=$((COUNT + 1))
+      fi
+    done
+  fi
 
   log "已创建 $COUNT 个 Agent Workspace"
 }
