@@ -384,6 +384,21 @@ if agents_dir.exists():
     
     cfg['agents']['list'] = agents_list
 
+# 配置 agentToAgent.allow - 添加 dispatcher 以便主 agent 可以调用
+tools_cfg = cfg.setdefault('tools', {})
+agent_to_agent = tools_cfg.setdefault('agentToAgent', {})
+if agent_to_agent.get('enabled') != True:
+    agent_to_agent['enabled'] = True
+allow_agents = agent_to_agent.get('allow', [])
+# 添加核心 agents：dispatcher, planner, architect, reviewer
+core_agents = ['dispatcher', 'planner', 'architect', 'reviewer', 'chief-of-staff', 'gan-planner', 'gan-generator', 'gan-evaluator']
+for agent_id in core_agents:
+    if agent_id not in allow_agents:
+        allow_agents.append(agent_id)
+        print(f'  + added {agent_id} to agentToAgent.allow')
+agent_to_agent['allow'] = allow_agents
+tools_cfg['agentToAgent'] = agent_to_agent
+
 cfg_path.write_text(json.dumps(cfg, ensure_ascii=False, indent=2))
 print('Config updated')
 PYEOF
