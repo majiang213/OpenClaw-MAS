@@ -28,14 +28,11 @@ sessions_spawn(agentId: "dispatcher", task: "用户请求：[原始请求内容]
 
 ## When to Use
 
-✅ **USE when:**
-- 用户请求模糊（「帮我做个 XX」「检查一下」「跑测试」）
-- 需要先分析用户真正想要什么
-- 任务涉及开发、审查、测试等
+此 skill 只有手动触发时才执行。
 
-❌ **DON'T use when:**
-- 明确具体的请求（「帮我查天气」「读一下这个文件」）
-- 简单问答，不涉及任务执行
+触发方式：用户说「spawn dispatcher」或类似指令。
+
+**没有其他判断条件。触发即执行。**
 
 ## How to Use
 
