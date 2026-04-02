@@ -357,6 +357,16 @@ if ecc_path not in paths:
 else:
     print('  ~ ecc already in plugins.load.paths')
 
+# 配置 commands.native 以启用 Telegram Bot 命令注册
+commands = cfg.setdefault('commands', {})
+if commands.get('native') != True:
+    commands['native'] = True
+    commands['nativeSkills'] = False
+    commands['allowFrom'] = {'*': ['1782038428']}  # 默认允许当前用户
+    print('  + configured commands.native=true for Telegram Bot commands')
+else:
+    print('  ~ commands.native already configured')
+
 # 注册 agents（从 agents 目录自动发现）
 agents_dir = pathlib.Path.home() / '.openclaw' / 'project' / 'everything-claude-code' / 'openclaw' / 'agents'
 if agents_dir.exists():
