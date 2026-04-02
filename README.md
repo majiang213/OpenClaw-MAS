@@ -1,213 +1,94 @@
 # OpenClaw Integration
 
-Run Everything Claude Code in OpenClaw - a multi-channel gateway (WhatsApp, Telegram, Discord, etc.)
+将 Everything Claude Code (ECC) 集成到 OpenClaw - 支持多通道网关（Telegram、WhatsApp、Discord 等）
 
-## Quick Start
+---
 
-### 方式一：一键安装（推荐）
+## 一键安装
 
 ```bash
-# 从 ECC 项目根目录运行
 cd ~/path/to/everything-claude-code
 ./openclaw/install-ecc.sh
 ```
 
-脚本会自动：
-- 安装 ECC Plugin（86 tools + /dispatch 命令）
-- 创建 36 个 Agents
-- 复制 68 个 Commands
-- 复制 142 个 Skills
-- 复制 14 个语言 Rules
-- 安装 Hooks
-- 重启 Gateway
+**自动完成**：
+- ✅ 安装 ECC Plugin（86 tools + /dispatch 命令）
+- ✅ 创建 36 个 Agents
+- ✅ 复制 68 个 Commands
+- ✅ 复制 142 个 Skills
+- ✅ 复制 14 个语言 Rules
+- ✅ 安装 Hooks
+- ✅ 重启 Gateway
 
-### 方式二：手动安装
+---
 
-```bash
-# From ECC project root
-cd ~/path/to/everything-claude-code
+## 使用方法
 
-# Copy plugin
-cp -r openclaw/plugin ~/.openclaw/plugins/ecc
+### 方式一：通过 /dispatch 命令（推荐）
 
-# Copy skills (142 skills)
-cp -r skills/* ~/.openclaw/skills/
-
-# Copy rules (14 languages)
-cp -r rules/* ~/.openclaw/rules/
-
-# Copy commands (68 command definitions)
-cp -r commands/* ~/.openclaw/commands/
 ```
-
-### 使用 Tools
-
-**ECC tools are called by agents, not directly by users.**
-
-```bash
-# From chat - via Dispatcher (recommended)
 /dispatch 帮我做一个待办应用
 /dispatch 审查一下这个 PR
 /dispatch 运行 E2E 测试
-
-# From chat - let main agent choose tools
-帮我做一个待办应用           # Main agent calls gan_build
-审查一下代码                 # Main agent calls code_review
-
-# From shell (hooks)
-gpush              # Git push with checks
-tmux-dev "npm run dev"  # Dev server in tmux
-cost-tracker       # Track token usage
 ```
 
-**How it works:**
-- User sends message → Main agent or Dispatcher analyzes intent
-- Agent calls ECC tool (`gan_build`, `code_review`, etc.)
-- ECC tool spawns workspace agent to execute task
-- Result returned to user
+Dispatcher Agent 会自动理解你的意图并调用正确的工具。
 
-### 8. Verify Installation
+### 方式二：让主 Agent 自动调用
 
-```bash
-# List plugins
-openclaw plugins list | grep -E "ecc|dispatcher"
-
-# List agents
-openclaw agents list
-
-# Test a tool (via main agent)
-openclaw agent --agent main --message "帮我运行 gan_build test"
 ```
-
-## What's Included
-
-- **37 Agents**: Each ECC agent becomes an independent OpenClaw agent
-- **86 Tools**: All ECC commands available as OpenClaw agent tools
-- **7 Hooks**: Converted from ECC hooks (4 shell scripts + 2 skills + internal)
-- **142 Skills**: All ECC skills available in OpenClaw
-- **14 Rule Packs**: Language-specific coding rules
-- **Dispatcher Plugin**: `/dispatch` command for intent-based tool routing
-- **Direct Mapping**: ECC `commands/*.md` → OpenClaw `api.registerTool()`
-
----
-
-## Available Plugins
-
-### ECC Plugin (`ecc`)
-
-The core ECC plugin with 86 tools for GAN development, code review, testing, and more.
-
-**Tools are called by agents, not directly by users.**
-
-```bash
-openclaw plugins list | grep ecc
-```
-
-**Example usage:**
-```
-User: /dispatch 帮我审查代码
-  ↓
-Dispatcher Agent: 用户想要 code_review
-  ↓
-Calls ECC tool: code_review()
-  ↓
-Spawns reviewer agent
-  ↓
-Returns review results
-```
-
-### Dispatcher Plugin (`dispatcher`)
-
-Intent-based command router. Use `/dispatch` to let the agent choose the right tool:
-
-```bash
-/dispatch /plan
-/dispatch 帮我审查代码
-/dispatch 这个构建失败了分析一下
+帮我做一个待办应用      # 主 Agent 自动调用 gan_build
+审查一下代码            # 主 Agent 自动调用 code_review
 ```
 
 ---
 
-## Available Tools (Called by Agents)
+## 包含内容
 
-**Note**: These tools are called by agents automatically. Users don't call them directly.
-
-### High Priority (8)
-
-| Tool | Agent | Description |
-|---------|-------|-------------|
-| `gan_build` | planner | GAN development loop |
-| `gan_design` | architect | GAN design loop |
-| `code_review` | reviewer | Code review |
-| `e2e` | e2e-runner | E2E testing |
-| `checkpoint` | main | Session checkpoint |
-| `eval` | gan-evaluator | Evaluation |
-| `tdd` | tdd-guide | TDD workflow |
-| `refactor_clean` | refactor-cleaner | Refactoring |
-
-### Language-Specific (24)
-
-- **C++**: `/cpp_build`, `/cpp_review`, `/cpp_test`
-- **Go**: `/go_build`, `/go_review`, `/go_test`
-- **Kotlin**: `/kotlin_build`, `/kotlin_review`, `/kotlin_test`
-- **Rust**: `/rust_build`, `/rust_review`, `/rust_test`
-- **TypeScript**: `/ts_build`, `/ts_review`
-- **Python**: `/python_build`, `/python_review`, `/python_test`
-- **Java**: `/java_build`, `/gradle_build`, `/java_review`
-- **Flutter**: `/flutter_build`, `/flutter_review`
-- **Other**: `/pytorch_build`, `/healthcare_review`
-
-### Tools (30+)
-
-- `/security_scan`, `/performance_audit`
-- `/build_error`, `/db_review`, `/harness_optimize`
-- `/update_docs`, `/loop_start`, `/loop_status`
-- `/opensource_fork`, `/opensource_package`, `/opensource_clean`
-- `/prp_*` (5 PRP workflow commands)
-- `/quality_gate`, `/test_coverage`, `/verify`
-- `/skill_create`, `/skill_health`, `/prompt_optimize`
-- `/save_session`, `/resume_session`
-- `/multi_*` (5 multi-agent commands)
-- And more...
-
-**Full list**: See [`plugin/index.ts`](./plugin/index.ts)
+| 组件 | 数量 | 说明 |
+|------|------|------|
+| **Agents** | 36 个 | 每个 ECC agent 成为独立的 OpenClaw agent |
+| **Tools** | 86 个 | ECC commands 转换为 OpenClaw tools |
+| **Skills** | 142 个 | ECC skills 直接使用 |
+| **Rules** | 14 个 | 14 种编程语言的编码规则 |
+| **Hooks** | 7 个 | 4 个 shell 脚本 + 2 个 skills + internal |
 
 ---
 
-## Available Hooks
+## 核心工具
 
-### Shell Scripts
+### GAN 开发循环
 
-| Script | Purpose | Usage |
-|--------|---------|-------|
-| `pre-commit-check.sh` | Pre-commit quality check | Auto-run by Git |
-| `git-push-check.sh` | Git push reminder | `gpush` |
-| `tmux-dev.sh` | Tmux wrapper for dev servers | `tmux-dev "npm run dev"` |
-| `cost-logger.sh` | Cost tracking | `cost-tracker` |
+| 工具 | 说明 |
+|------|------|
+| `/gan_build` | GAN 式开发（Planner → Generator → Evaluator） |
+| `/gan_design` | GAN 设计循环（专注视觉质量） |
 
-### OpenClaw Skills
+### 代码质量
 
-| Skill | Command | Purpose |
-|-------|---------|---------|
-| `console-check` | `/console_check` | Check for console.log |
-| `typecheck` | `/typecheck` | TypeScript type checking |
+| 工具 | 说明 |
+|------|------|
+| `/code_review` | 代码审查 |
+| `/e2e` | E2E 测试 |
+| `/tdd` | TDD 工作流 |
+| `/refactor_clean` | 重构清理 |
 
-**Full documentation**: See [`hooks/README.md`](./hooks/README.md)
+### 语言特定
 
-### Sync Hooks
+- **C++**: `cpp_build`, `cpp_review`, `cpp_test`
+- **Go**: `go_build`, `go_review`, `go_test`
+- **Kotlin**: `kotlin_build`, `kotlin_review`, `kotlin_test`
+- **Rust**: `rust_build`, `rust_review`, `rust_test`
+- **Python**: `python_build`, `python_review`, `python_test`
+- **Java**: `java_build`, `gradle_build`, `java_review`
+- **TypeScript**: `ts_build`, `ts_review`
+- **Flutter**: `flutter_build`, `flutter_review`
 
-```bash
-# ECC: hooks/
-# OpenClaw: ~/.openclaw/hooks/
-
-# Hooks are installed automatically by install-ecc.sh
-```
-
-**Rule**: Run installer script, hooks auto-configure!
+[完整列表](./plugin/index.ts)
 
 ---
 
-## Architecture
+## 架构
 
 ```
 ECC Project              OpenClaw
@@ -218,188 +99,111 @@ commands/            →   plugin/index.ts (86 tools)
 hooks/               →   ~/.openclaw/hooks/ (7 hooks)
 skills/              →   ~/.openclaw/skills/ (142 skills)
 rules/               →   ~/.openclaw/rules/ (14 languages)
-dispatcher/          →   ~/.openclaw/plugins/dispatcher/
 ```
 
 ---
 
-## Sync from ECC Project
+## 工作原理
 
-### Agents
+### Tools 如何调用
 
-```bash
-# ECC: agents/planner.md
-# OpenClaw: ~/.openclaw/workspace-planner/AGENTS.md
-
-cp agents/planner.md ~/.openclaw/workspace-planner/AGENTS.md
+```
+用户：/dispatch 帮我审查代码
+  ↓
+Dispatcher Agent 分析意图
+  ↓
+调用 ECC tool: code_review()
+  ↓
+ECC Plugin → sessionsSpawn(agentId: "reviewer")
+  ↓
+Reviewer Agent 执行
+  ↓
+返回结果
 ```
 
-**Rule**: Direct copy, no modification needed!
+### 关键点
 
-### Skills
+- **Tools 不是直接调用的命令**，而是由 Agent 调用的
+- 用户通过 `/dispatch` 或自然语言与主 Agent 交互
+- 主 Agent 或 Dispatcher Agent 决定调用哪个 tool
+
+---
+
+## 手动安装
 
 ```bash
-# ECC: skills/
-# OpenClaw: ~/.openclaw/skills/
+# 1. 安装 Plugin
+cp -r openclaw/plugin ~/.openclaw/plugins/ecc
+cd ~/.openclaw/plugins/ecc && npm install && npx tsc
 
+# 2. 复制资源
+cp -r commands/* ~/.openclaw/commands/
 cp -r skills/* ~/.openclaw/skills/
-```
-
-**Rule**: Direct copy, all 142 skills available in OpenClaw!
-
-### Rules
-
-```bash
-# ECC: rules/
-# OpenClaw: ~/.openclaw/rules/
-
 cp -r rules/* ~/.openclaw/rules/
-```
 
-**Rule**: Direct copy, 14 language rule-packs available!
+# 3. 创建 Agents
+# (自动通过 install-ecc.sh，或手动逐个创建)
 
-### Dispatcher Plugin
+# 4. 安装 Hooks
+cp -r hooks/* ~/.openclaw/hooks/
 
-```bash
-# ECC: openclaw/dispatcher/
-# OpenClaw: ~/.openclaw/plugins/dispatcher/
+# 5. 更新配置
+# 编辑 ~/.openclaw/openclaw.json，添加 ecc 到 plugins.allow
 
-cp -r openclaw/dispatcher ~/.openclaw/plugins/
-cd ~/.openclaw/plugins/dispatcher
-npm install
-npx tsc
-```
-
-**Rule**: Copy, install deps, compile - then restart gateway!
-
-### Commands
-
-```typescript
-// ECC: commands/gan-build.md
-// OpenClaw: plugin/index.ts
-
-api.registerTool({
-  name: "gan_build",  // kebab-case → snake_case
-  description: "GAN 式开发循环",
-  parameters: Type.Object({
-    brief: Type.String({ description: "项目描述" }),
-    max_iterations: Type.Optional(Type.Number({ default: 15 })),
-  }),
-  async execute(_id, params) {
-    const command = readCommand("gan-build");
-    const result = await api.runtime.sessionsSpawn({
-      agentId: "planner",
-      task: `${command}\n\nBrief: ${params.brief}`,
-      label: "gan-build",
-      runTimeoutSeconds: params.max_iterations * 60,
-    });
-    return {
-      content: [{
-        type: "text",
-        text: `🚀 GAN Build started\nSession: ${result.childSessionKey}`,
-      }],
-    };
-  },
-});
-```
-
-### Hooks
-
-See [Hooks Conversion Guide](./docs/hooks-conversion-guide.md) for details.
-
----
-
-## Testing
-
-```bash
-# List agents
-openclaw agents list
-
-# List plugins
-openclaw plugins list
-
-# Test tools (via main agent)
-openclaw agent --agent main --message "帮我运行 gan_build 测试项目"
-
-# Test hooks
-~/.openclaw/hooks/pre-commit-check.sh  # Should run checks
-gpush                                   # Should show git status
-tmux-dev "npm run dev"                 # Should suggest tmux
-```
-
----
-
-## Troubleshooting
-
-### Agent not found
-```bash
-openclaw agents add <name> --workspace "~/.openclaw/workspace-<name>"
-```
-
-### Tool not recognized
-```bash
-openclaw plugins list | grep ecc
+# 6. 重启 Gateway
 openclaw gateway restart
 ```
 
-### Hook not working
-```bash
-# Check if script is executable
-chmod +x ~/.openclaw/hooks/*.sh
+---
 
-# Reload shell aliases
-source ~/.zshrc
+## 添加新 Agents
 
-# Check Git hook
-ls -la .git/hooks/pre-commit
-```
+1. 在 `agents/` 目录创建 `my-agent.md`
+2. 运行 `./openclaw/install-ecc.sh` 自动创建 workspace
+3. 测试：`openclaw agents list`
 
 ---
 
-## Documentation
+## 添加新 Tools
 
-- [Integration Guide](./docs/integration-guide.md) - Full integration documentation
-- [Plugin Source](./plugin/index.ts) - 86 tools implementation
-- [Dispatcher Plugin](./dispatcher/index.ts) - Intent-based command routing
-- Agents are created automatically by `install-ecc.sh`
-- [Hooks Guide](./hooks/README.md) - Hooks installation and usage
-- [Hooks Conversion](./docs/hooks-conversion-guide.md) - How hooks are converted
-
----
-
-## Contributing
-
-### Add New Tools
-
-1. Create `commands/my-command.md`
-2. Add to `plugin/index.ts`:
+1. 创建 `commands/my-command.md`
+2. 在 `plugin/index.ts` 添加：
    ```typescript
-   api.registerTool({ name: "my_tool", ... })
+   api.registerTool({
+     name: "my_tool",
+     description: "工具描述",
+     parameters: Type.Object({...}),
+     async execute(_id, params) {
+       const command = readCommand("my-command");
+       const result = await api.runtime.sessionsSpawn({
+         agentId: "my-agent",
+         task: `${command}\n\nParams: ${JSON.stringify(params)}`,
+         label: "my-tool",
+         runTimeoutSeconds: 300,
+       });
+       return { content: [{ type: "text", text: `已启动\n会话：${result.childSessionKey}` }] };
+     },
+   });
    ```
-3. Test: Let agent call it or via `/dispatch 使用 my_tool`
-
-### Add New Dispatcher Routes
-
-The dispatcher plugin uses LLM to understand user intent. No code changes needed - just use natural language:
-
-```bash
-/dispatch <your request>
-```
-
-### Add New Hooks
-
-1. Create hook script in `hooks/`
-2. Hooks are installed automatically by `install-ecc.sh`
-3. Document in `hooks/README.md`
+3. 编译：`cd plugin && npx tsc`
+4. 重启 Gateway
 
 ---
 
-## Related
+## 文档
 
-- [OpenClaw Documentation](https://docs.openclaw.ai)
-- [ECC Main Documentation](../README.md)
+- [集成指南](./docs/integration-guide.md) - 完整技术文档
+- [Plugin 源码](./plugin/index.ts) - 86 tools 实现
+- [Hooks 指南](./hooks/README.md) - Hooks 安装和使用
+
+---
+
+## 相关资源
+
+- [OpenClaw 文档](https://docs.openclaw.ai)
+- [ECC 主文档](../README.md)
 - [ECC Hooks](../hooks/README.md)
 
 ---
 
-**Last Updated**: 2026-04-01
+**最后更新**: 2026-04-02
