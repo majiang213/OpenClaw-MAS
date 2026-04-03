@@ -25,10 +25,10 @@ A multi-agent development system that brings [Everything Claude Code](https://gi
 
 ### Option 1: Let your AI agent install it
 
-Send this to your OpenClaw agent:
+Clone the repo, then send this to your OpenClaw agent:
 
 ```
-Read the README at /path/to/everything-claude-code/openclaw/README.md and follow the installation instructions.
+Read the README in the OpenClaw-MAS repo I just cloned and follow the installation instructions.
 ```
 
 The agent will read this file, run the install script, verify the result, and report back when done.
@@ -36,8 +36,9 @@ The agent will read this file, run the install script, verify the result, and re
 ### Option 2: Install manually
 
 ```bash
-cd /path/to/everything-claude-code
-bash openclaw/install-ecc.sh
+git clone https://github.com/majiang213/OpenClaw-MAS.git
+cd OpenClaw-MAS
+bash install-ecc.sh
 ```
 
 ---
@@ -77,11 +78,8 @@ If any prerequisite is missing, stop and tell the user what needs to be installe
 Run the install script from the repository root:
 
 ```bash
-cd /path/to/everything-claude-code
-bash openclaw/install-ecc.sh
+bash install-ecc.sh
 ```
-
-Replace `/path/to/everything-claude-code` with the actual path. If you don't know it, ask the user.
 
 The script will:
 - Register 37 specialist agents into `openclaw.json`
