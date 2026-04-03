@@ -19,6 +19,7 @@ banner() {
   echo ""
 }
 
+
 log()   { echo -e "${GREEN}✅ $1${NC}"; }
 warn()  { echo -e "${YELLOW}⚠️  $1${NC}"; }
 error() { echo -e "${RED}❌ $1${NC}"; }
