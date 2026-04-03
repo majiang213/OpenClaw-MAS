@@ -78,7 +78,7 @@ backup_existing() {
 create_workspaces() {
   info "注册 Agent Workspace..."
 
-  AGENTS_DIR="$REPO_DIR/openclaw/agents"
+  AGENTS_DIR="$REPO_DIR/agents"
 
   if [ ! -d "$AGENTS_DIR" ]; then
     warn "未找到 agents 目录：$AGENTS_DIR，跳过"
@@ -138,7 +138,7 @@ install_skills() {
   ECC_SKILLS_SRC="$REPO_DIR/skills"
   CMD_SKILLS_SRC="$REPO_DIR/openclaw/skills"
   SKILLS_DST="$OC_HOME/skills"
-  SCRIPT="$REPO_DIR/openclaw/scripts/generate_skills.py"
+  SCRIPT="$REPO_DIR/scripts/generate_skills.py"
 
   if [ ! -f "$SCRIPT" ]; then
     error "未找到生成脚本：$SCRIPT"
