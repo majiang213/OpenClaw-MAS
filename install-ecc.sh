@@ -4,7 +4,7 @@
 # ══════════════════════════════════════════════════════════════
 set -e
 
-REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OC_HOME="$HOME/.openclaw"
 OC_CFG="$OC_HOME/openclaw.json"
 
@@ -76,7 +76,7 @@ backup_existing() {
 create_workspaces() {
   info "注册 Agent Workspace..."
 
-  AGENTS_DIR="$REPO_DIR/openclaw/agents"
+  AGENTS_DIR="$REPO_DIR/agents"
 
   if [ ! -d "$AGENTS_DIR" ]; then
     warn "未找到 agents 目录：$AGENTS_DIR，跳过"
@@ -133,10 +133,10 @@ PYEOF
 install_skills() {
   info "安装 Skills（全量覆盖）..."
 
-  ECC_SKILLS_SRC="$REPO_DIR/skills"
-  CMD_SKILLS_SRC="$REPO_DIR/openclaw/skills"
+  ECC_SKILLS_SRC="$REPO_DIR/ecc-skills"
+  CMD_SKILLS_SRC="$REPO_DIR/skills"
   SKILLS_DST="$OC_HOME/skills"
-  SCRIPT="$REPO_DIR/openclaw/scripts/generate_skills.py"
+  SCRIPT="$REPO_DIR/scripts/generate_skills.py"
 
   if [ ! -f "$SCRIPT" ]; then
     error "未找到生成脚本：$SCRIPT"
@@ -205,7 +205,7 @@ install_hooks() {
   info "安装 Hooks..."
 
   # 5a. Internal hooks（session-bootstrap, pre-compact）
-  INT_HOOKS_SRC="$REPO_DIR/openclaw/hooks"
+  INT_HOOKS_SRC="$REPO_DIR/hooks"
   INT_HOOKS_DST="$OC_HOME/hooks"
 
   if [ -d "$INT_HOOKS_SRC" ]; then
@@ -220,7 +220,7 @@ install_hooks() {
   fi
 
   # 5b. Plugin（ecc-hooks）：编译并安装
-  PLUGIN_SRC="$REPO_DIR/openclaw/plugin"
+  PLUGIN_SRC="$REPO_DIR/plugin"
   PLUGIN_DST="$OC_HOME/plugins/ecc-hooks"
 
   if [ ! -d "$PLUGIN_SRC" ]; then
