@@ -1,0 +1,16 @@
+# Node.js
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
