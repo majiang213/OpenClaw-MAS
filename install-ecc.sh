@@ -4,8 +4,7 @@
 # ══════════════════════════════════════════════════════════════
 set -e
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_DIR="$SCRIPT_DIR"
+REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OC_HOME="$HOME/.openclaw"
 OC_CFG="$OC_HOME/openclaw.json"
 
@@ -14,8 +13,8 @@ RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; BLUE='\033[0;34m'; NC
 banner() {
   echo ""
   echo -e "${BLUE}╔══════════════════════════════════════════╗${NC}"
-  echo -e "${BLUE}║  🦞  ECC · OpenClaw Multi-Agent System  ║${NC}"
-  echo -e "${BLUE}║       安装向导 (37 Agents + Skills)      ║${NC}"
+  echo -e "${BLUE}║        🦞  OpenClaw MAS Installer        ║${NC}"
+  echo -e "${BLUE}║         37 Agents + 210 Skills           ║${NC}"
   echo -e "${BLUE}╚══════════════════════════════════════════╝${NC}"
   echo ""
 }
@@ -135,8 +134,8 @@ PYEOF
 install_skills() {
   info "安装 Skills（全量覆盖）..."
 
-  ECC_SKILLS_SRC="$REPO_DIR/skills"
-  CMD_SKILLS_SRC="$REPO_DIR/openclaw/skills"
+  ECC_SKILLS_SRC="$REPO_DIR/ecc-skills"
+  CMD_SKILLS_SRC="$REPO_DIR/skills"
   SKILLS_DST="$OC_HOME/skills"
   SCRIPT="$REPO_DIR/scripts/generate_skills.py"
 
@@ -207,7 +206,7 @@ install_hooks() {
   info "安装 Hooks..."
 
   # 5a. Internal hooks（session-bootstrap, pre-compact）
-  INT_HOOKS_SRC="$REPO_DIR/openclaw/hooks"
+  INT_HOOKS_SRC="$REPO_DIR/hooks"
   INT_HOOKS_DST="$OC_HOME/hooks"
 
   if [ -d "$INT_HOOKS_SRC" ]; then
@@ -222,7 +221,7 @@ install_hooks() {
   fi
 
   # 5b. Plugin（ecc-hooks）：编译并安装
-  PLUGIN_SRC="$REPO_DIR/openclaw/plugin"
+  PLUGIN_SRC="$REPO_DIR/plugin"
   PLUGIN_DST="$OC_HOME/plugins/ecc-hooks"
 
   if [ ! -d "$PLUGIN_SRC" ]; then
@@ -246,7 +245,7 @@ install_hooks() {
   mkdir -p "$PLUGIN_DST"
   cp -r "$PLUGIN_SRC/dist" "$PLUGIN_DST/"
   cp "$PLUGIN_SRC/package.json" "$PLUGIN_DST/"
-  cp "$PLUGIN_SRC/openclaw.plugin.json" "$PLUGIN_DST/dist/"
+  cp "$PLUGIN_SRC/openclaw.plugin.json" "$PLUGIN_DST/"
   # 复制 node_modules 中的 openclaw 依赖（plugin 运行时需要）
   if [ -d "$PLUGIN_SRC/node_modules/openclaw" ]; then
     mkdir -p "$PLUGIN_DST/node_modules"
@@ -428,18 +427,18 @@ verify_install
 
 echo ""
 echo -e "${GREEN}╔══════════════════════════════════════════════════╗${NC}"
-echo -e "${GREEN}║  🎉  ECC 安装完成！                              ║${NC}"
+echo -e "${GREEN}║  🎉  OpenClaw MAS installed successfully!        ║${NC}"
 echo -e "${GREEN}╚══════════════════════════════════════════════════╝${NC}"
 echo ""
-echo "使用方法："
-echo "  /skill cmd_tdd 实现一个登录功能"
+echo "Usage:"
+echo "  /skill cmd_tdd implement a login feature"
 echo "  /skill cmd_build_fix"
 echo "  /skill cmd_code_review"
 echo "  /skill cmd_rust_review"
-echo "  /skill cmd_gan_build 做一个待办应用"
+echo "  /skill cmd_gan_build build a todo app"
 echo ""
-echo "查看所有可用 skill："
+echo "List all skills:"
 echo "  openclaw skills list"
 echo ""
-echo "文档：$REPO_DIR/openclaw/FLOW.md"
+echo "Docs: docs/flow.md  docs/architecture.md"
 echo ""
