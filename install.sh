@@ -138,15 +138,16 @@ install_skills() {
   SKILLS_DST="$OC_HOME/skills"
   SCRIPT="$REPO_DIR/scripts/generate_skills.py"
 
-  if [ ! -f "$SCRIPT" ]; then
-    error "未找到生成脚本：$SCRIPT"
-    exit 1
+  # 1. 如果 skills/ 目录为空（首次 clone），用脚本生成
+  if [ ! -d "$CMD_SKILLS_SRC" ] || [ -z "$(ls -A "$CMD_SKILLS_SRC" 2>/dev/null)" ]; then
+    if [ ! -f "$SCRIPT" ]; then
+      error "未找到生成脚本：$SCRIPT，且 skills/ 目录为空"
+      exit 1
+    fi
+    info "skills/ 目录为空，运行生成脚本..."
+    mkdir -p "$CMD_SKILLS_SRC"
+    python3 "$SCRIPT"
   fi
-
-  # 1. 先生成 68 个 command-skill 到 openclaw/skills/
-  rm -rf "$CMD_SKILLS_SRC"
-  mkdir -p "$CMD_SKILLS_SRC"
-  python3 "$SCRIPT"
 
   # 2. 全量清空 ~/.openclaw/skills/ 再统一写入
   rm -rf "$SKILLS_DST"
