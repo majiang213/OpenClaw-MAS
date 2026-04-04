@@ -1,6 +1,6 @@
 ---
 name: cmd_multi_plan
-description: "multi-plan workflow"
+description: "Multi-model collaborative planning — dual-model analysis generates a step-by-step implementation plan with context retrieval."
 user-invocable: true
 origin: openclaw-mas
 ---

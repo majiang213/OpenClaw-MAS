@@ -1,6 +1,6 @@
 ---
 name: cmd_multi_frontend
-description: "multi-frontend workflow"
+description: "Frontend-focused multi-model development workflow (Research → Plan → Execute → Review), Gemini-led with Claude refactoring."
 user-invocable: true
 origin: openclaw-mas
 ---

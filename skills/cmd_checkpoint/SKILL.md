@@ -1,6 +1,6 @@
 ---
 name: cmd_checkpoint
-description: "checkpoint workflow"
+description: "Create, verify, or list workflow checkpoints to mark stable states during a long task."
 user-invocable: true
 origin: openclaw-mas
 ---

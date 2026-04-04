@@ -1,6 +1,6 @@
 ---
 name: cmd_model_route
-description: "model-route workflow"
+description: "Recommend the best model tier (Haiku/Sonnet/Opus) for the current task based on complexity and budget."
 user-invocable: true
 origin: openclaw-mas
 ---

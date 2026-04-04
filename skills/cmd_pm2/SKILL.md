@@ -1,6 +1,6 @@
 ---
 name: cmd_pm2
-description: "pm2 workflow"
+description: "Auto-analyze project and generate PM2 process manager service commands and ecosystem config."
 user-invocable: true
 origin: openclaw-mas
 ---

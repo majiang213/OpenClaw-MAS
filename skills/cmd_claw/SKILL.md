@@ -1,6 +1,6 @@
 ---
 name: cmd_claw
-description: "Legacy slash-entry shim for the nanoclaw-repl skill. Prefer the skill directly."
+description: "Run or extend the NanoClaw REPL — operates scripts/claw.js for zero-dependency markdown-backed session management."
 user-invocable: true
 origin: openclaw-mas
 ---

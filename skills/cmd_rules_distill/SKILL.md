@@ -1,6 +1,6 @@
 ---
 name: cmd_rules_distill
-description: "Legacy slash-entry shim for the rules-distill skill. Prefer the skill directly."
+description: "Distill project conventions into rules — inventories existing rules, cross-reads codebase patterns, and produces a verdict on what to add or trim."
 user-invocable: true
 origin: openclaw-mas
 ---

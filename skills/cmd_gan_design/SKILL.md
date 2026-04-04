@@ -1,57 +1,44 @@
 ---
 name: cmd_gan_design
-description: "gan-design workflow"
+description: "GAN-style design loop (generator → evaluator) focused on frontend visual quality — iterates until design score passes threshold."
 user-invocable: true
 origin: openclaw-mas
 ---
 
-Parse the following from $ARGUMENTS:
-1. `brief` — the user's description of the design to create
-2. `--max-iterations N` — (optional, default 10) maximum design-evaluate cycles
-3. `--pass-threshold N` — (optional, default 7.5) weighted score to pass (higher default for design)
+Run a GAN-style design harness using two specialist agents in sequence: `gan-generator` → `gan-evaluator`.
 
-## GAN-Style Design Harness
+Include in the task payload:
+- The design brief (description of what to create — this becomes the spec directly, no planner step)
+- `--max-iterations N` (default 10) — maximum design-evaluate cycles
+- `--pass-threshold N` (default 7.5) — weighted score to pass (higher than gan-build for design quality)
 
-A two-agent loop (Generator + Evaluator) focused on frontend design quality. No planner — the brief IS the spec.
-
-This is the same mode Anthropic used for their frontend design experiments, where they saw creative breakthroughs like the 3D Dutch art museum with CSS perspective and doorway navigation.
-
-### Setup
-1. Create `gan-harness/` directory
-2. Write the brief directly as `gan-harness/spec.md`
-3. Write a design-focused `gan-harness/eval-rubric.md` with extra weight on Design Quality and Originality
-
-### Design-Specific Eval Rubric
-```markdown
-### Design Quality (weight: 0.35)
-### Originality (weight: 0.30)
-### Craft (weight: 0.25)
-### Functionality (weight: 0.10)
-```
-
-Note: Originality weight is higher (0.30 vs 0.20) to push for creative breakthroughs. Functionality weight is lower since design mode focuses on visual quality.
-
-### Loop
-Same as `/project:gan-build` Phase 2, but:
-- Skip the planner
-- Use the design-focused rubric
-- Generator prompt emphasizes visual quality over feature completeness
-- Evaluator prompt emphasizes "would this win a design award?" over "do all features work?"
-
-### Key Difference from gan-build
-The Generator is told: "Your PRIMARY goal is visual excellence. A stunning half-finished app beats a functional ugly one. Push for creative leaps — unusual layouts, custom animations, distinctive color work."
-
+The generator focuses on visual excellence over feature completeness. The evaluator uses a design-weighted rubric (Design Quality 35%, Originality 30%, Craft 25%, Functionality 10%). Loop continues until score ≥ threshold.
 
 ---
 
-## OpenClaw 执行
+Execute specialist agents in sequence: gan-generator → gan-evaluator
 
-sessions_spawn 是非阻塞的，必须串行执行，每步等 announce 后再继续。
+1. Reply to the user briefly, then call sessions_spawn:
+```json
+{
+  "agentId": "gan-generator",
+  "sessionKey": "gan-generator",
+  "task": "<task description with full context from previous step>",
+  "runTimeoutSeconds": 300
+}
+```
+Wait for this agent to complete before proceeding.
 
-执行顺序：gan-generator → gan-evaluator
+2. Reply to the user briefly, then call sessions_spawn:
+```json
+{
+  "agentId": "gan-evaluator",
+  "sessionKey": "gan-evaluator",
+  "task": "<task description with full context from previous step>",
+  "runTimeoutSeconds": 300
+}
+```
+Wait for this agent to complete before proceeding.
 
-1. sessions_spawn(agentId: "gan-generator", task: "...")
-2. sessions_spawn(agentId: "gan-evaluator", task: "...")
-
-每次 sessions_spawn 后停止等待，收到 announce 后再继续下一步。
-不要同时 spawn 多个 agent。
+Do not spawn the next agent until the current one completes. Do not spawn agents in parallel.
+After all agents complete, return the final result to the user.

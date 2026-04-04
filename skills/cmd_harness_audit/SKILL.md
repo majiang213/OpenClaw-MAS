@@ -1,96 +1,32 @@
 ---
 name: cmd_harness_audit
-description: "harness-audit workflow"
+description: "Audit the local agent harness for reliability, cost, and throughput — returns a prioritized scorecard with actionable improvements."
 user-invocable: true
 origin: openclaw-mas
 ---
 
-# Harness Audit Command
+Delegate to the `harness-optimizer` agent to audit the agent harness configuration.
 
-Run a deterministic repository harness audit and return a prioritized scorecard.
+Include in the task payload:
+- Scope: `repo` (full), `hooks`, `skills`, `commands`, or `agents` (default: repo)
+- Output format preference: `text` (default) or `json` (for automation)
+- Specific path to audit if not the current working directory
+- Any known issues or areas of concern to prioritize
 
-## Usage
-
-`/harness-audit [scope] [--format text|json] [--root path]`
-
-- `scope` (optional): `repo` (default), `hooks`, `skills`, `commands`, `agents`
-- `--format`: output style (`text` default, `json` for automation)
-- `--root`: audit a specific path instead of the current working directory
-
-## Deterministic Engine
-
-Always run:
-
-```bash
-node scripts/harness-audit.js <scope> --format <text|json> [--root <path>]
-```
-
-This script is the source of truth for scoring and checks. Do not invent additional dimensions or ad-hoc points.
-
-Rubric version: `2026-03-30`.
-
-The script computes 7 fixed categories (`0-10` normalized each):
-
-1. Tool Coverage
-2. Context Efficiency
-3. Quality Gates
-4. Memory Persistence
-5. Eval Coverage
-6. Security Guardrails
-7. Cost Efficiency
-
-Scores are derived from explicit file/rule checks and are reproducible for the same commit.
-The script audits the current working directory by default and auto-detects whether the target is the ECC repo itself or a consumer project using ECC.
-
-## Output Contract
-
-Return:
-
-1. `overall_score` out of `max_score` (70 for `repo`; smaller for scoped audits)
-2. Category scores and concrete findings
-3. Failed checks with exact file paths
-4. Top 3 actions from the deterministic output (`top_actions`)
-5. Suggested ECC skills to apply next
-
-## Checklist
-
-- Use script output directly; do not rescore manually.
-- If `--format json` is requested, return the script JSON unchanged.
-- If text is requested, summarize failing checks and top actions.
-- Include exact file paths from `checks[]` and `top_actions[]`.
-
-## Example Result
-
-```text
-Harness Audit (repo): 66/70
-- Tool Coverage: 10/10 (10/10 pts)
-- Context Efficiency: 9/10 (9/10 pts)
-- Quality Gates: 10/10 (10/10 pts)
-
-Top 3 Actions:
-1) [Security Guardrails] Add prompt/tool preflight security guards in hooks/hooks.json. (hooks/hooks.json)
-2) [Tool Coverage] Sync commands/harness-audit.md and .opencode/commands/harness-audit.md. (.opencode/commands/harness-audit.md)
-3) [Eval Coverage] Increase automated test coverage across scripts/hooks/lib. (tests/)
-```
-
-## Arguments
-
-$ARGUMENTS:
-- `repo|hooks|skills|commands|agents` (optional scope)
-- `--format text|json` (optional output format)
-
+The agent runs the deterministic harness audit script, scores 7 categories (Tool Coverage, Context Efficiency, Quality Gates, Memory Persistence, Eval Coverage, Security Guardrails, Cost Efficiency), and returns the top 3 actions.
 
 ---
 
-## OpenClaw 执行
+First, reply to the user briefly to confirm you are delegating to `harness-optimizer`.
 
-通过 sessions_spawn 调用专家 agent：
-
+Then call sessions_spawn:
+```json
+{
+  "agentId": "harness-optimizer",
+  "sessionKey": "harness-optimizer",
+  "task": "<user's full request and all relevant context — the agent cannot see this conversation>",
+  "runTimeoutSeconds": 300
+}
 ```
-sessions_spawn(
-  agentId: "harness-optimizer",
-  task: "[用户的完整请求和上下文]"
-)
-```
 
-等待 harness-optimizer 的 announce 结果，然后返回给用户。
+After sessions_spawn returns, relay the result to the user. Do not output anything after the spawn call until the result arrives.

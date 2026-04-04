@@ -1,55 +1,33 @@
 ---
 name: cmd_loop_start
-description: "loop-start workflow"
+description: "Start a managed autonomous agent loop — configure pattern (sequential, continuous-pr, rfc-dag, infinite), safety gates, and stop conditions."
 user-invocable: true
 origin: openclaw-mas
 ---
 
-# Loop Start Command
+Delegate to the `loop-operator` agent to configure and start an autonomous loop.
 
-Start a managed autonomous loop pattern with safety defaults.
+Include in the task payload:
+- Loop pattern: `sequential`, `continuous-pr`, `rfc-dag`, or `infinite`
+- Mode: `safe` (default, strict quality gates) or `fast` (reduced gates)
+- The task or goal the loop should execute
+- Explicit stop condition (required — loops must have a defined end)
+- Current repository state (branch, test status)
 
-## Usage
-
-`/loop-start [pattern] [--mode safe|fast]`
-
-- `pattern`: `sequential`, `continuous-pr`, `rfc-dag`, `infinite`
-- `--mode`:
-  - `safe` (default): strict quality gates and checkpoints
-  - `fast`: reduced gates for speed
-
-## Flow
-
-1. Confirm repository state and branch strategy.
-2. Select loop pattern and model tier strategy.
-3. Enable required hooks/profile for the chosen mode.
-4. Create loop plan and write runbook under `.claude/plans/`.
-5. Print commands to start and monitor the loop.
-
-## Required Safety Checks
-
-- Verify tests pass before first loop iteration.
-- Ensure `ECC_HOOK_PROFILE` is not disabled globally.
-- Ensure loop has explicit stop condition.
-
-## Arguments
-
-$ARGUMENTS:
-- `<pattern>` optional (`sequential|continuous-pr|rfc-dag|infinite`)
-- `--mode safe|fast` optional
-
+The agent verifies safety checks, creates a loop plan and runbook under `.claude/plans/`, and returns the commands to start and monitor the loop.
 
 ---
 
-## OpenClaw 执行
+First, reply to the user briefly to confirm you are delegating to `loop-operator`.
 
-通过 sessions_spawn 调用专家 agent：
-
+Then call sessions_spawn:
+```json
+{
+  "agentId": "loop-operator",
+  "sessionKey": "loop-operator",
+  "task": "<user's full request and all relevant context — the agent cannot see this conversation>",
+  "runTimeoutSeconds": 300
+}
 ```
-sessions_spawn(
-  agentId: "loop-operator",
-  task: "[用户的完整请求和上下文]"
-)
-```
 
-等待 loop-operator 的 announce 结果，然后返回给用户。
+After sessions_spawn returns, relay the result to the user. Do not output anything after the spawn call until the result arrives.

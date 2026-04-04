@@ -1,6 +1,6 @@
 ---
 name: cmd_docs
-description: "Legacy slash-entry shim for the documentation-lookup skill. Prefer the skill directly."
+description: "Look up live library or API documentation via Context7 — returns current answers and minimal code examples, not training-data guesses."
 user-invocable: true
 origin: openclaw-mas
 ---

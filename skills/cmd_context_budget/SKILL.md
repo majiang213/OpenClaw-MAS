@@ -1,42 +1,32 @@
 ---
 name: cmd_context_budget
-description: "Legacy slash-entry shim for the context-budget skill. Prefer the skill directly."
+description: "Analyze and optimize context window usage — inventories loaded context, detects bloat, and returns prioritized savings recommendations."
 user-invocable: true
 origin: openclaw-mas
 ---
 
-# Context Budget Optimizer (Legacy Shim)
+Delegate to the `harness-optimizer` agent to analyze context budget usage.
 
-Use this only if you still invoke `/context-budget`. The maintained workflow lives in `skills/context-budget/SKILL.md`.
+Include in the task payload:
+- Whether to run in verbose mode (`--verbose` flag)
+- Context window size if different from default (200K)
+- Specific files, rules, or agents suspected of causing context bloat
+- Whether this is a recurring issue or a one-time audit
 
-## Canonical Surface
-
-- Prefer the `context-budget` skill directly.
-- Keep this file only as a compatibility entry point.
-
-## Arguments
-
-$ARGUMENTS
-
-## Delegation
-
-Apply the `context-budget` skill.
-- Pass through `--verbose` if the user supplied it.
-- Assume a 200K context window unless the user specified otherwise.
-- Return the skill's inventory, issue detection, and prioritized savings report without re-implementing the scan here.
-
+The agent inventories all loaded context (rules, skills, agents, memory), detects inefficiencies, and returns a prioritized list of savings actions.
 
 ---
 
-## OpenClaw 执行
+First, reply to the user briefly to confirm you are delegating to `harness-optimizer`.
 
-通过 sessions_spawn 调用专家 agent：
-
+Then call sessions_spawn:
+```json
+{
+  "agentId": "harness-optimizer",
+  "sessionKey": "harness-optimizer",
+  "task": "<user's full request and all relevant context — the agent cannot see this conversation>",
+  "runTimeoutSeconds": 300
+}
 ```
-sessions_spawn(
-  agentId: "harness-optimizer",
-  task: "[用户的完整请求和上下文]"
-)
-```
 
-等待 harness-optimizer 的 announce 结果，然后返回给用户。
+After sessions_spawn returns, relay the result to the user. Do not output anything after the spawn call until the result arrives.

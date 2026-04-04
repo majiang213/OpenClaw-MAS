@@ -1,6 +1,6 @@
 ---
 name: cmd_prompt_optimize
-description: "Legacy slash-entry shim for the prompt-optimizer skill. Prefer the skill directly."
+description: "Optimize a prompt for clarity and effectiveness — returns recommended components and a ready-to-run improved prompt without executing the task."
 user-invocable: true
 origin: openclaw-mas
 ---

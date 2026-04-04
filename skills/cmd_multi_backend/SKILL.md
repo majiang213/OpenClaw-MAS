@@ -1,6 +1,6 @@
 ---
 name: cmd_multi_backend
-description: "multi-backend workflow"
+description: "Backend-focused multi-model development workflow (Research → Plan → Execute → Review), Codex-led with Claude refactoring."
 user-invocable: true
 origin: openclaw-mas
 ---
