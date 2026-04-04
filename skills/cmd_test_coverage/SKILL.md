@@ -1,6 +1,6 @@
 ---
 name: cmd_test_coverage
-description: "Analyze test coverage, identify gaps, and generate missing tests to reach 80%+ coverage."
+description: "test-coverage workflow"
 user-invocable: true
 origin: openclaw-mas
 ---

@@ -5,15 +5,12 @@ user-invocable: true
 origin: openclaw-mas
 ---
 
-Delegate to the `rust-build-resolver` agent to fix Rust build failures.
+Delegate to the `rust-build-resolver` agent.
 
 Include in the task payload:
-- The full error output from `cargo check` or `cargo build`
-- Rust edition and toolchain version (stable/nightly)
+- The full build error output
+- Language/framework version
 - Any recent changes that may have caused the breakage
-- Whether clippy or fmt issues are also present
-
-The agent runs `cargo check`, `cargo clippy`, and `cargo fmt --check`, then fixes errors one at a time — verifying after each change.
 
 ---
 

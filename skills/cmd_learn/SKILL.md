@@ -1,6 +1,6 @@
 ---
 name: cmd_learn
-description: "Analyze the current session and extract reusable patterns worth saving as skills or instincts."
+description: "learn workflow"
 user-invocable: true
 origin: openclaw-mas
 ---

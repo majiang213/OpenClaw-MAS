@@ -1,18 +1,16 @@
 ---
 name: cmd_santa_loop
-description: "Adversarial dual-review convergence loop — two independent model reviewers must both approve before code ships. Up to 3 fix rounds."
+description: "Adversarial dual-review convergence loop — two independent model reviewers must both approve before code ships."
 user-invocable: true
 origin: openclaw-mas
 ---
 
-Delegate to the `code-reviewer` agent to run the santa-loop dual-review protocol.
+Delegate to the `code-reviewer` agent.
 
 Include in the task payload:
 - The files, glob pattern, or description of what to review
-- Falls back to uncommitted changes (`git diff --name-only HEAD`) if no scope given
-- Any domain-specific rubric criteria to add (beyond the defaults: correctness, security, error handling, completeness, consistency, no regressions)
-
-The agent runs two independent reviewers in parallel (Claude Opus + external model if available). Both must return PASS before code is pushed. If either fails, all issues are fixed and fresh reviewers re-run — up to 3 rounds. Escalates to user if unresolved after 3 iterations.
+- Falls back to uncommitted changes if no scope given
+- Any domain-specific rubric criteria to add
 
 ---
 

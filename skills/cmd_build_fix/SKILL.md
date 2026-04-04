@@ -1,6 +1,6 @@
 ---
 name: cmd_build_fix
-description: "Fix build and type errors incrementally — detects build system, parses errors, applies minimal one-at-a-time fixes, and verifies after each change."
+description: "build-fix workflow"
 user-invocable: true
 origin: openclaw-mas
 ---

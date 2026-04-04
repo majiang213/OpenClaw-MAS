@@ -1,20 +1,17 @@
 ---
 name: cmd_e2e
-description: "Generate, maintain, and run end-to-end tests for critical user flows using Playwright or Vercel Agent Browser."
+description: "Legacy slash-entry shim for the e2e-testing skill. Prefer the skill directly."
 user-invocable: true
 origin: openclaw-mas
 ---
 
-Delegate to the `e2e-runner` agent to handle E2E test generation and execution.
+Delegate to the `e2e-runner` agent.
 
 Include in the task payload:
-- The user flows or features to test (e.g., "login flow", "checkout process")
+- The user flows or features to test
 - Base URL or dev server details if known
 - Existing test files or framework configuration
 - Whether to generate new tests, run existing ones, or both
-- Any flaky tests to investigate or quarantine
-
-The agent will generate test journeys, run them, upload artifacts (screenshots, traces), and report results.
 
 ---
 

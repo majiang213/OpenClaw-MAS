@@ -1,6 +1,6 @@
 ---
 name: cmd_multi_workflow
-description: "Full multi-model development workflow (Research → Ideation → Plan → Execute → Optimize → Review) with intelligent routing: frontend to Gemini, backend to Codex."
+description: "multi-workflow workflow"
 user-invocable: true
 origin: openclaw-mas
 ---

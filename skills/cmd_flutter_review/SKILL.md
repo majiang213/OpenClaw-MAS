@@ -1,19 +1,17 @@
 ---
 name: cmd_flutter_review
-description: "Review Flutter/Dart code for widget best practices, state management patterns, performance issues, accessibility, and security."
+description: "Review Flutter/Dart code for idiomatic patterns, widget best practices, state management, performance, accessibility, and security. Invokes the flutter-reviewer agent."
 user-invocable: true
 origin: openclaw-mas
 ---
 
-Delegate to the `flutter-reviewer` agent for a comprehensive Flutter/Dart code review.
+Delegate to the `flutter-reviewer` agent.
 
 Include in the task payload:
-- Files or widgets to review (or "all changed files" for a pre-commit review)
-- Flutter version and state management solution (Riverpod, Bloc, Provider, etc.)
+- Files or modules to review (or 'all changed files' for a pre-commit review)
+- Language version and key dependencies
 - Whether this is a pre-commit review or a PR review
-- Any specific concerns (BuildContext after async, widget rebuilds, accessibility)
-
-The agent checks for `BuildContext` after async gaps, missing `dispose()`, `GlobalScope` usage, missing error/loading states, and hardcoded strings. It runs `flutter analyze`.
+- Any specific concerns
 
 ---
 

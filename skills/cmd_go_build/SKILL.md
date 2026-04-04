@@ -5,15 +5,12 @@ user-invocable: true
 origin: openclaw-mas
 ---
 
-Delegate to the `go-build-resolver` agent to fix Go build failures.
+Delegate to the `go-build-resolver` agent.
 
 Include in the task payload:
-- The full build error output (`go build ./...` or `go vet ./...`)
-- Go version and module path
+- The full build error output
+- Language/framework version
 - Any recent changes that may have caused the breakage
-- Whether linter (`golangci-lint`, `staticcheck`) output is also available
-
-The agent runs `go build`, `go vet`, and `staticcheck`, then fixes errors one at a time — verifying after each change.
 
 ---
 

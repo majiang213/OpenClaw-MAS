@@ -1,19 +1,16 @@
 ---
 name: cmd_harness_audit
-description: "Audit the local agent harness for reliability, cost, and throughput — returns a prioritized scorecard with actionable improvements."
+description: "harness-audit workflow"
 user-invocable: true
 origin: openclaw-mas
 ---
 
-Delegate to the `harness-optimizer` agent to audit the agent harness configuration.
+Delegate to the `harness-optimizer` agent.
 
 Include in the task payload:
-- Scope: `repo` (full), `hooks`, `skills`, `commands`, or `agents` (default: repo)
-- Output format preference: `text` (default) or `json` (for automation)
-- Specific path to audit if not the current working directory
+- Scope: repo (full), hooks, skills, commands, or agents (default: repo)
+- Output format preference: text (default) or json
 - Any known issues or areas of concern to prioritize
-
-The agent runs the deterministic harness audit script, scores 7 categories (Tool Coverage, Context Efficiency, Quality Gates, Memory Persistence, Eval Coverage, Security Guardrails, Cost Efficiency), and returns the top 3 actions.
 
 ---
 

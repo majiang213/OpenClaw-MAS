@@ -1,19 +1,17 @@
 ---
 name: cmd_go_review
-description: "Review Go code for idiomatic patterns, concurrency safety, error handling, and security vulnerabilities."
+description: "Comprehensive Go code review for idiomatic patterns, concurrency safety, error handling, and security. Invokes the go-reviewer agent."
 user-invocable: true
 origin: openclaw-mas
 ---
 
-Delegate to the `go-reviewer` agent for a comprehensive Go code review.
+Delegate to the `go-reviewer` agent.
 
 Include in the task payload:
-- Files or packages to review (or "all changed files" for a pre-commit review)
-- Go version and any relevant module dependencies
+- Files or modules to review (or 'all changed files' for a pre-commit review)
+- Language version and key dependencies
 - Whether this is a pre-commit review or a PR review
-- Any specific concerns (goroutine leaks, race conditions, error handling)
-
-The agent checks for race conditions, goroutine leaks, missing error context, non-idiomatic patterns, and security issues. It runs `go vet`, `staticcheck`, and `golangci-lint`.
+- Any specific concerns
 
 ---
 

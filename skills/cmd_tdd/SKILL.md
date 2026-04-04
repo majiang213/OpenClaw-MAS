@@ -1,20 +1,17 @@
 ---
 name: cmd_tdd
-description: "Implement a feature or fix using test-driven development — write failing tests first, then implement to pass, then refactor. Enforces RED → GREEN → REFACTOR cycle with 80%+ coverage."
+description: "Legacy slash-entry shim for the tdd-workflow skill. Prefer the skill directly."
 user-invocable: true
 origin: openclaw-mas
 ---
 
-Delegate to the `tdd-guide` agent to implement using strict TDD.
+Delegate to the `tdd-guide` agent.
 
 Include in the task payload:
 - What to build (feature, fix, or refactor)
 - Relevant files, modules, or components involved
 - Tech stack and test framework in use
 - Any existing tests or coverage requirements to meet
-- Whether a plan already exists (pass it along if so)
-
-The agent will write tests first (RED), implement minimally to pass (GREEN), then refactor (IMPROVE). It enforces 80%+ coverage and will not skip the RED phase.
 
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: cmd_multi_execute
-description: "Multi-model collaborative execution — get dirty prototype from Codex/Gemini, Claude refactors to production-grade, multi-model audit and delivery."
+description: "multi-execute workflow"
 user-invocable: true
 origin: openclaw-mas
 ---

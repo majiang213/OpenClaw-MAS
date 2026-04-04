@@ -5,15 +5,12 @@ user-invocable: true
 origin: openclaw-mas
 ---
 
-Delegate to the `kotlin-build-resolver` agent to fix Kotlin/Gradle build failures.
+Delegate to the `kotlin-build-resolver` agent.
 
 Include in the task payload:
-- The full build error output (`./gradlew build` errors)
-- Kotlin version and Gradle version
-- Whether this is Android, KMP, or JVM-only
-- Any recent dependency or API changes that may have caused the breakage
-
-The agent runs `./gradlew build`, `detekt`, and `ktlintCheck`, then fixes errors one at a time — verifying after each change.
+- The full build error output
+- Language/framework version
+- Any recent changes that may have caused the breakage
 
 ---
 

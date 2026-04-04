@@ -1,20 +1,17 @@
 ---
 name: cmd_loop_start
-description: "Start a managed autonomous agent loop — configure pattern (sequential, continuous-pr, rfc-dag, infinite), safety gates, and stop conditions."
+description: "loop-start workflow"
 user-invocable: true
 origin: openclaw-mas
 ---
 
-Delegate to the `loop-operator` agent to configure and start an autonomous loop.
+Delegate to the `loop-operator` agent.
 
 Include in the task payload:
-- Loop pattern: `sequential`, `continuous-pr`, `rfc-dag`, or `infinite`
-- Mode: `safe` (default, strict quality gates) or `fast` (reduced gates)
+- Loop pattern: sequential, continuous-pr, rfc-dag, or infinite
+- Mode: safe (default) or fast
 - The task or goal the loop should execute
-- Explicit stop condition (required — loops must have a defined end)
-- Current repository state (branch, test status)
-
-The agent verifies safety checks, creates a loop plan and runbook under `.claude/plans/`, and returns the commands to start and monitor the loop.
+- Explicit stop condition (required)
 
 ---
 

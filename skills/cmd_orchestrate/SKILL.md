@@ -1,6 +1,6 @@
 ---
 name: cmd_orchestrate
-description: "Orchestrate multi-agent workflows — use dmux-workflows for parallel panes/worktrees, autonomous-agent-harness for persistent loops and governance."
+description: "Legacy slash-entry shim for dmux-workflows and autonomous-agent-harness. Prefer the skills directly."
 user-invocable: true
 origin: openclaw-mas
 ---

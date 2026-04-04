@@ -1,19 +1,17 @@
 ---
 name: cmd_plan
-description: "Create an implementation plan before writing code — restate requirements, identify risks, break down into phases, and wait for user confirmation before touching any code."
+description: "Restate requirements, assess risks, and create step-by-step implementation plan. WAIT for user CONFIRM before touching any code."
 user-invocable: true
 origin: openclaw-mas
 ---
 
-Delegate to the `planner` agent to produce a structured implementation plan.
+Delegate to the `planner` agent.
 
 Include in the task payload:
 - The full feature or change request
 - Relevant codebase context (tech stack, affected files/modules if known)
 - Any constraints, deadlines, or preferences the user mentioned
 - Whether this is a new feature, refactor, bug fix, or architectural change
-
-The planner will restate requirements, identify risks, break the work into phases, and **wait for user confirmation before any code is written**.
 
 ---
 

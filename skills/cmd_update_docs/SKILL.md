@@ -1,19 +1,16 @@
 ---
 name: cmd_update_docs
-description: "Update project documentation — READMEs, guides, API docs, and changelogs — to reflect recent code changes."
+description: "update-docs workflow"
 user-invocable: true
 origin: openclaw-mas
 ---
 
-Delegate to the `doc-updater` agent to update documentation.
+Delegate to the `doc-updater` agent.
 
 Include in the task payload:
 - What changed (feature, API, config, architecture)
 - Which docs need updating (README, CHANGELOG, API reference, guides)
 - Any specific sections or files to focus on
-- Whether to run `/update-codemaps` as part of this update
-
-The agent updates READMEs, guides, and other docs to match the current state of the codebase.
 
 ---
 

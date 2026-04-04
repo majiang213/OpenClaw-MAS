@@ -1,6 +1,6 @@
 ---
 name: cmd_verify
-description: "Run the full verification loop — build, types, lint, tests, security checks, and diff review in the correct order for the current repo."
+description: "Legacy slash-entry shim for the verification-loop skill. Prefer the skill directly."
 user-invocable: true
 origin: openclaw-mas
 ---

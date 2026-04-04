@@ -1,19 +1,16 @@
 ---
 name: cmd_context_budget
-description: "Analyze and optimize context window usage — inventories loaded context, detects bloat, and returns prioritized savings recommendations."
+description: "Legacy slash-entry shim for the context-budget skill. Prefer the skill directly."
 user-invocable: true
 origin: openclaw-mas
 ---
 
-Delegate to the `harness-optimizer` agent to analyze context budget usage.
+Delegate to the `harness-optimizer` agent.
 
 Include in the task payload:
-- Whether to run in verbose mode (`--verbose` flag)
+- Whether to run in verbose mode
 - Context window size if different from default (200K)
 - Specific files, rules, or agents suspected of causing context bloat
-- Whether this is a recurring issue or a one-time audit
-
-The agent inventories all loaded context (rules, skills, agents, memory), detects inefficiencies, and returns a prioritized list of savings actions.
 
 ---
 

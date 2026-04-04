@@ -1,18 +1,16 @@
 ---
 name: cmd_update_codemaps
-description: "Regenerate docs/CODEMAPS/* to reflect the current codebase structure, module boundaries, and key entry points."
+description: "update-codemaps workflow"
 user-invocable: true
 origin: openclaw-mas
 ---
 
-Delegate to the `doc-updater` agent to regenerate codemaps.
+Delegate to the `doc-updater` agent.
 
 Include in the task payload:
 - The codebase root or specific modules to remap
 - Whether this follows a significant refactor, new feature, or file restructure
 - Any existing CODEMAPS to update vs. create from scratch
-
-The agent runs `/update-codemaps`, generates `docs/CODEMAPS/*`, and ensures the maps reflect the current module structure.
 
 ---
 

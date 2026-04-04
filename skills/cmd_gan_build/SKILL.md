@@ -1,20 +1,18 @@
 ---
 name: cmd_gan_build
-description: "GAN-style three-agent build loop (planner → generator → evaluator) — iterates until the build passes a quality threshold or max iterations."
+description: "gan-build workflow"
 user-invocable: true
 origin: openclaw-mas
 ---
 
-Run a GAN-style build harness using three specialist agents in sequence: `gan-planner` → `gan-generator` → `gan-evaluator`.
+Run specialist agents in sequence: gan-planner → gan-generator → gan-evaluator.
 
 Include in the task payload:
-- The user's build brief (one-line description of what to build)
-- `--max-iterations N` (default 15) — maximum generator-evaluator cycles
-- `--pass-threshold N` (default 7.0) — weighted score to pass
-- `--skip-planner` if `gan-harness/spec.md` already exists
-- `--eval-mode` (default `playwright`) — one of: `playwright`, `screenshot`, `code-only`
+- The user's full request and build/design brief
+- Any flags or configuration options (max iterations, pass threshold, etc.)
+- Relevant codebase context
 
-The planner produces `spec.md` and `eval-rubric.md`. The generator builds iteratively. The evaluator scores against the rubric and writes feedback. Loop continues until score ≥ threshold or max iterations reached.
+
 
 ---
 

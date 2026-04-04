@@ -1,19 +1,16 @@
 ---
 name: cmd_gradle_build
-description: "Fix Gradle build errors for Android, KMP, and JVM projects — resolves compiler errors, dependency conflicts, and configuration issues."
+description: "Fix Gradle build errors for Android and KMP projects"
 user-invocable: true
 origin: openclaw-mas
 ---
 
-Delegate to the `java-build-resolver` agent to fix Gradle build failures.
+Delegate to the `java-build-resolver` agent.
 
 Include in the task payload:
-- The full build error output (`./gradlew build` or `./gradlew assemble`)
-- Project type (Android, KMP, pure JVM)
-- Kotlin and Gradle versions
-- Any recent dependency or API changes that may have caused the breakage
-
-The agent detects the build configuration, runs the appropriate Gradle tasks, and fixes errors one at a time — verifying after each change.
+- The full build error output
+- Language/framework version
+- Any recent changes that may have caused the breakage
 
 ---
 

@@ -1,19 +1,17 @@
 ---
 name: cmd_rust_review
-description: "Review Rust code for ownership correctness, lifetime issues, unsafe usage, error handling patterns, and idiomatic style."
+description: "Comprehensive Rust code review for ownership, lifetimes, error handling, unsafe usage, and idiomatic patterns. Invokes the rust-reviewer agent."
 user-invocable: true
 origin: openclaw-mas
 ---
 
-Delegate to the `rust-reviewer` agent for a comprehensive Rust code review.
+Delegate to the `rust-reviewer` agent.
 
 Include in the task payload:
-- Files or modules to review (or "all changed files" for a pre-commit review)
-- Rust edition and toolchain version
+- Files or modules to review (or 'all changed files' for a pre-commit review)
+- Language version and key dependencies
 - Whether this is a pre-commit review or a PR review
-- Any specific concerns (unsafe blocks, async patterns, performance)
-
-The agent checks for unchecked `unwrap()`, `unsafe` without `// SAFETY:` comments, unnecessary clones, blocking in async context, and security issues. It runs `cargo clippy -- -D warnings` and `cargo audit`.
+- Any specific concerns
 
 ---
 

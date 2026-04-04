@@ -1,19 +1,17 @@
 ---
 name: cmd_cpp_review
-description: "Review C++ code for memory safety, modern C++ idioms, concurrency issues, and security vulnerabilities."
+description: "Comprehensive C++ code review for memory safety, modern C++ idioms, concurrency, and security. Invokes the cpp-reviewer agent."
 user-invocable: true
 origin: openclaw-mas
 ---
 
-Delegate to the `cpp-reviewer` agent for a comprehensive C++ code review.
+Delegate to the `cpp-reviewer` agent.
 
 Include in the task payload:
-- Files or modules to review (or "all changed files" for a pre-commit review)
-- C++ standard version and compiler in use
+- Files or modules to review (or 'all changed files' for a pre-commit review)
+- Language version and key dependencies
 - Whether this is a pre-commit review or a PR review
-- Any specific concerns (memory safety, concurrency, performance)
-
-The agent checks for RAII violations, unsafe memory patterns, data races, missing `const` correctness, and C-style anti-patterns. It runs `clang-tidy` and `cppcheck`.
+- Any specific concerns
 
 ---
 

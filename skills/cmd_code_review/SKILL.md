@@ -1,20 +1,17 @@
 ---
 name: cmd_code_review
-description: "Review code for quality, security, and correctness — local uncommitted changes or a GitHub PR (pass PR number or URL for PR mode)."
+description: "Code review — local uncommitted changes or GitHub PR (pass PR number/URL for PR mode)"
 user-invocable: true
 origin: openclaw-mas
 ---
 
-Delegate to the `code-reviewer` agent for a comprehensive code review.
+Delegate to the `code-reviewer` agent.
 
 Include in the task payload:
 - Whether this is a local review (uncommitted changes) or a PR review
 - PR number or URL if reviewing a GitHub PR
 - Specific files, modules, or areas of concern if any
 - Tech stack and any project-specific conventions
-- Whether to post the review back to GitHub or report locally only
-
-The agent covers correctness, type safety, security, performance, pattern compliance, and completeness. It will approve, request changes, or block based on severity of findings.
 
 ---
 

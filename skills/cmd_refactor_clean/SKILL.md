@@ -1,20 +1,17 @@
 ---
 name: cmd_refactor_clean
-description: "Remove dead code, unused exports, duplicate logic, and deprecated patterns. Runs analysis tools (knip, depcheck, ts-prune) to identify and safely delete unused code."
+description: "refactor-clean workflow"
 user-invocable: true
 origin: openclaw-mas
 ---
 
-Delegate to the `refactor-cleaner` agent to identify and remove dead code.
+Delegate to the `refactor-cleaner` agent.
 
 Include in the task payload:
 - Scope: specific files/directories or full codebase
 - Tech stack (Node.js, TypeScript, Python, Go, Rust, etc.)
 - Whether to auto-delete or report only
 - Any known areas of dead code or unused exports to prioritize
-- Constraints (e.g., "don't touch the public API surface")
-
-The agent runs static analysis tools, identifies unused code, and removes it safely with minimal diffs — verifying tests pass after each deletion.
 
 ---
 

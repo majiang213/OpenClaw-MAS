@@ -1,20 +1,17 @@
 ---
 name: cmd_cpp_test
-description: "Implement C++ code using TDD with GoogleTest — write failing tests first, implement to pass, verify coverage with gcov/lcov."
+description: "Enforce TDD workflow for C++. Write GoogleTest tests first, then implement. Verify coverage with gcov/lcov."
 user-invocable: true
 origin: openclaw-mas
 ---
 
-Delegate to the `cpp-build-resolver` agent to implement C++ code using TDD.
+Delegate to the `cpp-build-resolver` agent.
 
 Include in the task payload:
 - What to implement (function, class, module)
-- Test framework in use (GoogleTest, Catch2, doctest)
-- CMake configuration and build directory
-- Coverage target (default: 80%)
+- Language version and test framework in use
 - Any existing test fixtures or helpers to reuse
-
-The agent writes failing tests first (RED), implements minimal code to pass (GREEN), then refactors — verifying coverage with gcov/lcov.
+- Coverage target (default: 80%)
 
 ---
 

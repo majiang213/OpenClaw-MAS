@@ -1,6 +1,6 @@
 ---
 name: cmd_quality_gate
-description: "Run the full quality pipeline on demand (lint, types, tests, security) for a file or project scope. Use --fix to auto-remediate."
+description: "quality-gate workflow"
 user-invocable: true
 origin: openclaw-mas
 ---

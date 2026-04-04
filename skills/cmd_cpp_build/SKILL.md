@@ -5,15 +5,12 @@ user-invocable: true
 origin: openclaw-mas
 ---
 
-Delegate to the `cpp-build-resolver` agent to fix C++ build failures.
+Delegate to the `cpp-build-resolver` agent.
 
 Include in the task payload:
-- The full build error output (`cmake --build` or compiler errors)
-- Build system in use (CMake, Makefile, Bazel, etc.)
-- C++ standard version (C++17, C++20, etc.)
+- The full build error output
+- Language/framework version
 - Any recent changes that may have caused the breakage
-
-The agent runs `cmake --build`, `clang-tidy`, and `cppcheck`, then fixes errors one at a time — verifying after each change.
 
 ---
 

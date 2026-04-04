@@ -1,6 +1,6 @@
 ---
 name: cmd_devfleet
-description: "Dispatch a multi-agent dev fleet — plan from description, show DAG, get approval, then execute parallel missions with status polling."
+description: "Legacy slash-entry shim for the claude-devfleet skill. Prefer the skill directly."
 user-invocable: true
 origin: openclaw-mas
 ---

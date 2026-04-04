@@ -1,20 +1,17 @@
 ---
 name: cmd_go_test
-description: "Implement Go code using TDD with table-driven tests — write failing tests first, implement to pass, verify 80%+ coverage with go test -cover."
+description: "Enforce TDD workflow for Go. Write table-driven tests first, then implement. Verify 80%+ coverage with go test -cover."
 user-invocable: true
 origin: openclaw-mas
 ---
 
-Delegate to the `go-build-resolver` agent to implement Go code using TDD.
+Delegate to the `go-build-resolver` agent.
 
 Include in the task payload:
-- What to implement (function, method, package)
-- Go version and module path
-- Any existing test helpers or fixtures to reuse
+- What to implement (function, class, module)
+- Language version and test framework in use
+- Any existing test fixtures or helpers to reuse
 - Coverage target (default: 80%)
-- Whether to use subtests, benchmarks, or fuzz tests
-
-The agent writes table-driven tests first (RED), implements minimal code to pass (GREEN), then refactors — verifying coverage with `go test -cover`.
 
 ---
 

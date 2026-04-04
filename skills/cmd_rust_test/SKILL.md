@@ -1,20 +1,17 @@
 ---
 name: cmd_rust_test
-description: "Implement Rust code using TDD — write failing tests first, implement to pass, verify 80%+ coverage with cargo-llvm-cov."
+description: "Enforce TDD workflow for Rust. Write tests first, then implement. Verify 80%+ coverage with cargo-llvm-cov."
 user-invocable: true
 origin: openclaw-mas
 ---
 
-Delegate to the `rust-build-resolver` agent to implement Rust code using TDD.
+Delegate to the `rust-build-resolver` agent.
 
 Include in the task payload:
-- What to implement (function, struct, trait, module)
-- Rust edition and any relevant crate dependencies
-- Test approach preferred (unit tests, rstest parameterized, proptest, async with tokio::test)
+- What to implement (function, class, module)
+- Language version and test framework in use
+- Any existing test fixtures or helpers to reuse
 - Coverage target (default: 80%)
-- Any existing test helpers or fixtures to reuse
-
-The agent writes tests in `#[cfg(test)]` modules first (RED), implements minimal code to pass (GREEN), then refactors — verifying coverage with `cargo llvm-cov`.
 
 ---
 

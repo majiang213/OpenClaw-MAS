@@ -1,19 +1,17 @@
 ---
 name: cmd_python_review
-description: "Review Python code for PEP 8 compliance, type hints, security vulnerabilities, and Pythonic idioms."
+description: "Comprehensive Python code review for PEP 8 compliance, type hints, security, and Pythonic idioms. Invokes the python-reviewer agent."
 user-invocable: true
 origin: openclaw-mas
 ---
 
-Delegate to the `python-reviewer` agent for a comprehensive Python code review.
+Delegate to the `python-reviewer` agent.
 
 Include in the task payload:
-- Files or modules to review (or "all changed files" for a pre-commit review)
-- Python version and key dependencies/framework (Django, FastAPI, Flask, etc.)
+- Files or modules to review (or 'all changed files' for a pre-commit review)
+- Language version and key dependencies
 - Whether this is a pre-commit review or a PR review
-- Any specific concerns (SQL injection, type safety, async patterns)
-
-The agent checks for injection vulnerabilities, mutable defaults, missing type hints, bare `except` clauses, and PEP 8 violations. It runs `ruff`, `mypy`, `bandit`, and `black --check`.
+- Any specific concerns
 
 ---
 

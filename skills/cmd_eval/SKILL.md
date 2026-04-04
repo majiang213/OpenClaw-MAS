@@ -1,6 +1,6 @@
 ---
 name: cmd_eval
-description: "Define, run, or report on capability evals — capability-first, regression-backed, and evidence-based."
+description: "Legacy slash-entry shim for the eval-harness skill. Prefer the skill directly."
 user-invocable: true
 origin: openclaw-mas
 ---

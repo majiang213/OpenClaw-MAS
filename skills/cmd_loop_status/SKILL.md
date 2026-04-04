@@ -1,6 +1,6 @@
 ---
 name: cmd_loop_status
-description: "Inspect active loop state, progress, and failure signals. Use after starting a loop to monitor its status."
+description: "loop-status workflow"
 user-invocable: true
 origin: openclaw-mas
 ---
