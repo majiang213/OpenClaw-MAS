@@ -2,7 +2,7 @@
 name: cmd_rust_build
 description: "Fix Rust build errors, borrow checker issues, and dependency problems incrementally. Invokes the rust-build-resolver agent for minimal, surgical fixes."
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Rust Build and Fix
@@ -192,9 +192,9 @@ The agent will stop and report if:
 
 ---
 
-## OpenClaw Execution
+## OpenClaw 执行
 
-Invoke the specialist agent via sessions_spawn:
+通过 sessions_spawn 调用专家 agent：
 
 ```
 sessions_spawn(
@@ -203,4 +203,4 @@ sessions_spawn(
 )
 ```
 
-Wait for rust-build-resolver's announce result, then return to the user.
+等待 rust-build-resolver 的 announce 结果，然后返回给用户。

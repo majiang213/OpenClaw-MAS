@@ -2,7 +2,7 @@
 name: cmd_go_build
 description: "Fix Go build errors, go vet warnings, and linter issues incrementally. Invokes the go-build-resolver agent for minimal, surgical fixes."
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Go Build and Fix
@@ -188,9 +188,9 @@ The agent will stop and report if:
 
 ---
 
-## OpenClaw Execution
+## OpenClaw 执行
 
-Invoke the specialist agent via sessions_spawn:
+通过 sessions_spawn 调用专家 agent：
 
 ```
 sessions_spawn(
@@ -199,4 +199,4 @@ sessions_spawn(
 )
 ```
 
-Wait for go-build-resolver's announce result, then return to the user.
+等待 go-build-resolver 的 announce 结果，然后返回给用户。

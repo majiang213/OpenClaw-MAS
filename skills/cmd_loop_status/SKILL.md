@@ -1,8 +1,8 @@
 ---
 name: cmd_loop_status
-description: "ECC loop-status workflow"
+description: "loop-status workflow"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Loop Status Command

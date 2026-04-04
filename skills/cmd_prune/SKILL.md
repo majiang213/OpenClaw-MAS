@@ -2,7 +2,7 @@
 name: cmd_prune
 description: "Delete pending instincts older than 30 days that were never promoted"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Prune Pending Instincts

@@ -2,7 +2,7 @@
 name: cmd_promote
 description: "Promote project-scoped instincts to global scope"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Promote Command

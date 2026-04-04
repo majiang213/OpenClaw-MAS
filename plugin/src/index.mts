@@ -71,8 +71,8 @@ const JS_TS_EXT = /\.(ts|tsx|js|jsx)$/;
 
 export default definePluginEntry({
   id: "ecc-hooks",
-  name: "ECC Hooks",
-  description: "ECC tool execution hooks: security guards, quality gates, logging",
+  name: "OpenClaw MAS Hooks",
+  description: "OpenClaw MAS tool execution hooks: security guards, quality gates, logging",
 
   register(api) {
 
@@ -276,7 +276,7 @@ export default definePluginEntry({
         if (process.platform === "darwin") {
           try {
             execSync(
-              `osascript -e 'display notification "Session complete (${event.messageCount} messages)" with title "OpenClaw ECC"'`,
+              `osascript -e 'display notification "Session complete (${event.messageCount} messages)" with title "OpenClaw MAS"'`,
               { timeout: 5000 }
             );
           } catch {

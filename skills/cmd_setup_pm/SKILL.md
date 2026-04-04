@@ -2,7 +2,7 @@
 name: cmd_setup_pm
 description: "Configure your preferred package manager (npm/pnpm/yarn/bun)"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Package Manager Setup

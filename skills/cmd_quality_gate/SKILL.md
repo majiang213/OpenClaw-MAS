@@ -1,8 +1,8 @@
 ---
 name: cmd_quality_gate
-description: "ECC quality-gate workflow"
+description: "quality-gate workflow"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Quality Gate Command

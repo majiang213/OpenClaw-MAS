@@ -2,7 +2,7 @@
 name: cmd_prp_prd
 description: "Interactive PRD generator - problem-first, hypothesis-driven product spec with back-and-forth questioning"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Product Requirements Document Generator

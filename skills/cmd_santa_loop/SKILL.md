@@ -2,7 +2,7 @@
 name: cmd_santa_loop
 description: "Adversarial dual-review convergence loop — two independent model reviewers must both approve before code ships."
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Santa Loop
@@ -180,9 +180,9 @@ Result:     [PUSHED / ESCALATED TO USER]
 
 ---
 
-## OpenClaw Execution
+## OpenClaw 执行
 
-Invoke the specialist agent via sessions_spawn:
+通过 sessions_spawn 调用专家 agent：
 
 ```
 sessions_spawn(
@@ -191,4 +191,4 @@ sessions_spawn(
 )
 ```
 
-Wait for code-reviewer's announce result, then return to the user.
+等待 code-reviewer 的 announce 结果，然后返回给用户。

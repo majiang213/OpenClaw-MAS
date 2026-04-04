@@ -1,8 +1,8 @@
 ---
 name: cmd_multi_frontend
-description: "ECC multi-frontend workflow"
+description: "multi-frontend workflow"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Frontend - Frontend-Focused Development

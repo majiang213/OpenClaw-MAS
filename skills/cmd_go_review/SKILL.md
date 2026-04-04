@@ -2,7 +2,7 @@
 name: cmd_go_review
 description: "Comprehensive Go code review for idiomatic patterns, concurrency safety, error handling, and security. Invokes the go-reviewer agent."
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Go Code Review
@@ -153,9 +153,9 @@ Recommendation: FAIL: Block merge until CRITICAL issue is fixed
 
 ---
 
-## OpenClaw Execution
+## OpenClaw 执行
 
-Invoke the specialist agent via sessions_spawn:
+通过 sessions_spawn 调用专家 agent：
 
 ```
 sessions_spawn(
@@ -164,4 +164,4 @@ sessions_spawn(
 )
 ```
 
-Wait for go-reviewer's announce result, then return to the user.
+等待 go-reviewer 的 announce 结果，然后返回给用户。

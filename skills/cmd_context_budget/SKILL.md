@@ -1,42 +1,36 @@
 ---
 name: cmd_context_budget
-description: "Analyze context window usage across agents, skills, MCP servers, and rules to find optimization opportunities. Helps reduce token overhead and avoid performance warnings."
+description: "Legacy slash-entry shim for the context-budget skill. Prefer the skill directly."
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
-# Context Budget Optimizer
+# Context Budget Optimizer (Legacy Shim)
 
-Analyze your Claude Code setup's context window consumption and produce actionable recommendations to reduce token overhead.
+Use this only if you still invoke `/context-budget`. The maintained workflow lives in `skills/context-budget/SKILL.md`.
 
-## Usage
+## Canonical Surface
 
-```
-/context-budget [--verbose]
-```
+- Prefer the `context-budget` skill directly.
+- Keep this file only as a compatibility entry point.
 
-- Default: summary with top recommendations
-- `--verbose`: full breakdown per component
+## Arguments
 
 $ARGUMENTS
 
-## What to Do
+## Delegation
 
-Run the **context-budget** skill (`skills/context-budget/SKILL.md`) with the following inputs:
-
-1. Pass `--verbose` flag if present in `$ARGUMENTS`
-2. Assume a 200K context window (Claude Sonnet default) unless the user specifies otherwise
-3. Follow the skill's four phases: Inventory → Classify → Detect Issues → Report
-4. Output the formatted Context Budget Report to the user
-
-The skill handles all scanning logic, token estimation, issue detection, and report formatting.
+Apply the `context-budget` skill.
+- Pass through `--verbose` if the user supplied it.
+- Assume a 200K context window unless the user specified otherwise.
+- Return the skill's inventory, issue detection, and prioritized savings report without re-implementing the scan here.
 
 
 ---
 
-## OpenClaw Execution
+## OpenClaw 执行
 
-Invoke the specialist agent via sessions_spawn:
+通过 sessions_spawn 调用专家 agent：
 
 ```
 sessions_spawn(
@@ -45,4 +39,4 @@ sessions_spawn(
 )
 ```
 
-Wait for harness-optimizer's announce result, then return to the user.
+等待 harness-optimizer 的 announce 结果，然后返回给用户。

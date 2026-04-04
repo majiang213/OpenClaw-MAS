@@ -2,7 +2,7 @@
 name: cmd_code_review
 description: "Code review — local uncommitted changes or GitHub PR (pass PR number/URL for PR mode)"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Code Review
@@ -293,9 +293,9 @@ Next steps:
 
 ---
 
-## OpenClaw Execution
+## OpenClaw 执行
 
-Invoke the specialist agent via sessions_spawn:
+通过 sessions_spawn 调用专家 agent：
 
 ```
 sessions_spawn(
@@ -304,4 +304,4 @@ sessions_spawn(
 )
 ```
 
-Wait for code-reviewer's announce result, then return to the user.
+等待 code-reviewer 的 announce 结果，然后返回给用户。

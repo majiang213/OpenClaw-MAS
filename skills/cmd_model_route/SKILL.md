@@ -1,8 +1,8 @@
 ---
 name: cmd_model_route
-description: "ECC model-route workflow"
+description: "model-route workflow"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Model Route Command

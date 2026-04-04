@@ -2,7 +2,7 @@
 name: cmd_gradle_build
 description: "Fix Gradle build errors for Android and KMP projects"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Gradle Build Fix
@@ -75,9 +75,9 @@ Report:
 
 ---
 
-## OpenClaw Execution
+## OpenClaw 执行
 
-Invoke the specialist agent via sessions_spawn:
+通过 sessions_spawn 调用专家 agent：
 
 ```
 sessions_spawn(
@@ -86,4 +86,4 @@ sessions_spawn(
 )
 ```
 
-Wait for java-build-resolver's announce result, then return to the user.
+等待 java-build-resolver 的 announce 结果，然后返回给用户。

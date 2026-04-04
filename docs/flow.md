@@ -17,7 +17,7 @@ This document traces what happens from user input to final output for each skill
 │   ├── gan_build/SKILL.md
 │   ├── rust_review/SKILL.md
 │   ├── ... (68 command-skills)
-│   └── ... (142 original ECC skills)
+│   └── ... (142 upstream skills)
 │
 ├── workspace-main/
 ├── workspace-tdd-guide/

@@ -1,8 +1,8 @@
 ---
 name: cmd_test_coverage
-description: "ECC test-coverage workflow"
+description: "test-coverage workflow"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Test Coverage

@@ -2,7 +2,7 @@
 name: cmd_cpp_review
 description: "Comprehensive C++ code review for memory safety, modern C++ idioms, concurrency, and security. Invokes the cpp-reviewer agent."
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # C++ Code Review
@@ -137,9 +137,9 @@ Recommendation: FAIL: Block merge until CRITICAL issue is fixed
 
 ---
 
-## OpenClaw Execution
+## OpenClaw 执行
 
-Invoke the specialist agent via sessions_spawn:
+通过 sessions_spawn 调用专家 agent：
 
 ```
 sessions_spawn(
@@ -148,4 +148,4 @@ sessions_spawn(
 )
 ```
 
-Wait for cpp-reviewer's announce result, then return to the user.
+等待 cpp-reviewer 的 announce 结果，然后返回给用户。

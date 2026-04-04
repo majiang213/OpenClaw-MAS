@@ -2,7 +2,7 @@
 name: cmd_rust_test
 description: "Enforce TDD workflow for Rust. Write tests first, then implement. Verify 80%+ coverage with cargo-llvm-cov."
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Rust TDD Command
@@ -313,9 +313,9 @@ cargo test --no-fail-fast
 
 ---
 
-## OpenClaw Execution
+## OpenClaw 执行
 
-Invoke the specialist agent via sessions_spawn:
+通过 sessions_spawn 调用专家 agent：
 
 ```
 sessions_spawn(
@@ -324,4 +324,4 @@ sessions_spawn(
 )
 ```
 
-Wait for rust-build-resolver's announce result, then return to the user.
+等待 rust-build-resolver 的 announce 结果，然后返回给用户。

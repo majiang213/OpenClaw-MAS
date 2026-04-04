@@ -2,7 +2,7 @@
 name: cmd_plan
 description: "Restate requirements, assess risks, and create step-by-step implementation plan. WAIT for user CONFIRM before touching any code."
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Plan Command
@@ -122,9 +122,9 @@ For manual installs, the source file lives at:
 
 ---
 
-## OpenClaw Execution
+## OpenClaw 执行
 
-Invoke the specialist agent via sessions_spawn:
+通过 sessions_spawn 调用专家 agent：
 
 ```
 sessions_spawn(
@@ -133,4 +133,4 @@ sessions_spawn(
 )
 ```
 
-Wait for planner's announce result, then return to the user.
+等待 planner 的 announce 结果，然后返回给用户。

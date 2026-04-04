@@ -2,7 +2,7 @@
 name: cmd_prp_plan
 description: "Create comprehensive feature implementation plan with codebase analysis and pattern extraction"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 > Adapted from PRPs-agentic-eng by Wirasm. Part of the PRP workflow series.

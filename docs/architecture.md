@@ -2,7 +2,7 @@
 
 ## Overview
 
-OpenClaw MAS integrates [Everything Claude Code (ECC)](https://github.com/anthropics/everything-claude-code) into [OpenClaw](https://github.com/openclaw/openclaw), making ECC's full suite of development workflows available through any messaging channel (Telegram, WhatsApp, Discord, etc.).
+OpenClaw MAS integrates [Everything Claude Code](https://github.com/anthropics/everything-claude-code) workflows into [OpenClaw](https://github.com/openclaw/openclaw), making them available through any messaging channel (Telegram, WhatsApp, Discord, etc.).
 
 The core design principle: **Skills as the user interface.** Instead of a routing layer that guesses intent, users invoke workflows directly via `/skill <name>`.
 
@@ -29,7 +29,7 @@ main agent reads SKILL.md and follows the workflow
 
 ## Skill Types
 
-Skills are generated from ECC commands during installation. There are two kinds:
+Skills are generated from upstream commands during installation. There are two kinds:
 
 ### Type A — Specialist Agent Skills (~33 skills)
 

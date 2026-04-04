@@ -2,7 +2,7 @@
 name: cmd_skill_health
 description: "Show skill portfolio health dashboard with charts and analytics"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Skill Health Dashboard

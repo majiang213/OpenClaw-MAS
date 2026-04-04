@@ -1,8 +1,8 @@
 ---
 name: cmd_multi_workflow
-description: "ECC multi-workflow workflow"
+description: "multi-workflow workflow"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Workflow - Multi-Model Collaborative Development

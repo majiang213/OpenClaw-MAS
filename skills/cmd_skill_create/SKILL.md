@@ -2,7 +2,7 @@
 name: cmd_skill_create
 description: "Analyze local git history to extract coding patterns and generate SKILL.md files. Local version of the Skill Creator GitHub App."
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # /skill-create - Local Skill Generation

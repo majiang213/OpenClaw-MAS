@@ -2,7 +2,7 @@
 name: cmd_projects
 description: "List known projects and their instinct statistics"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Projects Command

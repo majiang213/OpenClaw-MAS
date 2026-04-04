@@ -2,7 +2,7 @@
 name: cmd_cpp_build
 description: "Fix C++ build errors, CMake issues, and linker problems incrementally. Invokes the cpp-build-resolver agent for minimal, surgical fixes."
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # C++ Build and Fix
@@ -178,9 +178,9 @@ The agent will stop and report if:
 
 ---
 
-## OpenClaw Execution
+## OpenClaw 执行
 
-Invoke the specialist agent via sessions_spawn:
+通过 sessions_spawn 调用专家 agent：
 
 ```
 sessions_spawn(
@@ -189,4 +189,4 @@ sessions_spawn(
 )
 ```
 
-Wait for cpp-build-resolver's announce result, then return to the user.
+等待 cpp-build-resolver 的 announce 结果，然后返回给用户。

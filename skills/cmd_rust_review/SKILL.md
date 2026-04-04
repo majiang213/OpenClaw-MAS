@@ -2,7 +2,7 @@
 name: cmd_rust_review
 description: "Comprehensive Rust code review for ownership, lifetimes, error handling, unsafe usage, and idiomatic patterns. Invokes the rust-reviewer agent."
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Rust Code Review
@@ -147,9 +147,9 @@ Recommendation: Block merge until CRITICAL issue is fixed
 
 ---
 
-## OpenClaw Execution
+## OpenClaw 执行
 
-Invoke the specialist agent via sessions_spawn:
+通过 sessions_spawn 调用专家 agent：
 
 ```
 sessions_spawn(
@@ -158,4 +158,4 @@ sessions_spawn(
 )
 ```
 
-Wait for rust-reviewer's announce result, then return to the user.
+等待 rust-reviewer 的 announce 结果，然后返回给用户。

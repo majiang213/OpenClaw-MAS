@@ -2,7 +2,7 @@
 name: cmd_python_review
 description: "Comprehensive Python code review for PEP 8 compliance, type hints, security, and Pythonic idioms. Invokes the python-reviewer agent."
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Python Code Review
@@ -302,9 +302,9 @@ Ensure your project's `pyproject.toml` or `setup.py` specifies the correct minim
 
 ---
 
-## OpenClaw Execution
+## OpenClaw 执行
 
-Invoke the specialist agent via sessions_spawn:
+通过 sessions_spawn 调用专家 agent：
 
 ```
 sessions_spawn(
@@ -313,4 +313,4 @@ sessions_spawn(
 )
 ```
 
-Wait for python-reviewer's announce result, then return to the user.
+等待 python-reviewer 的 announce 结果，然后返回给用户。

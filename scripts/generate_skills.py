@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-把 ECC commands/ 批量转换为 OpenClaw user-invocable skills
+把 everything-claude-code commands/ 批量转换为 OpenClaw user-invocable skills
 输出到 openclaw/skills/（安装时会复制到 ~/.openclaw/skills/）
 """
 import os
@@ -146,7 +146,7 @@ def generate_skill(cmd_file: Path):
     description, body = extract_frontmatter_and_body(content)
 
     if not description:
-        description = f"ECC {cmd_name} workflow"
+        description = f"{cmd_name} workflow"
 
     # 转义 description 里的双引号
     description = description.replace('"', "'")
@@ -158,7 +158,7 @@ def generate_skill(cmd_file: Path):
 name: {skill_name}
 description: "{description}"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 {body}{spawn_section}"""

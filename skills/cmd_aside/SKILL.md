@@ -2,7 +2,7 @@
 name: cmd_aside
 description: "Answer a quick side question without interrupting or losing context from the current task. Resume work automatically after answering."
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Aside Command

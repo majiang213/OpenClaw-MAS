@@ -2,7 +2,7 @@
 name: cmd_resume_session
 description: "Load the most recent session file from ~/.claude/session-data/ and resume work with full context from where the last session ended."
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Resume Session Command

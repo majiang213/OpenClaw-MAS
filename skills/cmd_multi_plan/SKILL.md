@@ -1,8 +1,8 @@
 ---
 name: cmd_multi_plan
-description: "ECC multi-plan workflow"
+description: "multi-plan workflow"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Plan - Multi-Model Collaborative Planning

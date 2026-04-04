@@ -2,7 +2,7 @@
 name: cmd_instinct_status
 description: "Show learned instincts (project + global) with confidence"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Instinct Status Command

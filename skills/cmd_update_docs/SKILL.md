@@ -1,8 +1,8 @@
 ---
 name: cmd_update_docs
-description: "ECC update-docs workflow"
+description: "update-docs workflow"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Update Documentation
@@ -93,9 +93,9 @@ Skipped:  docs/API.md (no changes detected)
 
 ---
 
-## OpenClaw Execution
+## OpenClaw 执行
 
-Invoke the specialist agent via sessions_spawn:
+通过 sessions_spawn 调用专家 agent：
 
 ```
 sessions_spawn(
@@ -104,4 +104,4 @@ sessions_spawn(
 )
 ```
 
-Wait for doc-updater's announce result, then return to the user.
+等待 doc-updater 的 announce 结果，然后返回给用户。

@@ -7,7 +7,7 @@ A multi-agent development system that brings [Everything Claude Code](https://gi
 ## What's Included
 
 - **37 specialist agents** — tdd-guide, rust-reviewer, code-reviewer, gan-planner, security-reviewer, and more
-- **210 skills** — 142 ECC skills + 68 command skills covering the full development lifecycle
+- **210 skills** — 142 upstream skills + 68 command skills covering the full development lifecycle
 - **14 language rule sets** — Rust, Go, C++, Kotlin, Java, Python, Flutter, TypeScript, and more
 - **Hooks** — safety guards, quality gates, and session memory, active automatically
 
@@ -83,7 +83,7 @@ bash install.sh
 
 The script will:
 - Register 37 specialist agents into `openclaw.json`
-- Install 210 skills into `~/.openclaw/skills/` (142 ECC skills + 68 command skills)
+- Install 210 skills into `~/.openclaw/skills/` (142 upstream skills + 68 command skills)
 - Copy 14 language rule sets into each agent workspace
 - Install hooks for safety checks, quality gates, and session memory
 - Set `maxSpawnDepth: 2` and `commands.nativeSkills: true` in `openclaw.json`

@@ -1,7 +1,7 @@
 {
   "name": "ecc-hooks",
   "version": "1.0.0",
-  "description": "ECC tool execution hooks for OpenClaw",
+  "description": "OpenClaw MAS tool execution hooks",
   "type": "module",
   "main": "dist/index.mjs",
   "openclaw": {

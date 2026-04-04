@@ -1,6 +1,6 @@
 #!/bin/bash
 # ══════════════════════════════════════════════════════════════
-# 从 ECC agents/*.md 生成 OpenClaw 格式的 agent 文件
+# 从 everything-claude-code agents/*.md 生成 OpenClaw 格式的 agent 文件
 # ══════════════════════════════════════════════════════════════
 set -e
 
@@ -211,7 +211,7 @@ generate_bootstrap() {
 
 # 主函数
 main() {
-  info "从 ECC agents/*.md 生成 OpenClaw 格式..."
+  info "从 everything-claude-code agents/*.md 生成 OpenClaw 格式..."
   
   COUNT=0
   

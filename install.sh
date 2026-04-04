@@ -1,6 +1,6 @@
 #!/bin/bash
 # ══════════════════════════════════════════════════════════════
-# ECC (Everything Claude Code) · OpenClaw 一键安装脚本
+# OpenClaw MAS · 一键安装脚本
 # ══════════════════════════════════════════════════════════════
 set -e
 
@@ -113,7 +113,7 @@ for agent_dir in sorted(agents_dir.iterdir()):
     ws = str(oc_home / f'workspace-{agent_id}')
     new_agents.append({'id': agent_id, 'workspace': ws})
 
-# 合并到 agents.list：保留现有非 ECC agent，替换 ECC agent
+# 合并到 agents.list：保留现有非 MAS agent，替换 MAS agent
 agents_cfg = cfg.setdefault('agents', {})
 existing = agents_cfg.get('list', [])
 new_ids = {a['id'] for a in new_agents}
@@ -129,11 +129,11 @@ PYEOF
 }
 
 # ── Step 2: 生成并安装所有 Skills（全量覆盖）────────────────
-# 包含：142 个 ECC skill + 68 个 command-skill，共 210 个
+# 包含：142 个 MAS skill + 68 个 command-skill，共 210 个
 install_skills() {
   info "安装 Skills（全量覆盖）..."
 
-  ECC_SKILLS_SRC="$REPO_DIR/ecc-skills"
+  MAS_SKILLS_SRC="$REPO_DIR/ecc-skills"
   CMD_SKILLS_SRC="$REPO_DIR/skills"
   SKILLS_DST="$OC_HOME/skills"
   SCRIPT="$REPO_DIR/scripts/generate_skills.py"
@@ -152,20 +152,20 @@ install_skills() {
   rm -rf "$SKILLS_DST"
   mkdir -p "$SKILLS_DST"
 
-  # 2a. 复制 142 个 ECC skill
-  if [ -d "$ECC_SKILLS_SRC" ]; then
-    cp -r "$ECC_SKILLS_SRC/"* "$SKILLS_DST/"
+  # 2a. 复制 142 个 MAS skill
+  if [ -d "$MAS_SKILLS_SRC" ]; then
+    cp -r "$MAS_SKILLS_SRC/"* "$SKILLS_DST/"
   else
-    warn "未找到 ECC skills 目录：$ECC_SKILLS_SRC，跳过"
+    warn "未找到 MAS skills 目录：$MAS_SKILLS_SRC，跳过"
   fi
 
-  # 2b. 复制 68 个 command-skill（同名时报错，不允许覆盖 ECC skill）
+  # 2b. 复制 68 个 command-skill（同名时报错，不允许覆盖 MAS skill）
   CONFLICT=0
   for skill_dir in "$CMD_SKILLS_SRC"/*/; do
     [ -d "$skill_dir" ] || continue
     skill_name=$(basename "$skill_dir")
     if [ -d "$SKILLS_DST/$skill_name" ]; then
-      error "命名冲突：command-skill '$skill_name' 与已有 ECC skill 同名，请重命名"
+      error "命名冲突：command-skill '$skill_name' 与已有 MAS skill 同名，请重命名"
       CONFLICT=$((CONFLICT + 1))
     else
       cp -r "$skill_dir" "$SKILLS_DST/$skill_name"

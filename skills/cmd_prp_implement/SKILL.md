@@ -2,7 +2,7 @@
 name: cmd_prp_implement
 description: "Execute an implementation plan with rigorous validation loops"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 > Adapted from PRPs-agentic-eng by Wirasm. Part of the PRP workflow series.

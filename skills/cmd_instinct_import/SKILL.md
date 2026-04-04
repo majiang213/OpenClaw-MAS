@@ -2,7 +2,7 @@
 name: cmd_instinct_import
 description: "Import instincts from file or URL into project/global scope"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Instinct Import Command

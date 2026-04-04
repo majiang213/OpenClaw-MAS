@@ -2,7 +2,7 @@
 name: cmd_sessions
 description: "Manage Claude Code session history, aliases, and session metadata."
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Sessions Command

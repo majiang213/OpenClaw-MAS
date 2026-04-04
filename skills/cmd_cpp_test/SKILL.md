@@ -2,7 +2,7 @@
 name: cmd_cpp_test
 description: "Enforce TDD workflow for C++. Write GoogleTest tests first, then implement. Verify coverage with gcov/lcov."
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # C++ TDD Command
@@ -256,9 +256,9 @@ genhtml coverage.info --output-directory coverage_html
 
 ---
 
-## OpenClaw Execution
+## OpenClaw 执行
 
-Invoke the specialist agent via sessions_spawn:
+通过 sessions_spawn 调用专家 agent：
 
 ```
 sessions_spawn(
@@ -267,4 +267,4 @@ sessions_spawn(
 )
 ```
 
-Wait for cpp-build-resolver's announce result, then return to the user.
+等待 cpp-build-resolver 的 announce 结果，然后返回给用户。

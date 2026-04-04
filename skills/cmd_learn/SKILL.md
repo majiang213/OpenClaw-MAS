@@ -1,8 +1,8 @@
 ---
 name: cmd_learn
-description: "ECC learn workflow"
+description: "learn workflow"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # /learn - Extract Reusable Patterns

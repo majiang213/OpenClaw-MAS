@@ -2,7 +2,7 @@
 name: cmd_evolve
 description: "Analyze instincts and suggest or generate evolved structures"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Evolve Command

@@ -1,8 +1,8 @@
 ---
 name: cmd_pm2
-description: "ECC pm2 workflow"
+description: "pm2 workflow"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # PM2 Init

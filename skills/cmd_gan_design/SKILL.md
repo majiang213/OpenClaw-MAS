@@ -1,8 +1,8 @@
 ---
 name: cmd_gan_design
-description: "ECC gan-design workflow"
+description: "gan-design workflow"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 Parse the following from $ARGUMENTS:
@@ -44,14 +44,14 @@ The Generator is told: "Your PRIMARY goal is visual excellence. A stunning half-
 
 ---
 
-## OpenClaw Execution
+## OpenClaw 执行
 
-sessions_spawn is non-blocking. Execute serially — wait for each announce before proceeding.
+sessions_spawn 是非阻塞的，必须串行执行，每步等 announce 后再继续。
 
-Agents involved (in order): gan-generator → gan-evaluator
+执行顺序：gan-generator → gan-evaluator
 
 1. sessions_spawn(agentId: "gan-generator", task: "...")
 2. sessions_spawn(agentId: "gan-evaluator", task: "...")
 
-Stop after each sessions_spawn and wait for the announce before continuing.
-Do not spawn multiple agents concurrently.
+每次 sessions_spawn 后停止等待，收到 announce 后再继续下一步。
+不要同时 spawn 多个 agent。

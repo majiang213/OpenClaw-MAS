@@ -1,8 +1,8 @@
 ---
 name: cmd_refactor_clean
-description: "ECC refactor-clean workflow"
+description: "refactor-clean workflow"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Refactor Clean
@@ -89,9 +89,9 @@ All tests passing PASS:
 
 ---
 
-## OpenClaw Execution
+## OpenClaw 执行
 
-Invoke the specialist agent via sessions_spawn:
+通过 sessions_spawn 调用专家 agent：
 
 ```
 sessions_spawn(
@@ -100,4 +100,4 @@ sessions_spawn(
 )
 ```
 
-Wait for refactor-cleaner's announce result, then return to the user.
+等待 refactor-cleaner 的 announce 结果，然后返回给用户。

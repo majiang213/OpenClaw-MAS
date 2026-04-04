@@ -1,8 +1,8 @@
 ---
 name: cmd_checkpoint
-description: "ECC checkpoint workflow"
+description: "checkpoint workflow"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Checkpoint Command

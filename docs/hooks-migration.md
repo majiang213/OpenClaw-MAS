@@ -1,14 +1,14 @@
-# Hooks Migration: ECC → OpenClaw
+# Hooks Migration: Everything Claude Code → OpenClaw
 
 ## Background
 
-ECC's hooks (`hooks/hooks.json`) use the Claude Code hook format and cannot be used directly in OpenClaw. This document describes how each ECC hook maps to OpenClaw's hook system.
+Everything Claude Code's hooks (`hooks/hooks.json`) use the Claude Code hook format and cannot be used directly in OpenClaw. This document describes how each hook maps to OpenClaw's hook system.
 
 ---
 
 ## Hook Systems Compared
 
-### Claude Code format (ECC)
+### Claude Code format (Everything Claude Code)
 
 ```json
 {
@@ -30,7 +30,7 @@ ECC's hooks (`hooks/hooks.json`) use the Claude Code hook format and cannot be u
 | **Internal hooks** | `~/.openclaw/hooks/<name>/` | Message flow, session lifecycle, bootstrap |
 | **Plugin hooks** | `api.registerHook()` in `plugin/index.ts` | Tool execution interception (before/after tool call) |
 
-ECC's PreToolUse/PostToolUse hooks on Bash/Edit/Write must be implemented as **Plugin hooks** — internal hooks cannot intercept tool calls.
+PreToolUse/PostToolUse hooks on Bash/Edit/Write must be implemented as **Plugin hooks** — internal hooks cannot intercept tool calls.
 
 ---
 
@@ -95,7 +95,7 @@ before_message_write
 
 ---
 
-## ECC Hook Mapping
+## Hook Mapping
 
 | Hook | Original event | Function | OpenClaw implementation |
 |------|---------------|----------|------------------------|
@@ -163,8 +163,8 @@ import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
 
 export default definePluginEntry({
   id: "ecc-hooks",
-  name: "ECC Hooks",
-  description: "ECC tool execution hooks: security guards, quality gates, logging",
+  name: "OpenClaw MAS Hooks",
+  description: "OpenClaw MAS tool execution hooks: security guards, quality gates, logging",
 
   register(api) {
 
@@ -283,7 +283,7 @@ export default definePluginEntry({
         try {
           const { execSync } = await import("child_process");
           execSync(
-            `osascript -e 'display notification "Session complete" with title "OpenClaw ECC"'`,
+            `osascript -e 'display notification "Session complete" with title "OpenClaw MAS"'`,
             { timeout: 5000 }
           );
         } catch { /* silent fail */ }

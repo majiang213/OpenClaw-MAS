@@ -1,8 +1,8 @@
 ---
 name: cmd_multi_backend
-description: "ECC multi-backend workflow"
+description: "multi-backend workflow"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Backend - Backend-Focused Development

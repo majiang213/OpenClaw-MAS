@@ -2,7 +2,7 @@
 name: cmd_kotlin_test
 description: "Enforce TDD workflow for Kotlin. Write Kotest tests first, then implement. Verify 80%+ coverage with Kover."
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Kotlin TDD Command
@@ -317,9 +317,9 @@ open build/reports/kover/html/index.html
 
 ---
 
-## OpenClaw Execution
+## OpenClaw 执行
 
-Invoke the specialist agent via sessions_spawn:
+通过 sessions_spawn 调用专家 agent：
 
 ```
 sessions_spawn(
@@ -328,4 +328,4 @@ sessions_spawn(
 )
 ```
 
-Wait for kotlin-build-resolver's announce result, then return to the user.
+等待 kotlin-build-resolver 的 announce 结果，然后返回给用户。

@@ -1,8 +1,8 @@
 ---
 name: cmd_multi_execute
-description: "ECC multi-execute workflow"
+description: "multi-execute workflow"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Execute - Multi-Model Collaborative Execution

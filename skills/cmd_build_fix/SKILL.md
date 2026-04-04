@@ -1,8 +1,8 @@
 ---
 name: cmd_build_fix
-description: "ECC build-fix workflow"
+description: "build-fix workflow"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Build and Fix

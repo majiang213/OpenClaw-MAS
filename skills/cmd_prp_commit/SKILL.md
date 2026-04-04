@@ -2,7 +2,7 @@
 name: cmd_prp_commit
 description: "Quick commit with natural language file targeting — describe what to commit in plain English"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Smart Commit

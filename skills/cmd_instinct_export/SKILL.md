@@ -2,7 +2,7 @@
 name: cmd_instinct_export
 description: "Export instincts from project/global scope to a file"
 user-invocable: true
-origin: ECC-command
+origin: openclaw-mas
 ---
 
 # Instinct Export Command
