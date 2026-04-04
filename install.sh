@@ -228,16 +228,11 @@ install_hooks() {
     return
   fi
 
-  # 安装依赖并编译
-  info "编译 ecc-hooks plugin..."
-  cd "$PLUGIN_SRC"
-  npm install --silent 2>/dev/null || npm install
-  npx tsc --skipLibCheck 2>/dev/null || {
-    warn "Plugin 编译失败，hooks 功能可能不完整"
-    cd - >/dev/null
+  # 直接使用预编译的 dist（无需在目标机器上运行 npm/tsc）
+  if [ ! -d "$PLUGIN_SRC/dist" ]; then
+    warn "Plugin dist 目录不存在（$PLUGIN_SRC/dist），请先在开发机上运行 npm install && npx tsc"
     return
-  }
-  cd - >/dev/null
+  fi
 
   # 复制到 plugins 目录
   rm -rf "$PLUGIN_DST"

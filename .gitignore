@@ -1,7 +1,9 @@
 # Node.js
 node_modules/
-dist/
 *.tsbuildinfo
+
+# plugin dist 需要 commit（目标机器无法编译）
+# dist/ 不在此排除
 
 # Python
 __pycache__/
