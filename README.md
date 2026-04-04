@@ -38,7 +38,7 @@ The agent will read this file, run the install script, verify the result, and re
 ```bash
 git clone https://github.com/majiang213/OpenClaw-MAS.git
 cd OpenClaw-MAS
-bash install-ecc.sh
+bash install.sh
 ```
 
 ---
@@ -78,7 +78,7 @@ If any prerequisite is missing, stop and tell the user what needs to be installe
 Run the install script from the repository root:
 
 ```bash
-bash install-ecc.sh
+bash install.sh
 ```
 
 The script will:

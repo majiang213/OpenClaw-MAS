@@ -47,7 +47,7 @@ These workflows delegate to a dedicated expert agent via `sessions_spawn`.
 | `security_scan` | security-reviewer |
 | `db_review` | database-reviewer |
 | `gan_build` | gan-planner → gan-generator → gan-evaluator |
-| ... | (see `install-ecc.sh` for full mapping) |
+| ... | (see `install.sh` for full mapping) |
 
 ### Type B — Direct Execution Skills (~35 skills)
 

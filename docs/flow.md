@@ -6,7 +6,7 @@ This document traces what happens from user input to final output for each skill
 
 ## After Installation
 
-`install-ecc.sh` sets up the following structure:
+`install.sh` sets up the following structure:
 
 ```
 ~/.openclaw/
