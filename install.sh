@@ -301,7 +301,8 @@ defaults = agents_cfg.setdefault('defaults', {})
 subagents = defaults.setdefault('subagents', {})
 subagents['maxSpawnDepth'] = 2        # 支持 GAN 循环等二层嵌套
 subagents['maxChildrenPerAgent'] = 10  # 并发子 agent 上限
-print('  + agents.defaults.subagents: maxSpawnDepth=2, maxChildrenPerAgent=10')
+subagents['allowAgents'] = ['*']      # 允许 spawn 任意 agentId
+print('  + agents.defaults.subagents: maxSpawnDepth=2, maxChildrenPerAgent=10, allowAgents=*')
 
 # agents.list 由 openclaw agents add CLI 管理，无需手动写入
 print('  ~ agents.list 由 CLI 管理，共',
