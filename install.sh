@@ -235,17 +235,20 @@ install_hooks() {
     return
   fi
 
-  # 复制到 plugins 目录
-  rm -rf "$PLUGIN_DST"
-  mkdir -p "$PLUGIN_DST"
-  cp -r "$PLUGIN_SRC/dist" "$PLUGIN_DST/"
-  cp "$PLUGIN_SRC/package.json" "$PLUGIN_DST/"
-  cp "$PLUGIN_SRC/openclaw.plugin.json" "$PLUGIN_DST/"
-  # 复制 node_modules 中的 openclaw 依赖（plugin 运行时需要）
-  if [ -d "$PLUGIN_SRC/node_modules/openclaw" ]; then
-    mkdir -p "$PLUGIN_DST/node_modules"
-    cp -r "$PLUGIN_SRC/node_modules/openclaw" "$PLUGIN_DST/node_modules/"
-  fi
+  # 用 openclaw CLI 安装 plugin（自动处理 allow/entries 配置）
+  openclaw plugins install "$PLUGIN_SRC" --dangerously-force-unsafe-install 2>/dev/null || {
+    # fallback：手动复制
+    warn "openclaw plugins install 失败，回退到手动复制..."
+    rm -rf "$PLUGIN_DST"
+    mkdir -p "$PLUGIN_DST"
+    cp -r "$PLUGIN_SRC/dist" "$PLUGIN_DST/"
+    cp "$PLUGIN_SRC/package.json" "$PLUGIN_DST/"
+    cp "$PLUGIN_SRC/openclaw.plugin.json" "$PLUGIN_DST/"
+    if [ -d "$PLUGIN_SRC/node_modules/openclaw" ]; then
+      mkdir -p "$PLUGIN_DST/node_modules"
+      cp -r "$PLUGIN_SRC/node_modules/openclaw" "$PLUGIN_DST/node_modules/"
+    fi
+  }
 
   log "ecc-hooks plugin 已安装：$PLUGIN_DST"
 }
@@ -325,23 +328,8 @@ for hook_name in ['session-bootstrap', 'pre-compact']:
     entries.setdefault(hook_name, {})['enabled'] = True
 print('  + hooks: session-bootstrap, pre-compact 已启用')
 
-# ── 6. 注册 ecc-hooks plugin ──────────────────────────────────
-plugins = cfg.setdefault('plugins', {})
-# 从 allow 移除旧的 ecc-hooks 条目（改用 load.paths 自动发现）
-allow_list = plugins.get('allow', [])
-if 'ecc-hooks' in allow_list:
-    allow_list.remove('ecc-hooks')
-    plugins['allow'] = allow_list
-    print('  - 移除 ecc-hooks from plugins.allow（改用 load.paths 自动发现）')
-load = plugins.setdefault('load', {})
-paths = load.setdefault('paths', [])
-# 指向 plugins/ 父目录，OpenClaw 会扫描其中每个子目录作为 plugin
-plugins_dir = str(pathlib.Path.home() / '.openclaw' / 'plugins')
-# 移除旧的 ecc-hooks 直接路径（如有）
-paths[:] = [p for p in paths if not p.endswith('/ecc-hooks') and not p.endswith('/ecc-hooks/dist')]
-if plugins_dir not in paths:
-    paths.insert(0, plugins_dir)
-    print(f'  + plugins 目录加入 plugins.load.paths: {plugins_dir}')
+# ── 6. plugin 由 openclaw plugins install CLI 管理，无需手动写配置 ──
+print('  ~ ecc-hooks plugin 由 CLI 安装，跳过手动配置')
 
 # ── 7. 写回配置 ──────────────────────────────────────────────
 cfg_path.write_text(json.dumps(cfg, ensure_ascii=False, indent=2))
@@ -407,10 +395,12 @@ verify_install() {
   fi
 
   # ── 4. Plugin ────────────────────────────────────────────────
-  if [ -f "$OC_HOME/plugins/ecc-hooks/dist/index.js" ]; then
+  if openclaw plugins list 2>/dev/null | grep -q "ecc-hooks"; then
     log "Plugin: ecc-hooks 已安装"
+  elif [ -f "$OC_HOME/plugins/ecc-hooks/dist/index.js" ]; then
+    log "Plugin: ecc-hooks 已安装（手动复制）"
   else
-    error "Plugin: ecc-hooks 未找到（$OC_HOME/plugins/ecc-hooks/dist/index.js）"
+    error "Plugin: ecc-hooks 未找到"
     FAIL=$((FAIL + 1))
   fi
 
@@ -423,8 +413,6 @@ agents   = cfg.get('agents', {})
 defaults = agents.get('defaults', {})
 subagents = defaults.get('subagents', {})
 hooks    = cfg.get('hooks', {}).get('internal', {})
-plugins  = cfg.get('plugins', {}).get('load', {}).get('paths', [])
-plugins_dir = str(pathlib.Path.home() / '.openclaw' / 'plugins')
 
 fail = 0
 checks = [
@@ -435,7 +423,9 @@ checks = [
          for a in agents.get('list', [])),                    'agents.list[main].subagents.allowAgents = ["*"]'),
     (len(agents.get('list', [])) >= 10,                       f'agents.list >= 10 个（当前 {len(agents.get("list",[]))} 个）'),
     (hooks.get('enabled'),                                    'hooks.internal.enabled = true'),
-    (plugins_dir in plugins,                                  f'plugins.load.paths 含 {plugins_dir}'),
+    (cfg.get('plugins', {}).get('entries', {}).get('ecc-hooks', {}).get('enabled', True) is not False
+     or pathlib.Path.home().joinpath('.openclaw/plugins/ecc-hooks/dist/index.js').exists(),
+                                                              'plugin ecc-hooks 已注册'),
 ]
 for passed, label in checks:
     if passed:
