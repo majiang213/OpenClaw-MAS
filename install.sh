@@ -359,54 +359,94 @@ restart_gateway() {
 verify_install() {
   info "验证安装..."
 
-  # 检查 skills
-  SKILL_COUNT=$(ls -1 "$OC_HOME/skills" 2>/dev/null | wc -l | tr -d ' ')
-  log "Skills: $SKILL_COUNT 个"
+  FAIL=0
 
-  # 检查关键 command-skill（带 cmd_ 前缀）
-  for name in cmd_tdd cmd_build_fix cmd_code_review cmd_rust_review cmd_gan_build cmd_plan cmd_e2e; do
+  # ── 1. Skills ────────────────────────────────────────────────
+  SKILL_COUNT=$(ls -1 "$OC_HOME/skills" 2>/dev/null | wc -l | tr -d ' ')
+  CMD_COUNT=$(ls -1 "$OC_HOME/skills" 2>/dev/null | grep -c "^cmd_" || true)
+  if [ "$SKILL_COUNT" -ge 100 ]; then
+    log "Skills: $SKILL_COUNT 个（含 cmd_ $CMD_COUNT 个）"
+  else
+    error "Skills 数量不足：$SKILL_COUNT 个（期望 >= 100）"
+    FAIL=$((FAIL + 1))
+  fi
+
+  # 检查关键 command-skill
+  for name in cmd_tdd cmd_build_fix cmd_code_review cmd_plan cmd_e2e cmd_gan_build cmd_rust_review; do
     if [ -d "$OC_HOME/skills/$name" ]; then
       echo -e "  ${GREEN}✅ /skill $name${NC}"
     else
       echo -e "  ${RED}❌ /skill $name 未找到${NC}"
+      FAIL=$((FAIL + 1))
     fi
   done
 
-  # 检查 rules
+  # ── 2. Rules ─────────────────────────────────────────────────
   RULE_COUNT=$(ls -1 "$OC_HOME/rules" 2>/dev/null | wc -l | tr -d ' ')
-  log "Rules: $RULE_COUNT 个语言"
+  if [ "$RULE_COUNT" -ge 1 ]; then
+    log "Rules: $RULE_COUNT 个语言"
+  else
+    error "Rules 目录为空"
+    FAIL=$((FAIL + 1))
+  fi
 
-  # 检查 agents
-  AGENT_COUNT=$(python3 -c "
-import json, pathlib
-cfg = json.loads((pathlib.Path.home() / '.openclaw' / 'openclaw.json').read_text())
-print(len(cfg.get('agents', {}).get('list', [])))
-" 2>/dev/null || echo "0")
-  log "Agents: $AGENT_COUNT 个已注册"
+  # ── 3. Hooks ─────────────────────────────────────────────────
+  HOOK_COUNT=$(ls -1 "$OC_HOME/hooks" 2>/dev/null | wc -l | tr -d ' ')
+  if [ "$HOOK_COUNT" -ge 1 ]; then
+    log "Hooks: $HOOK_COUNT 个"
+  else
+    warn "Hooks 目录为空"
+  fi
 
-  # 检查 openclaw.json 关键配置
-  python3 << 'PYEOF'
-import json, pathlib
+  # ── 4. Plugin ────────────────────────────────────────────────
+  if [ -f "$OC_HOME/plugins/ecc-hooks/dist/index.js" ]; then
+    log "Plugin: ecc-hooks 已安装"
+  else
+    error "Plugin: ecc-hooks 未找到（$OC_HOME/plugins/ecc-hooks/dist/index.js）"
+    FAIL=$((FAIL + 1))
+  fi
+
+  # ── 5. openclaw.json 关键配置 ────────────────────────────────
+  python3 << PYEOF
+import json, pathlib, sys
 cfg = json.loads((pathlib.Path.home() / '.openclaw' / 'openclaw.json').read_text())
 commands = cfg.get('commands', {})
-agents = cfg.get('agents', {})
+agents   = cfg.get('agents', {})
 defaults = agents.get('defaults', {})
 subagents = defaults.get('subagents', {})
+hooks    = cfg.get('hooks', {}).get('internal', {})
+plugins  = cfg.get('plugins', {}).get('load', {}).get('paths', [])
+plugins_dir = str(pathlib.Path.home() / '.openclaw' / 'plugins')
 
-ok = True
+fail = 0
 checks = [
-    (commands.get('text'),         'commands.text'),
-    (commands.get('nativeSkills'), 'commands.nativeSkills'),
-    (subagents.get('maxSpawnDepth', 1) >= 2, 'agents.defaults.subagents.maxSpawnDepth >= 2'),
-    (len(agents.get('list', [])) >= 10,      'agents.list 已注册 >= 10 个'),
+    (commands.get('text'),                                    'commands.text = true'),
+    (commands.get('nativeSkills'),                            'commands.nativeSkills = true'),
+    (subagents.get('maxSpawnDepth', 1) >= 2,                  'subagents.maxSpawnDepth >= 2'),
+    (subagents.get('allowAgents') == ['*'],                   'subagents.allowAgents = ["*"]'),
+    (len(agents.get('list', [])) >= 10,                       f'agents.list >= 10 个（当前 {len(agents.get("list",[]))} 个）'),
+    (hooks.get('enabled'),                                    'hooks.internal.enabled = true'),
+    (plugins_dir in plugins,                                  f'plugins.load.paths 含 {plugins_dir}'),
 ]
 for passed, label in checks:
     if passed:
-        print(f'  ✅ {label}')
+        print(f'  \033[0;32m✅ {label}\033[0m')
     else:
-        print(f'  ⚠️  {label} 未满足')
-        ok = False
+        print(f'  \033[0;31m❌ {label}\033[0m')
+        fail += 1
+sys.exit(fail)
 PYEOF
+  PY_FAIL=$?
+  FAIL=$((FAIL + PY_FAIL))
+
+  # ── 总结 ─────────────────────────────────────────────────────
+  echo ""
+  if [ "$FAIL" -eq 0 ]; then
+    log "所有检查通过 ✅"
+  else
+    error "$FAIL 项检查未通过，请检查上方错误"
+    exit 1
+  fi
 }
 
 # ── Main ─────────────────────────────────────────────────────
