@@ -301,8 +301,16 @@ defaults = agents_cfg.setdefault('defaults', {})
 subagents = defaults.setdefault('subagents', {})
 subagents['maxSpawnDepth'] = 2        # 支持 GAN 循环等二层嵌套
 subagents['maxChildrenPerAgent'] = 10  # 并发子 agent 上限
-subagents['allowAgents'] = ['*']      # 允许 spawn 任意 agentId
-print('  + agents.defaults.subagents: maxSpawnDepth=2, maxChildrenPerAgent=10, allowAgents=*')
+print('  + agents.defaults.subagents: maxSpawnDepth=2, maxChildrenPerAgent=10')
+
+# allowAgents 是 per-agent 配置，设置在 agents.list[id=main] 上
+agents_list = agents_cfg.setdefault('list', [])
+main_agent = next((a for a in agents_list if a.get('id') == 'main'), None)
+if main_agent is None:
+    main_agent = {'id': 'main'}
+    agents_list.insert(0, main_agent)
+main_agent.setdefault('subagents', {})['allowAgents'] = ['*']
+print('  + agents.list[main].subagents.allowAgents = ["*"]')
 
 # agents.list 由 openclaw agents add CLI 管理，无需手动写入
 print('  ~ agents.list 由 CLI 管理，共',
@@ -423,7 +431,8 @@ checks = [
     (commands.get('text'),                                    'commands.text = true'),
     (commands.get('nativeSkills'),                            'commands.nativeSkills = true'),
     (subagents.get('maxSpawnDepth', 1) >= 2,                  'subagents.maxSpawnDepth >= 2'),
-    (subagents.get('allowAgents') == ['*'],                   'subagents.allowAgents = ["*"]'),
+    (any(a.get('id') == 'main' and a.get('subagents', {}).get('allowAgents') == ['*']
+         for a in agents.get('list', [])),                    'agents.list[main].subagents.allowAgents = ["*"]'),
     (len(agents.get('list', [])) >= 10,                       f'agents.list >= 10 个（当前 {len(agents.get("list",[]))} 个）'),
     (hooks.get('enabled'),                                    'hooks.internal.enabled = true'),
     (plugins_dir in plugins,                                  f'plugins.load.paths 含 {plugins_dir}'),
