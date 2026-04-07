@@ -23,7 +23,7 @@ Then call sessions_spawn:
   "agentId": "java-build-resolver",
   "sessionKey": "java-build-resolver",
   "task": "<user's full request and all relevant context — the agent cannot see this conversation>",
-  "runTimeoutSeconds": 300
+  "runTimeoutSeconds": 0
 }
 ```
 

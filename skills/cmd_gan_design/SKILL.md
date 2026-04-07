@@ -25,7 +25,7 @@ Execute specialist agents in sequence: gan-generator → gan-evaluator
   "agentId": "gan-generator",
   "sessionKey": "gan-generator",
   "task": "<task description with full context from previous step>",
-  "runTimeoutSeconds": 300
+  "runTimeoutSeconds": 0
 }
 ```
 Wait for this agent to complete before proceeding.
@@ -36,7 +36,7 @@ Wait for this agent to complete before proceeding.
   "agentId": "gan-evaluator",
   "sessionKey": "gan-evaluator",
   "task": "<task description with full context from previous step>",
-  "runTimeoutSeconds": 300
+  "runTimeoutSeconds": 0
 }
 ```
 Wait for this agent to complete before proceeding.

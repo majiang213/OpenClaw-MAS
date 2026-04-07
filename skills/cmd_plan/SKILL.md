@@ -24,7 +24,7 @@ Then call sessions_spawn:
   "agentId": "planner",
   "sessionKey": "planner",
   "task": "<user's full request and all relevant context — the agent cannot see this conversation>",
-  "runTimeoutSeconds": 300
+  "runTimeoutSeconds": 0
 }
 ```
 
