@@ -113,7 +113,7 @@ Invoke any workflow with `/skill <name>` in your OpenClaw chat. Always pass the 
 ```
 /skill cmd_tdd ~/.openclaw/projects/myapp implement a login endpoint with JWT auth
 /skill cmd_code_review ~/.openclaw/projects/myapp
-/skill cmd_code_review ~/.openclaw/projects/myapp 42
+/skill cmd_code_review ~/.openclaw/projects/myapp 42  # review GitHub PR #42
 /skill cmd_build_fix ~/.openclaw/projects/myapp
 /skill cmd_rust_review ~/.openclaw/projects/myapp
 /skill cmd_gan_build ~/.openclaw/projects/myapp build a real-time collaborative whiteboard
