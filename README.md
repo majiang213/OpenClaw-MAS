@@ -48,12 +48,12 @@ bash install.sh
 Once installed, use `/skill <name>` in any OpenClaw chat. Always include the project path so the agent knows where to work:
 
 ```
-/skill cmd_tdd ~/projects/myapp implement a login endpoint with JWT auth
-/skill cmd_code_review ~/projects/myapp
-/skill cmd_build_fix ~/projects/myapp
-/skill cmd_rust_review ~/projects/myapp
-/skill cmd_security_scan ~/projects/myapp
-/skill cmd_gan_build ~/projects/myapp build a real-time collaborative whiteboard
+/skill cmd_tdd ~/.openclaw/projects/myapp implement a login endpoint with JWT auth
+/skill cmd_code_review ~/.openclaw/projects/myapp
+/skill cmd_build_fix ~/.openclaw/projects/myapp
+/skill cmd_rust_review ~/.openclaw/projects/myapp
+/skill cmd_security_scan ~/.openclaw/projects/myapp
+/skill cmd_gan_build ~/.openclaw/projects/myapp build a real-time collaborative whiteboard
 ```
 
 ---
@@ -111,14 +111,14 @@ Then tell the user: "OpenClaw MAS is installed. You can now use `/skill <name>` 
 Invoke any workflow with `/skill <name>` in your OpenClaw chat. Always pass the project path as the first argument so the agent knows where to work:
 
 ```
-/skill cmd_tdd ~/projects/myapp implement a login endpoint with JWT auth
-/skill cmd_code_review ~/projects/myapp
-/skill cmd_code_review ~/projects/myapp 42
-/skill cmd_build_fix ~/projects/myapp
-/skill cmd_rust_review ~/projects/myapp
-/skill cmd_gan_build ~/projects/myapp build a real-time collaborative whiteboard
-/skill cmd_plan ~/projects/myapp add payment integration
-/skill cmd_security_scan ~/projects/myapp
+/skill cmd_tdd ~/.openclaw/projects/myapp implement a login endpoint with JWT auth
+/skill cmd_code_review ~/.openclaw/projects/myapp
+/skill cmd_code_review ~/.openclaw/projects/myapp 42
+/skill cmd_build_fix ~/.openclaw/projects/myapp
+/skill cmd_rust_review ~/.openclaw/projects/myapp
+/skill cmd_gan_build ~/.openclaw/projects/myapp build a real-time collaborative whiteboard
+/skill cmd_plan ~/.openclaw/projects/myapp add payment integration
+/skill cmd_security_scan ~/.openclaw/projects/myapp
 ```
 
 ---
