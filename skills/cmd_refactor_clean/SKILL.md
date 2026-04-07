@@ -8,6 +8,7 @@ origin: openclaw-mas
 Delegate to the `refactor-cleaner` agent.
 
 Include in the task payload:
+- Project path (the absolute path the user provided as the first argument)
 - Scope: specific files/directories or full codebase
 - Tech stack (Node.js, TypeScript, Python, Go, Rust, etc.)
 - Whether to auto-delete or report only

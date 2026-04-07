@@ -8,6 +8,7 @@ origin: openclaw-mas
 Run specialist agents in sequence: gan-generator → gan-evaluator.
 
 Include in the task payload:
+- Project path (the absolute path the user provided as the first argument)
 - The user's full request and build/design brief
 - Any flags or configuration options (max iterations, pass threshold, etc.)
 - Relevant codebase context

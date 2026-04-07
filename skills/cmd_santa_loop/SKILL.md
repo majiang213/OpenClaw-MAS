@@ -8,6 +8,7 @@ origin: openclaw-mas
 Delegate to the `code-reviewer` agent.
 
 Include in the task payload:
+- Project path (the absolute path the user provided as the first argument)
 - The files, glob pattern, or description of what to review
 - Falls back to uncommitted changes if no scope given
 - Any domain-specific rubric criteria to add

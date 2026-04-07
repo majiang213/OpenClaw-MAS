@@ -8,6 +8,7 @@ origin: openclaw-mas
 Delegate to the `e2e-runner` agent.
 
 Include in the task payload:
+- Project path (the absolute path the user provided as the first argument)
 - The user flows or features to test
 - Base URL or dev server details if known
 - Existing test files or framework configuration

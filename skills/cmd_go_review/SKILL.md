@@ -8,6 +8,7 @@ origin: openclaw-mas
 Delegate to the `go-reviewer` agent.
 
 Include in the task payload:
+- Project path (the absolute path the user provided as the first argument)
 - Files or modules to review (or 'all changed files' for a pre-commit review)
 - Language version and key dependencies
 - Whether this is a pre-commit review or a PR review

@@ -8,6 +8,7 @@ origin: openclaw-mas
 Delegate to the `tdd-guide` agent.
 
 Include in the task payload:
+- Project path (the absolute path the user provided as the first argument)
 - What to build (feature, fix, or refactor)
 - Relevant files, modules, or components involved
 - Tech stack and test framework in use

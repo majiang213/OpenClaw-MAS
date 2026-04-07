@@ -5,6 +5,14 @@ user-invocable: true
 origin: openclaw-mas
 ---
 
+## Project Path
+
+The first argument is the project path. Before doing anything else:
+
+1. Extract the project path from the first argument
+2. Verify the path exists
+3. Work within that directory for all file operations and shell commands
+
 # Jira Command
 
 Interact with Jira tickets directly from your workflow — fetch tickets, analyze requirements, add comments, and transition status.

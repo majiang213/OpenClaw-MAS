@@ -8,6 +8,7 @@ origin: openclaw-mas
 Delegate to the `doc-updater` agent.
 
 Include in the task payload:
+- Project path (the absolute path the user provided as the first argument)
 - The codebase root or specific modules to remap
 - Whether this follows a significant refactor, new feature, or file restructure
 - Any existing CODEMAPS to update vs. create from scratch

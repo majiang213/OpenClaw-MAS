@@ -5,6 +5,14 @@ user-invocable: true
 origin: openclaw-mas
 ---
 
+## Project Path
+
+The first argument is the project path. Before doing anything else:
+
+1. Extract the project path from the first argument
+2. Verify the path exists
+3. Work within that directory for all file operations and shell commands
+
 # /skill-create - Local Skill Generation
 
 Analyze your repository's git history to extract coding patterns and generate SKILL.md files that teach Claude your team's practices.

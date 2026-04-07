@@ -8,6 +8,7 @@ origin: openclaw-mas
 Delegate to the `kotlin-build-resolver` agent.
 
 Include in the task payload:
+- Project path (the absolute path the user provided as the first argument)
 - The full build error output
 - Language/framework version
 - Any recent changes that may have caused the breakage

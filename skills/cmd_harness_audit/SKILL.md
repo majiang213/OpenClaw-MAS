@@ -8,6 +8,7 @@ origin: openclaw-mas
 Delegate to the `harness-optimizer` agent.
 
 Include in the task payload:
+- Project path (the absolute path the user provided as the first argument)
 - Scope: repo (full), hooks, skills, commands, or agents (default: repo)
 - Output format preference: text (default) or json
 - Any known issues or areas of concern to prioritize

@@ -8,6 +8,7 @@ origin: openclaw-mas
 Delegate to the `code-reviewer` agent.
 
 Include in the task payload:
+- Project path (the absolute path the user provided as the first argument)
 - Whether this is a local review (uncommitted changes) or a PR review
 - PR number or URL if reviewing a GitHub PR
 - Specific files, modules, or areas of concern if any

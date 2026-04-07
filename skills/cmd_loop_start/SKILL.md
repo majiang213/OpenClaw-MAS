@@ -8,6 +8,7 @@ origin: openclaw-mas
 Delegate to the `loop-operator` agent.
 
 Include in the task payload:
+- Project path (the absolute path the user provided as the first argument)
 - Loop pattern: sequential, continuous-pr, rfc-dag, or infinite
 - Mode: safe (default) or fast
 - The task or goal the loop should execute

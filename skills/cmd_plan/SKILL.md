@@ -8,6 +8,7 @@ origin: openclaw-mas
 Delegate to the `planner` agent.
 
 Include in the task payload:
+- Project path (the absolute path the user provided as the first argument)
 - The full feature or change request
 - Relevant codebase context (tech stack, affected files/modules if known)
 - Any constraints, deadlines, or preferences the user mentioned

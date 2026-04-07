@@ -5,6 +5,14 @@ user-invocable: true
 origin: openclaw-mas
 ---
 
+## Project Path
+
+The first argument is the project path. Before doing anything else:
+
+1. Extract the project path from the first argument
+2. Verify the path exists
+3. Work within that directory for all file operations and shell commands
+
 # Sessions Command
 
 Manage Claude Code session history - list, load, alias, and edit sessions stored in `~/.claude/session-data/` with legacy reads from `~/.claude/sessions/`.

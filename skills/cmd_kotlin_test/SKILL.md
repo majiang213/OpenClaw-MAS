@@ -8,6 +8,7 @@ origin: openclaw-mas
 Delegate to the `kotlin-build-resolver` agent.
 
 Include in the task payload:
+- Project path (the absolute path the user provided as the first argument)
 - What to implement (function, class, module)
 - Language version and test framework in use
 - Any existing test fixtures or helpers to reuse

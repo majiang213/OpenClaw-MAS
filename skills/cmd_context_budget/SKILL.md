@@ -8,6 +8,7 @@ origin: openclaw-mas
 Delegate to the `harness-optimizer` agent.
 
 Include in the task payload:
+- Project path (the absolute path the user provided as the first argument)
 - Whether to run in verbose mode
 - Context window size if different from default (200K)
 - Specific files, rules, or agents suspected of causing context bloat

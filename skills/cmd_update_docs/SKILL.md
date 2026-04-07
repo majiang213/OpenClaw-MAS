@@ -8,6 +8,7 @@ origin: openclaw-mas
 Delegate to the `doc-updater` agent.
 
 Include in the task payload:
+- Project path (the absolute path the user provided as the first argument)
 - What changed (feature, API, config, architecture)
 - Which docs need updating (README, CHANGELOG, API reference, guides)
 - Any specific sections or files to focus on
