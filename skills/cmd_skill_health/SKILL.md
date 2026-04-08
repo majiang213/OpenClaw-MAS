@@ -1,9 +1,9 @@
 ---
 name: cmd_skill_health
-description: "Show skill portfolio health dashboard with charts and analytics"
+description: "Audit all installed OpenClaw skills for missing frontmatter fields, stub descriptions, and format compliance. Reports a health dashboard."
 user-invocable: true
 origin: openclaw-mas
-argument-hint: "<project-path>"
+argument-hint: "<project-path> [--fix]"
 ---
 
 ## Project Path
@@ -16,49 +16,124 @@ The first argument is the project path. Before doing anything else:
 
 # Skill Health Dashboard
 
-Shows a comprehensive health dashboard for all skills in the portfolio with success rate sparklines, failure pattern clustering, pending amendments, and version history.
-
-## Implementation
-
-Run the skill health CLI in dashboard mode:
-
-```bash
-ECC_ROOT="${CLAUDE_PLUGIN_ROOT:-$(node -e "var p=require('path'),f=require('fs'),h=require('os').homedir(),d=p.join(h,'.claude'),q=p.join('scripts','lib','utils.js');if(!f.existsSync(p.join(d,q))){try{var b=p.join(d,'plugins','cache','everything-claude-code');for(var o of f.readdirSync(b))for(var v of f.readdirSync(p.join(b,o))){var c=p.join(b,o,v);if(f.existsSync(p.join(c,q))){d=c;break}}}catch(x){}}console.log(d)")}"
-node "$ECC_ROOT/scripts/skills-health.js" --dashboard
-```
-
-For a specific panel only:
-
-```bash
-ECC_ROOT="${CLAUDE_PLUGIN_ROOT:-$(node -e "var p=require('path'),f=require('fs'),h=require('os').homedir(),d=p.join(h,'.claude'),q=p.join('scripts','lib','utils.js');if(!f.existsSync(p.join(d,q))){try{var b=p.join(d,'plugins','cache','everything-claude-code');for(var o of f.readdirSync(b))for(var v of f.readdirSync(p.join(b,o))){var c=p.join(b,o,v);if(f.existsSync(p.join(c,q))){d=c;break}}}catch(x){}}console.log(d)")}"
-node "$ECC_ROOT/scripts/skills-health.js" --dashboard --panel failures
-```
-
-For machine-readable output:
-
-```bash
-ECC_ROOT="${CLAUDE_PLUGIN_ROOT:-$(node -e "var p=require('path'),f=require('fs'),h=require('os').homedir(),d=p.join(h,'.claude'),q=p.join('scripts','lib','utils.js');if(!f.existsSync(p.join(d,q))){try{var b=p.join(d,'plugins','cache','everything-claude-code');for(var o of f.readdirSync(b))for(var v of f.readdirSync(p.join(b,o))){var c=p.join(b,o,v);if(f.existsSync(p.join(c,q))){d=c;break}}}catch(x){}}console.log(d)")}"
-node "$ECC_ROOT/scripts/skills-health.js" --dashboard --json
-```
+Scans all skills installed in `~/.openclaw/skills/` (and optionally in
+`<project-path>/skills/`) and reports a health summary: required frontmatter
+fields, stub descriptions, and format compliance.
 
 ## Usage
 
 ```
-/skill-health                    # Full dashboard view
-/skill-health --panel failures   # Only failure clustering panel
-/skill-health --json             # Machine-readable JSON output
+/skill cmd_skill_health <project-path>         # Audit installed skills
+/skill cmd_skill_health <project-path> --fix   # Audit and suggest fixes
 ```
 
 ## What to Do
 
-1. Run the skills-health.js script with --dashboard flag
-2. Display the output to the user
-3. If any skills are declining, highlight them and suggest running /evolve
-4. If there are pending amendments, suggest reviewing them
+### Step 1: Locate skill directories
 
-## Panels
+Scan two locations:
 
-- **Success Rate (30d)** — Sparkline charts showing daily success rates per skill
-- **Failure Patterns** — Clustered failure reasons with horizontal bar chart
-- **Pending Amendments** — Amendment proposals awaiting review
-- **Version History** — Timeline of version snapshots per skill
+1. **Installed skills**: `~/.openclaw/skills/`
+2. **Project skills**: `<project-path>/skills/`
+
+For each location, find all SKILL.md files:
+
+```bash
+find ~/.openclaw/skills/ -name "SKILL.md" 2>/dev/null
+find <project-path>/skills/ -name "SKILL.md" 2>/dev/null
+```
+
+If both locations are empty, report: "No skills found." Stop.
+
+### Step 2: Parse each SKILL.md
+
+For each SKILL.md, extract frontmatter fields by reading the YAML block between
+the opening and closing `---` lines. Check for:
+
+**Required fields:**
+- `name` — must be present and non-empty
+- `description` — must be present, non-empty, and not a stub
+- `user-invocable` — must be `true` or `false`
+- `origin` — must be present
+- `argument-hint` — must be present (may be empty string for no-arg skills)
+
+**Stub detection** — flag description as a stub if it:
+- Is shorter than 20 characters
+- Matches a generic pattern like `"<skill-name> workflow"`, `"<skill-name> command"`,
+  `"TODO"`, `"..."`, or is identical to the skill name
+
+### Step 3: Categorize each skill
+
+Assign one of three statuses:
+
+- **PASS** — all required fields present and non-stub
+- **WARN** — `argument-hint` missing (added later, not always present in older skills)
+- **FAIL** — `name`, `description`, `user-invocable`, or `origin` missing, or description is a stub
+
+### Step 4: Display the dashboard
+
+```
+============================================================
+  SKILL HEALTH DASHBOARD
+  Scanned: ~/.openclaw/skills/ + <project-path>/skills/
+  Total skills: <N>
+============================================================
+
+PASS  (<count>)
+──────────────────────────────────────────────────────────
+  ✓  cmd_save_session        "Save current session state..."
+  ✓  cmd_evolve              "Cluster MEMORY.md entries..."
+  ...
+
+WARN  (<count>)  — missing argument-hint
+──────────────────────────────────────────────────────────
+  ⚠  some_old_skill          "Does something useful"
+
+FAIL  (<count>)  — missing fields or stub description
+──────────────────────────────────────────────────────────
+  ✗  broken_skill            MISSING: description
+  ✗  stub_skill              STUB: "stub_skill workflow"
+
+============================================================
+  Summary: <PASS> passed · <WARN> warnings · <FAIL> failed
+============================================================
+```
+
+### Step 5: If --fix is NOT passed
+
+Print suggested next steps:
+
+```
+To fix FAIL items:
+  - Edit the SKILL.md file and add missing fields
+  - Replace stub descriptions with accurate one-liners
+
+To add missing argument-hint to WARN items:
+  - Add: argument-hint: "<project-path> [options]"
+  - Or:  argument-hint: "" (for skills with no arguments)
+
+Run with --fix to see per-skill fix suggestions inline.
+```
+
+### Step 6: If --fix IS passed
+
+For each WARN or FAIL skill, print an inline fix suggestion:
+
+```
+FIX NEEDED: ~/.openclaw/skills/some_old_skill/SKILL.md
+  Add after `origin:` line:
+    argument-hint: "<project-path>"
+
+FIX NEEDED: <project-path>/skills/broken_skill/SKILL.md
+  Add to frontmatter:
+    description: "<accurate one-liner describing what this skill does>"
+```
+
+Do not modify any files automatically — only print suggestions.
+
+## Notes
+
+- This skill reads files directly; it does not call any external CLI or script
+- Only SKILL.md files are scanned — agent AGENTS.md, hook HOOK.md, etc. are out of scope
+- A skill with `user-invocable: false` is still checked for all required fields
+- The `argument-hint` field may be an empty string `""` for skills that take no arguments — this is valid (PASS)

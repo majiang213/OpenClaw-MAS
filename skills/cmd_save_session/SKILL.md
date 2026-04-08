@@ -1,6 +1,6 @@
 ---
 name: cmd_save_session
-description: "Save current session state to a dated file in ~/.claude/session-data/ so work can be resumed in a future session with full context."
+description: "Save current session state to a dated file in ~/.openclaw/workspace-main/sessions/ so work can be resumed in a future session with full context."
 user-invocable: true
 origin: openclaw-mas
 argument-hint: "<project-path>"
@@ -38,26 +38,25 @@ Before writing the file, collect:
 
 ### Step 2: Create the sessions folder if it doesn't exist
 
-Create the canonical sessions folder in the user's Claude home directory:
+Create the canonical sessions folder in the OpenClaw workspace:
 
 ```bash
-mkdir -p ~/.claude/session-data
+mkdir -p ~/.openclaw/workspace-main/sessions
 ```
 
 ### Step 3: Write the session file
 
-Create `~/.claude/session-data/YYYY-MM-DD-<short-id>-session.tmp`, using today's actual date and a short-id that satisfies the rules enforced by `SESSION_FILENAME_REGEX` in `session-manager.js`:
+Create `~/.openclaw/workspace-main/sessions/YYYY-MM-DD-<short-id>-session.md`,
+using today's actual date and a short-id to avoid same-day collisions.
 
-- Compatibility characters: letters `a-z` / `A-Z`, digits `0-9`, hyphens `-`, underscores `_`
-- Compatibility minimum length: 1 character
-- Recommended style for new files: lowercase letters, digits, and hyphens with 8+ characters to avoid collisions
+Short-id rules:
+- Characters: letters `a-z` / `A-Z`, digits `0-9`, hyphens `-`, underscores `_`
+- Minimum length: 1 character
+- Recommended: lowercase letters, digits, and hyphens with 8+ characters
 
-Valid examples: `abc123de`, `a1b2c3d4`, `frontend-worktree-1`, `ChezMoi_2`
-Avoid for new files: `A`, `test_id1`, `ABC123de`
+Valid examples: `abc123de`, `a1b2c3d4`, `frontend-worktree-1`
 
-Full valid filename example: `2024-01-15-abc123de-session.tmp`
-
-The legacy filename `YYYY-MM-DD-session.tmp` is still valid, but new session files should prefer the short-id form to avoid same-day collisions.
+Full valid filename example: `2024-01-15-abc123de-session.md`
 
 ### Step 4: Populate the file with all sections below
 
@@ -68,7 +67,7 @@ Write every section honestly. Do not skip sections — write "Nothing yet" or "N
 After writing, display the full contents and ask:
 
 ```
-Session saved to [actual resolved path to the session file]
+Session saved to ~/.openclaw/workspace-main/sessions/[filename]
 
 Does this look accurate? Anything to correct or add before we close?
 ```
@@ -283,5 +282,5 @@ Then test with Postman — the response should include a `Set-Cookie` header.
 - The "What Did NOT Work" section is the most critical — future sessions will blindly retry failed approaches without it
 - If the user asks to save mid-session (not just at the end), save what's known so far and mark in-progress items clearly
 - The file is meant to be read by Claude at the start of the next session via `/resume-session`
-- Use the canonical global session store: `~/.claude/session-data/`
-- Prefer the short-id filename form (`YYYY-MM-DD-<short-id>-session.tmp`) for any new session file
+- Use the canonical OpenClaw session store: `~/.openclaw/workspace-main/sessions/`
+- Prefer the short-id filename form (`YYYY-MM-DD-<short-id>-session.md`) for any new session file

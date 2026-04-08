@@ -1,6 +1,6 @@
 ---
 name: cmd_resume_session
-description: "Load the most recent session file from ~/.claude/session-data/ and resume work with full context from where the last session ended."
+description: "Load the most recent session file from ~/.openclaw/workspace-main/sessions/ and resume work with full context from where the last session ended."
 user-invocable: true
 origin: openclaw-mas
 argument-hint: "<project-path>"
@@ -29,10 +29,9 @@ This command is the counterpart to `/save-session`.
 ## Usage
 
 ```
-/resume-session                                                      # loads most recent file in ~/.claude/session-data/
-/resume-session 2024-01-15                                           # loads most recent session for that date
-/resume-session ~/.claude/session-data/2024-01-15-abc123de-session.tmp  # loads a current short-id session file
-/resume-session ~/.claude/sessions/2024-01-15-session.tmp               # loads a specific legacy-format file
+/resume-session                                                                   # loads most recent file in ~/.openclaw/workspace-main/sessions/
+/resume-session 2024-01-15                                                        # loads most recent session for that date
+/resume-session ~/.openclaw/workspace-main/sessions/2024-01-15-abc123de-session.md  # loads a specific session file
 ```
 
 ## Process
@@ -41,21 +40,19 @@ This command is the counterpart to `/save-session`.
 
 If no argument provided:
 
-1. Check `~/.claude/session-data/`
-2. Pick the most recently modified `*-session.tmp` file
+1. Check `~/.openclaw/workspace-main/sessions/`
+2. Pick the most recently modified `*-session.md` file
 3. If the folder does not exist or has no matching files, tell the user:
    ```
-   No session files found in ~/.claude/session-data/
+   No session files found in ~/.openclaw/workspace-main/sessions/
    Run /save-session at the end of a session to create one.
    ```
    Then stop.
 
 If an argument is provided:
 
-- If it looks like a date (`YYYY-MM-DD`), search `~/.claude/session-data/` first, then the legacy
-  `~/.claude/sessions/`, for files matching `YYYY-MM-DD-session.tmp` (legacy format) or
-  `YYYY-MM-DD-<shortid>-session.tmp` (current format)
-  and load the most recently modified variant for that date
+- If it looks like a date (`YYYY-MM-DD`), search `~/.openclaw/workspace-main/sessions/`
+  for files matching `YYYY-MM-DD-*-session.md` and load the most recently modified one
 - If it looks like a file path, read that file directly
 - If not found, report clearly and stop
 
@@ -107,8 +104,8 @@ If no next step is defined — ask the user where to start, and optionally sugge
 
 ## Edge Cases
 
-**Multiple sessions for the same date** (`2024-01-15-session.tmp`, `2024-01-15-abc123de-session.tmp`):
-Load the most recently modified matching file for that date, regardless of whether it uses the legacy no-id format or the current short-id format.
+**Multiple sessions for the same date** (`2024-01-15-abc123de-session.md`, `2024-01-15-xyz789-session.md`):
+Load the most recently modified matching file for that date.
 
 **Session file references files that no longer exist:**
 Note this during the briefing — "WARNING: `path/to/file.ts` referenced in session but not found on disk."
@@ -127,7 +124,7 @@ Report: "Session file found but appears empty or unreadable. You may need to cre
 ## Example Output
 
 ```
-SESSION LOADED: /Users/you/.claude/session-data/2024-01-15-abc123de-session.tmp
+SESSION LOADED: /Users/you/.openclaw/workspace-main/sessions/2024-01-15-abc123de-session.md
 ════════════════════════════════════════════════
 
 PROJECT: my-app — JWT Authentication

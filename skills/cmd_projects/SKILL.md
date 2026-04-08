@@ -1,6 +1,6 @@
 ---
 name: cmd_projects
-description: "List known projects and their instinct statistics"
+description: "List all OpenClaw agent workspaces with memory and session statistics."
 user-invocable: true
 origin: openclaw-mas
 argument-hint: "<project-path>"
@@ -14,36 +14,65 @@ The first argument is the project path. Before doing anything else:
 2. Verify the path exists
 3. Work within that directory for all file operations and shell commands
 
-# Projects Command
+# Workspaces
 
-List project registry entries and per-project instinct/observation counts for continuous-learning-v2.
-
-## Implementation
-
-Run the instinct CLI using the plugin root path:
-
-```bash
-python3 "${CLAUDE_PLUGIN_ROOT}/skills/continuous-learning-v2/scripts/instinct-cli.py" projects
-```
-
-Or if `CLAUDE_PLUGIN_ROOT` is not set (manual installation):
-
-```bash
-python3 ~/.claude/skills/continuous-learning-v2/scripts/instinct-cli.py projects
-```
+Lists all OpenClaw agent workspaces and shows memory and session statistics for each.
 
 ## Usage
 
-```bash
-/projects
+```
+/skill cmd_projects <project-path>
 ```
 
 ## What to Do
 
-1. Read `~/.claude/homunculus/projects.json`
-2. For each project, display:
-   - Project name, id, root, remote
-   - Personal and inherited instinct counts
-   - Observation event count
-   - Last seen timestamp
-3. Also display global instinct totals
+1. List all workspace directories:
+   ```bash
+   ls -d ~/.openclaw/workspace-*/
+   ```
+   If none are found, report: "No OpenClaw workspaces found at ~/.openclaw/workspace-*/" and stop.
+
+2. For each workspace directory, collect:
+
+   a. **Name**: strip the `workspace-` prefix from the directory basename
+      (e.g. `workspace-tdd-guide` → `tdd-guide`)
+
+   b. **MEMORY.md stats**: check if `<workspace>/MEMORY.md` exists.
+      If yes, count `##`-level headings (memory sections).
+      If no, mark as `(no memory)`.
+
+   c. **Sessions stats**: check if `<workspace>/sessions/` exists.
+      If yes, count `*.md` files and find the most recently modified:
+      ```bash
+      ls -t <workspace>/sessions/*.md 2>/dev/null | head -1
+      ```
+      If no sessions directory, mark as `(no sessions)`.
+
+3. Display as a table:
+
+```
+============================================================
+  OPENCLAW WORKSPACES
+============================================================
+
+Workspace              MEMORY.md      Sessions      Latest Session
+──────────────────────────────────────────────────────────────────
+main                   12 sections    8 sessions    2026-04-07.md
+tdd-guide              3 sections     2 sessions    2026-03-15.md
+code-reviewer          (no memory)    5 sessions    2026-04-06.md
+rust-reviewer          (no memory)    (no sessions) —
+...
+
+Total workspaces: <N>
+```
+
+4. Run the memory index status for the main workspace:
+   ```bash
+   openclaw memory status
+   ```
+
+## Notes
+
+- Workspace discovery uses ~/.openclaw/workspace-*/ glob
+- The "main" workspace is the primary long-term memory location
+- This replaces the old ~/.claude/homunculus/projects.json registry

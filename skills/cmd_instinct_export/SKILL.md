@@ -1,6 +1,6 @@
 ---
 name: cmd_instinct_export
-description: "Export instincts from project/global scope to a file"
+description: "Export MEMORY.md to a timestamped markdown file for sharing or backup."
 user-invocable: true
 origin: openclaw-mas
 argument-hint: "<project-path> [output-file]"
@@ -14,63 +14,59 @@ The first argument is the project path. Before doing anything else:
 2. Verify the path exists
 3. Work within that directory for all file operations and shell commands
 
-# Instinct Export Command
+# Memory Export
 
-Exports instincts to a shareable format. Perfect for:
-- Sharing with teammates
-- Transferring to a new machine
-- Contributing to project conventions
+Exports the workspace MEMORY.md to a shareable file. Use this to:
+- Share curated knowledge with teammates
+- Back up memory before a reinstall
+- Transfer knowledge to another workspace
 
 ## Usage
 
 ```
-/instinct-export                           # Export all personal instincts
-/instinct-export --domain testing          # Export only testing instincts
-/instinct-export --min-confidence 0.7      # Only export high-confidence instincts
-/instinct-export --output team-instincts.yaml
-/instinct-export --scope project --output project-instincts.yaml
+/skill cmd_instinct_export <project-path>
+/skill cmd_instinct_export <project-path> my-team-memory.md
 ```
+
+The optional second argument is the output file path. If omitted, the file is
+written to the project directory as `memory-export-YYYY-MM-DD.md`.
 
 ## What to Do
 
-1. Detect current project context
-2. Load instincts by selected scope:
-   - `project`: current project only
-   - `global`: global only
-   - `all`: project + global merged (default)
-3. Apply filters (`--domain`, `--min-confidence`)
-4. Write YAML-style export to file (or stdout if no output path provided)
+1. Read MEMORY.md from the main workspace:
+   ```bash
+   cat ~/.openclaw/workspace-main/MEMORY.md
+   ```
+   If the file does not exist or is empty, report: "Nothing to export — MEMORY.md is empty." Stop.
 
-## Output Format
+2. Count the `##`-level headings to get the section count.
 
-Creates a YAML file:
+3. Determine the output path:
+   - If a second argument was provided, use it as-is
+   - Otherwise: `<project-path>/memory-export-<today-YYYY-MM-DD>.md`
 
-```yaml
-# Instincts Export
-# Generated: 2025-01-22
-# Source: personal
-# Count: 12 instincts
+4. Write the export file:
+   ```markdown
+   # Memory Export
+   # Exported: <YYYY-MM-DD HH:MM>
+   # Source: ~/.openclaw/workspace-main/MEMORY.md
+   # Sections: <count>
 
----
-id: prefer-functional-style
-trigger: "when writing new functions"
-confidence: 0.8
-domain: code-style
-source: session-observation
-scope: project
-project_id: a1b2c3d4e5f6
-project_name: my-app
----
+   ---
 
-# Prefer Functional Style
+   <full MEMORY.md content verbatim>
+   ```
 
-## Action
-Use functional patterns over classes.
-```
+5. Report:
+   ```
+   Memory exported: <output-path>
+   Sections exported: <count>
 
-## Flags
+   To import into another workspace:
+     /skill cmd_instinct_import <project-path> <output-path>
+   ```
 
-- `--domain <name>`: Export only specified domain
-- `--min-confidence <n>`: Minimum confidence threshold
-- `--output <file>`: Output file path (prints to stdout when omitted)
-- `--scope <project|global|all>`: Export scope (default: `all`)
+## Notes
+
+- The export format is plain markdown — no YAML instinct schema
+- Import using /skill cmd_instinct_import

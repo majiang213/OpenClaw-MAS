@@ -1,6 +1,6 @@
 ---
 name: cmd_instinct_status
-description: "Show learned instincts (project + global) with confidence"
+description: "Show current workspace memory: MEMORY.md contents, pending recalls, and index status."
 user-invocable: true
 origin: openclaw-mas
 argument-hint: "<project-path>"
@@ -14,56 +14,63 @@ The first argument is the project path. Before doing anything else:
 2. Verify the path exists
 3. Work within that directory for all file operations and shell commands
 
-# Instinct Status Command
+# Memory Status
 
-Shows learned instincts for the current project plus global instincts, grouped by domain.
-
-## Implementation
-
-Run the instinct CLI using the plugin root path:
-
-```bash
-python3 "${CLAUDE_PLUGIN_ROOT}/skills/continuous-learning-v2/scripts/instinct-cli.py" status
-```
-
-Or if `CLAUDE_PLUGIN_ROOT` is not set (manual installation), use:
-
-```bash
-python3 ~/.claude/skills/continuous-learning-v2/scripts/instinct-cli.py status
-```
+Shows the current state of long-term memory (MEMORY.md) and short-term recalls
+pending promotion for the active OpenClaw workspace.
 
 ## Usage
 
 ```
-/instinct-status
+/skill cmd_instinct_status <project-path>
 ```
 
 ## What to Do
 
-1. Detect current project context (git remote/path hash)
-2. Read project instincts from `~/.claude/homunculus/projects/<project-id>/instincts/`
-3. Read global instincts from `~/.claude/homunculus/instincts/`
-4. Merge with precedence rules (project overrides global when IDs collide)
-5. Display grouped by domain with confidence bars and observation stats
+1. Read MEMORY.md from the main workspace:
+   ```bash
+   cat ~/.openclaw/workspace-main/MEMORY.md
+   ```
+   If the file does not exist or is empty, note: "No MEMORY.md found — workspace has no long-term memory yet."
 
-## Output Format
+2. Count the `##`-level headings in MEMORY.md to get the total number of memory sections.
+
+3. Run memory status to show the index:
+   ```bash
+   openclaw memory status
+   ```
+
+4. Run promotion preview to show what is pending:
+   ```bash
+   openclaw memory promote
+   ```
+   (without `--apply` — preview only)
+
+5. Display the output:
 
 ```
 ============================================================
-  INSTINCT STATUS - 12 total
+  MEMORY STATUS
 ============================================================
 
-  Project: my-app (a1b2c3d4e5f6)
-  Project instincts: 8
-  Global instincts:  4
+  Workspace: ~/.openclaw/workspace-main/
+  MEMORY.md sections: <count>
 
-## PROJECT-SCOPED (my-app)
-  ### WORKFLOW (3)
-    ███████░░░  70%  grep-before-edit [project]
-              trigger: when modifying code
+## LONG-TERM MEMORY (MEMORY.md)
 
-## GLOBAL (apply to all projects)
-  ### SECURITY (2)
-    █████████░  85%  validate-user-input [global]
-              trigger: when handling user input
+<full MEMORY.md content>
+
+## SHORT-TERM RECALLS (pending promotion)
+
+<output from openclaw memory promote>
+
+## MEMORY INDEX
+
+<output from openclaw memory status>
 ```
+
+## Notes
+
+- MEMORY.md is injected at every agent bootstrap via the session-bootstrap hook
+- Short-term recalls are stored in ~/.openclaw/memory/main.sqlite
+- Run /skill cmd_promote to apply pending promotions to MEMORY.md

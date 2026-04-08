@@ -1,9 +1,9 @@
 ---
 name: cmd_instinct_import
-description: "Import instincts from file or URL into project/global scope"
+description: "Import memory entries from a markdown export file, merging with MEMORY.md without duplicating."
 user-invocable: true
 origin: openclaw-mas
-argument-hint: "<project-path> <file-or-url>"
+argument-hint: "<project-path> <file-or-url> [--dry-run] [--force]"
 ---
 
 ## Project Path
@@ -14,111 +14,85 @@ The first argument is the project path. Before doing anything else:
 2. Verify the path exists
 3. Work within that directory for all file operations and shell commands
 
-# Instinct Import Command
+# Memory Import
 
-## Implementation
-
-Run the instinct CLI using the plugin root path:
-
-```bash
-python3 "${CLAUDE_PLUGIN_ROOT}/skills/continuous-learning-v2/scripts/instinct-cli.py" import <file-or-url> [--dry-run] [--force] [--min-confidence 0.7] [--scope project|global]
-```
-
-Or if `CLAUDE_PLUGIN_ROOT` is not set (manual installation):
-
-```bash
-python3 ~/.claude/skills/continuous-learning-v2/scripts/instinct-cli.py import <file-or-url>
-```
-
-Import instincts from local file paths or HTTP(S) URLs.
+Imports memory entries from a markdown file (produced by /skill cmd_instinct_export
+or written manually) into the workspace MEMORY.md. Duplicate sections are detected
+and skipped. New sections are appended.
 
 ## Usage
 
 ```
-/instinct-import team-instincts.yaml
-/instinct-import https://github.com/org/repo/instincts.yaml
-/instinct-import team-instincts.yaml --dry-run
-/instinct-import team-instincts.yaml --scope global --force
-```
-
-## What to Do
-
-1. Fetch the instinct file (local path or URL)
-2. Parse and validate the format
-3. Check for duplicates with existing instincts
-4. Merge or add new instincts
-5. Save to inherited instincts directory:
-   - Project scope: `~/.claude/homunculus/projects/<project-id>/instincts/inherited/`
-   - Global scope: `~/.claude/homunculus/instincts/inherited/`
-
-## Import Process
-
-```
- Importing instincts from: team-instincts.yaml
-================================================
-
-Found 12 instincts to import.
-
-Analyzing conflicts...
-
-## New Instincts (8)
-These will be added:
-  ✓ use-zod-validation (confidence: 0.7)
-  ✓ prefer-named-exports (confidence: 0.65)
-  ✓ test-async-functions (confidence: 0.8)
-  ...
-
-## Duplicate Instincts (3)
-Already have similar instincts:
-  WARNING: prefer-functional-style
-     Local: 0.8 confidence, 12 observations
-     Import: 0.7 confidence
-     → Keep local (higher confidence)
-
-  WARNING: test-first-workflow
-     Local: 0.75 confidence
-     Import: 0.9 confidence
-     → Update to import (higher confidence)
-
-Import 8 new, update 1?
-```
-
-## Merge Behavior
-
-When importing an instinct with an existing ID:
-- Higher-confidence import becomes an update candidate
-- Equal/lower-confidence import is skipped
-- User confirms unless `--force` is used
-
-## Source Tracking
-
-Imported instincts are marked with:
-```yaml
-source: inherited
-scope: project
-imported_from: "team-instincts.yaml"
-project_id: "a1b2c3d4e5f6"
-project_name: "my-project"
+/skill cmd_instinct_import <project-path> <file-path>
+/skill cmd_instinct_import <project-path> https://example.com/memory.md
+/skill cmd_instinct_import <project-path> team-memory.md --dry-run
+/skill cmd_instinct_import <project-path> team-memory.md --force
 ```
 
 ## Flags
 
-- `--dry-run`: Preview without importing
-- `--force`: Skip confirmation prompt
-- `--min-confidence <n>`: Only import instincts above threshold
-- `--scope <project|global>`: Select target scope (default: `project`)
+- `--dry-run` — show what would be added without writing anything
+- `--force` — skip the confirmation prompt
 
-## Output
+## What to Do
 
-After import:
-```
-PASS: Import complete!
+1. Read the import source:
+   - If the second argument starts with `http://` or `https://`, fetch it:
+     ```bash
+     curl -s "<url>"
+     ```
+   - Otherwise read the file directly.
+   If the source cannot be read, report the error and stop.
 
-Added: 8 instincts
-Updated: 1 instinct
-Skipped: 3 instincts (equal/higher confidence already exists)
+2. Parse import sections: extract all `##`-level headings and their content blocks.
+   Skip export header lines (`# Memory Export`, `# Exported:`, `# Source:`,
+   `# Sections:`, and the `---` separator).
 
-New instincts saved to: ~/.claude/homunculus/instincts/inherited/
+3. Read the existing `~/.openclaw/workspace-main/MEMORY.md`.
+   Extract all existing `##`-level heading names for deduplication.
 
-Run /instinct-status to see all instincts.
-```
+4. Classify each imported section:
+   - **New**: heading name does not exist in current MEMORY.md (case-insensitive match)
+   - **Duplicate**: heading name already exists — will be skipped
+
+5. Report the analysis:
+   ```
+   Import Analysis: <source>
+   ================================
+
+   Found <N> sections in import file.
+
+   New sections (<count>):
+     + <heading name>
+     + <heading name>
+
+   Duplicate sections (<count>, will be skipped):
+     = <heading name>
+   ```
+
+6. If `--dry-run` is set, stop here.
+
+7. If there are no new sections, report "Nothing to import — all sections already exist." Stop.
+
+8. If `--force` is not set, ask: "Import <count> new sections? (yes/no)"
+   If the user declines, stop.
+
+9. Append the new sections to `~/.openclaw/workspace-main/MEMORY.md`.
+
+10. Re-index memory:
+    ```bash
+    openclaw memory index
+    ```
+
+11. Report:
+    ```
+    Import complete.
+    Added: <count> sections
+    Skipped: <count> duplicates
+    MEMORY.md now has <total> sections.
+    ```
+
+## Notes
+
+- Deduplication is by heading text (case-insensitive) — local version always wins on conflict
+- Use --force in scripted/automated contexts to skip the confirmation prompt

@@ -1,9 +1,9 @@
 ---
 name: cmd_evolve
-description: "Analyze instincts and suggest or generate evolved structures"
+description: "Cluster MEMORY.md entries by theme and optionally generate SKILL.md drafts."
 user-invocable: true
 origin: openclaw-mas
-argument-hint: "<project-path>"
+argument-hint: "<project-path> [--generate]"
 ---
 
 ## Project Path
@@ -14,175 +14,166 @@ The first argument is the project path. Before doing anything else:
 2. Verify the path exists
 3. Work within that directory for all file operations and shell commands
 
-# Evolve Command
+# Evolve — Memory Clustering and Skill Generation
 
-## Implementation
-
-Run the instinct CLI using the plugin root path:
-
-```bash
-python3 "${CLAUDE_PLUGIN_ROOT}/skills/continuous-learning-v2/scripts/instinct-cli.py" evolve [--generate]
-```
-
-Or if `CLAUDE_PLUGIN_ROOT` is not set (manual installation):
-
-```bash
-python3 ~/.claude/skills/continuous-learning-v2/scripts/instinct-cli.py evolve [--generate]
-```
-
-Analyzes instincts and clusters related ones into higher-level structures:
-- **Commands**: When instincts describe user-invoked actions
-- **Skills**: When instincts describe auto-triggered behaviors
-- **Agents**: When instincts describe complex, multi-step processes
+Reads MEMORY.md, groups related sections by theme, and identifies which clusters
+are strong enough candidates to become reusable skills. With `--generate`, writes
+SKILL.md drafts into the project's `skills/` directory.
 
 ## Usage
 
 ```
-/evolve                    # Analyze all instincts and suggest evolutions
-/evolve --generate         # Also generate files under evolved/{skills,commands,agents}
+/skill cmd_evolve <project-path>             # Analyze and suggest
+/skill cmd_evolve <project-path> --generate  # Analyze and write SKILL.md drafts
 ```
-
-## Evolution Rules
-
-### → Command (User-Invoked)
-When instincts describe actions a user would explicitly request:
-- Multiple instincts about "when user asks to..."
-- Instincts with triggers like "when creating a new X"
-- Instincts that follow a repeatable sequence
-
-Example:
-- `new-table-step1`: "when adding a database table, create migration"
-- `new-table-step2`: "when adding a database table, update schema"
-- `new-table-step3`: "when adding a database table, regenerate types"
-
-→ Creates: **new-table** command
-
-### → Skill (Auto-Triggered)
-When instincts describe behaviors that should happen automatically:
-- Pattern-matching triggers
-- Error handling responses
-- Code style enforcement
-
-Example:
-- `prefer-functional`: "when writing functions, prefer functional style"
-- `use-immutable`: "when modifying state, use immutable patterns"
-- `avoid-classes`: "when designing modules, avoid class-based design"
-
-→ Creates: `functional-patterns` skill
-
-### → Agent (Needs Depth/Isolation)
-When instincts describe complex, multi-step processes that benefit from isolation:
-- Debugging workflows
-- Refactoring sequences
-- Research tasks
-
-Example:
-- `debug-step1`: "when debugging, first check logs"
-- `debug-step2`: "when debugging, isolate the failing component"
-- `debug-step3`: "when debugging, create minimal reproduction"
-- `debug-step4`: "when debugging, verify fix with test"
-
-→ Creates: **debugger** agent
 
 ## What to Do
 
-1. Detect current project context
-2. Read project + global instincts (project takes precedence on ID conflicts)
-3. Group instincts by trigger/domain patterns
-4. Identify:
-   - Skill candidates (trigger clusters with 2+ instincts)
-   - Command candidates (high-confidence workflow instincts)
-   - Agent candidates (larger, high-confidence clusters)
-5. Show promotion candidates (project -> global) when applicable
-6. If `--generate` is passed, write files to:
-   - Project scope: `~/.claude/homunculus/projects/<project-id>/evolved/`
-   - Global fallback: `~/.claude/homunculus/evolved/`
+### Step 1: Read MEMORY.md
 
-## Output Format
+Read `~/.openclaw/workspace-main/MEMORY.md`. Parse all `##`-level sections —
+each section has a heading and a content block.
+
+If MEMORY.md is empty or has fewer than 3 sections, report:
+"Not enough memory entries to cluster. Add more with /skill cmd_promote."
+Stop here.
+
+### Step 2: Surface recent short-term recalls
+
+```bash
+openclaw memory search "pattern workflow behavior"
+```
+
+Include any surfaced recalls alongside MEMORY.md sections in the analysis pool.
+
+### Step 3: Cluster by theme
+
+Group sections into thematic clusters using:
+- **Trigger similarity**: sections that activate under similar conditions
+- **Domain overlap**: sections touching the same technical area (testing, security, build, etc.)
+- **Sequential relationship**: sections describing steps in a multi-step process
+
+For each cluster, determine:
+- Cluster name (descriptive theme)
+- Member sections (list of `##` headings)
+- Section count
+- Suggested output type:
+  - **command** — cluster describes a user-invoked, multi-step workflow
+  - **skill** — cluster describes an automatic, pattern-matched behavior
+
+Single-section entries: note them but do not generate from them.
+
+### Step 4: Display analysis
 
 ```
 ============================================================
-  EVOLVE ANALYSIS - 12 instincts
-  Project: my-app (a1b2c3d4e5f6)
-  Project-scoped: 8 | Global: 4
+  EVOLVE ANALYSIS
+  Source: ~/.openclaw/workspace-main/MEMORY.md
+  Total sections: <N>
+  Clusters identified: <K>
 ============================================================
 
-High confidence instincts (>=80%): 5
+## CLUSTER 1: "<theme name>"
+  Sections: <count>
+  Members:
+    - <heading 1>
+    - <heading 2>
+  Suggested type: <command | skill>
+  Rationale: <one sentence>
 
-## SKILL CANDIDATES
-1. Cluster: "adding tests"
-   Instincts: 3
-   Avg confidence: 82%
-   Domains: testing
-   Scopes: project
+## CLUSTER 2: "<theme name>"
+  ...
 
-## COMMAND CANDIDATES (2)
-  /adding-tests
-    From: test-first-workflow [project]
-    Confidence: 84%
+## SINGLE-SECTION ENTRIES (not enough to cluster)
+  - <heading>
 
-## AGENT CANDIDATES (1)
-  adding-tests-agent
-    Covers 3 instincts
-    Avg confidence: 82%
+## SUMMARY
+  Command candidates: <N>
+  Skill candidates: <N>
+  Single entries: <N>
 ```
 
-## Flags
+### Step 5: If --generate is NOT passed
 
-- `--generate`: Generate evolved files in addition to analysis output
+Suggest next steps:
+```
+To generate SKILL.md drafts from these clusters:
+  /skill cmd_evolve <project-path> --generate
 
-## Generated File Format
+To promote more entries from short-term memory first:
+  /skill cmd_promote <project-path>
+```
+Stop here.
 
-### Command
+### Step 6: If --generate IS passed
+
+For each cluster with 2 or more sections:
+
+1. Derive a skill name: lowercase, underscores only, max 32 chars
+   (e.g. "Adding Database Tables" → `add_database_table`)
+
+2. Output path: `<project-path>/skills/<skill-name>/SKILL.md`
+   Create the directory if it does not exist.
+
+3. Write the SKILL.md draft:
+
 ```markdown
 ---
-name: new-table
-description: Create a new database table with migration, schema update, and type generation
-command: /new-table
+name: <skill-name>
+description: "<one-line description derived from cluster theme>"
+user-invocable: <true if command candidate, false if skill>
+origin: openclaw-mas
+argument-hint: "<project-path>"
 evolved_from:
-  - new-table-migration
-  - update-schema
-  - regenerate-types
+  - <MEMORY.md heading 1>
+  - <MEMORY.md heading 2>
+generated: <YYYY-MM-DD>
 ---
 
-# New Table Command
+## Project Path
 
-[Generated content based on clustered instincts]
+The first argument is the project path. Before doing anything else:
 
-## Steps
-1. ...
-2. ...
+1. Extract the project path from the first argument
+2. Verify the path exists
+3. Work within that directory for all file operations and shell commands
+
+# <Skill Title>
+
+<Description synthesized from the cluster's memory sections>
+
+## Context
+
+This skill was generated by /skill cmd_evolve from the following MEMORY.md entries:
+<list the source sections>
+
+## Workflow
+
+<Step-by-step workflow derived from the clustered memory sections>
+
+## Notes
+
+- Review and refine this draft — it was auto-generated from memory clusters
+- Remove the evolved_from and generated frontmatter keys before publishing
 ```
 
-### Skill
-```markdown
----
-name: functional-patterns
-description: Enforce functional programming patterns
-evolved_from:
-  - prefer-functional
-  - use-immutable
-  - avoid-classes
----
+4. After writing each draft:
+   ```
+   Generated: <project-path>/skills/<skill-name>/SKILL.md
+   ```
 
-# Functional Patterns Skill
+5. Final report:
+   ```
+   Generated <N> SKILL.md drafts in <project-path>/skills/
 
-[Generated content based on clustered instincts]
-```
+   Next steps:
+   - Review each draft and refine the workflow steps
+   - Remove evolved_from and generated frontmatter keys before deploying
+   - Install to ~/.openclaw/skills/ when ready
+   ```
 
-### Agent
-```markdown
----
-name: debugger
-description: Systematic debugging agent
-model: sonnet
-evolved_from:
-  - debug-check-logs
-  - debug-isolate
-  - debug-reproduce
----
+## Notes
 
-# Debugger Agent
-
-[Generated content based on clustered instincts]
-```
+- Generated files are drafts — they capture the theme but need human review
+- cmd_evolve is read-only except for --generate which writes to <project-path>/skills/
+- Single-section entries are shown in analysis but never generate a SKILL.md
