@@ -37,10 +37,11 @@ If no description is provided, use the `conversation-analyzer` agent to find beh
 ### Step 2: Design the Hook
 
 For each behavior to prevent, determine:
-- **Event**: which OpenClaw event to listen on (`command:new`, `message:received`, `message:sent`, `session:patch`, etc.)
-- **Pattern**: what to match (regex against message content, command text, etc.)
-- **Action**: `warn` only — OpenClaw hooks cannot block actions, they can only push warning messages to the user
+- **Event**: which OpenClaw event to listen on (see event types below)
+- **Pattern**: what to match (regex against message content, command source, etc.)
 - **Name**: a descriptive kebab-case name
+
+> Note: Internal hooks can only **warn** (push messages to the user). They cannot block actions. Errors in handlers are caught and logged but don't prevent other handlers from running.
 
 ### Step 3: Generate Hook Files
 
@@ -50,34 +51,23 @@ Create a hook directory at `<project-path>/.openclaw/hooks/<hook-name>/`:
 ```markdown
 ---
 name: <hook-name>
-description: "<what this hook prevents>"
-events: ["<event-type>"]
+description: "<what this hook warns about>"
+events: ["<event:action>"]
 enabled: true
 emoji: "🛡️"
 ---
-
-# <Hook Name>
-
-Prevents: <description of unwanted behavior>
-
-## Trigger
-
-Event: `<event-type>`
-Pattern: `<regex pattern>`
-Action: <block|warn>
 ```
 
 **handler.ts**:
 ```typescript
-// event names use colon-separated format: "command:new" → type="command", action="new"
-// "session:compact:before" → type="session", action="compact:before"
-const handler = async (event) => {
-  if (event.type !== "command" || event.action !== "new") {
+import type { InternalHookEvent } from "openclaw/plugin-sdk/hook-runtime";
+
+const handler = async (event: InternalHookEvent) => {
+  if (event.type !== "<type>" || event.action !== "<action>") {
     return;
   }
-  // for message:received use event.context.content
-  // for command:new use event.context.commandSource or event.context.workspaceDir
-  const content = event.context?.content ?? event.context?.commandSource ?? '';
+  const ctx = event.context as Record<string, unknown>;
+  const content = (ctx.content ?? ctx.commandSource ?? '') as string;
   const pattern = /<regex pattern>/i;
 
   if (pattern.test(content)) {
@@ -87,15 +77,30 @@ const handler = async (event) => {
 export default handler;
 ```
 
-> Note: Do not throw errors in handlers — it will prevent other handlers from running.
+### Event Types & Context Fields
+
+| Event | type | action | Useful context fields |
+|-------|------|--------|-----------------------|
+| `command:new` | `command` | `new` | `commandSource`, `workspaceDir`, `sessionEntry`, `cfg` |
+| `command:reset` | `command` | `reset` | `sessionEntry` |
+| `command:stop` | `command` | `stop` | `sessionEntry` |
+| `message:received` | `message` | `received` | `from`, `content`, `channelId`, `conversationId`, `metadata` |
+| `message:sent` | `message` | `sent` | `to`, `content`, `success`, `channelId`, `groupId` |
+| `message:transcribed` | `message` | `transcribed` | `content`, `transcript`, `from`, `channelId` |
+| `message:preprocessed` | `message` | `preprocessed` | `body`, `bodyForAgent`, `transcript`, `isGroup`, `groupId` |
+| `session:patch` | `session` | `patch` | `sessionEntry`, `patch`, `cfg` |
+| `agent:bootstrap` | `agent` | `bootstrap` | `workspaceDir`, `bootstrapFiles`, `agentId`, `sessionKey` |
+| `gateway:startup` | `gateway` | `startup` | `cfg`, `workspaceDir` |
 
 ### Step 4: Register the Hook
 
-Instruct the user to register the hook:
 ```bash
 openclaw hooks enable <hook-name>
-# or add to openclaw.json:
-# "hooks.internal.entries.<hook-name>": { "enabled": true }
+```
+
+Or add to `openclaw.json`:
+```json
+"hooks.internal.entries.<hook-name>": { "enabled": true }
 ```
 
 ### Step 5: Confirm

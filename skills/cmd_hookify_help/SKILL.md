@@ -19,11 +19,9 @@ Display comprehensive documentation for the OpenClaw hookify system.
 
 ## OpenClaw Hook System Overview
 
-Hooks are automation scripts that execute when specific events occur in the OpenClaw gateway.
+Hooks are automation scripts that execute when specific events occur in the OpenClaw gateway. Internal hooks can push warning messages to the user but cannot block actions — errors in handlers are caught and logged without stopping other handlers.
 
 ### Hook Structure
-
-Each hook lives in a directory with two files:
 
 ```
 .openclaw/hooks/<hook-name>/
@@ -31,22 +29,20 @@ Each hook lives in a directory with two files:
 └── handler.ts    # TypeScript implementation
 ```
 
-### Available Events
+### Available Events & Context Fields
 
-| Event | type | action | When it fires |
-|-------|------|--------|--------------|
-| `command:new` | `command` | `new` | A new command is received |
-| `command:reset` | `command` | `reset` | A command is reset |
-| `command:stop` | `command` | `stop` | A command is stopped |
-| `message:received` | `message` | `received` | A message is received from the user |
-| `message:sent` | `message` | `sent` | A message is sent by the agent |
-| `message:transcribed` | `message` | `transcribed` | A voice message is transcribed |
-| `message:preprocessed` | `message` | `preprocessed` | A message is preprocessed |
-| `session:compact:before` | `session` | `compact:before` | Before session compaction |
-| `session:compact:after` | `session` | `compact:after` | After session compaction |
-| `session:patch` | `session` | `patch` | Session state is patched |
-| `agent:bootstrap` | `agent` | `bootstrap` | Agent bootstrap |
-| `gateway:startup` | `gateway` | `startup` | Gateway startup |
+| Event | type | action | Key context fields |
+|-------|------|--------|--------------------|
+| `command:new` | `command` | `new` | `commandSource`, `workspaceDir`, `sessionEntry`, `cfg` |
+| `command:reset` | `command` | `reset` | `sessionEntry` |
+| `command:stop` | `command` | `stop` | `sessionEntry` |
+| `message:received` | `message` | `received` | `from`, `content`, `channelId`, `conversationId`, `metadata` |
+| `message:sent` | `message` | `sent` | `to`, `content`, `success`, `channelId`, `groupId` |
+| `message:transcribed` | `message` | `transcribed` | `content`, `transcript`, `from`, `channelId` |
+| `message:preprocessed` | `message` | `preprocessed` | `body`, `bodyForAgent`, `transcript`, `isGroup`, `groupId` |
+| `session:patch` | `session` | `patch` | `sessionEntry`, `patch`, `cfg` |
+| `agent:bootstrap` | `agent` | `bootstrap` | `workspaceDir`, `bootstrapFiles`, `agentId`, `sessionKey` |
+| `gateway:startup` | `gateway` | `startup` | `cfg`, `workspaceDir` |
 
 ### HOOK.md Format
 
@@ -63,27 +59,47 @@ emoji: "🛡️"
 ### handler.ts Format
 
 ```typescript
-const handler = async (event) => {
+import type { InternalHookEvent } from "openclaw/plugin-sdk/hook-runtime";
+
+const handler = async (event: InternalHookEvent) => {
   if (event.type !== "command" || event.action !== "new") {
     return;
   }
-  // warn the user:
-  event.messages.push('⚠️ Warning: reason');
-  // Note: do not throw — it prevents other handlers from running
+  const ctx = event.context as Record<string, unknown>;
+  const content = (ctx.content ?? ctx.commandSource ?? '') as string;
+
+  if (/pattern/i.test(content)) {
+    event.messages.push('⚠️ Warning: reason');
+  }
+  // Note: do not throw — errors are caught but prevent other handlers from running
 };
 export default handler;
 ```
 
-Available on `event`: `type`, `action`, `sessionKey`, `timestamp`, `messages` (push strings to notify user), `context` (event-specific data)
+### InternalHookEvent interface
 
-### event.context fields by event type
+```typescript
+interface InternalHookEvent {
+  type: "command" | "session" | "agent" | "gateway" | "message";
+  action: string;
+  sessionKey: string;
+  context: Record<string, unknown>;
+  timestamp: Date;
+  messages: string[];  // push strings here to notify the user
+}
+```
 
-| Event | context fields |
-|-------|---------------|
-| `command:new` | `sessionEntry`, `previousSessionEntry`, `commandSource`, `workspaceDir`, `cfg` |
-| `message:received` | `from`, `content`, `channelId`, `metadata` (senderId, senderName, guildId) |
-| `message:sent` | `to`, `content`, `success`, `channelId` |
-| `session:patch` | `sessionEntry`, `patch` (changed fields only), `cfg` |
+### Type guards (from "openclaw/plugin-sdk/hook-runtime")
+
+```typescript
+isMessageReceivedEvent(event)    // narrows to MessageReceivedHookEvent
+isMessageSentEvent(event)        // narrows to MessageSentHookEvent
+isMessageTranscribedEvent(event) // narrows to MessageTranscribedHookEvent
+isMessagePreprocessedEvent(event)
+isSessionPatchEvent(event)
+isAgentBootstrapEvent(event)
+isGatewayStartupEvent(event)
+```
 
 ### CLI Commands
 
