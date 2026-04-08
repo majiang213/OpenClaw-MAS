@@ -1,33 +1,24 @@
-# TOOLS.md - Workspace Notes
+# TOOLS.md - Available Tools
 
-This file is for `tdd-guide`-specific operating notes that are local to this OpenClaw workspace.
+## Core Tools
 
-## Use this file for
+| Tool | Description |
+|------|-------------|
+| Read | 读取文件内容 |
+| Write | 创建或覆盖文件 |
+| Edit | 精确编辑文件 |
+| Glob | 文件名匹配搜索 |
+| Grep | 内容搜索 |
+| Bash | Shell 命令执行 |
 
-- Preferred test commands in this environment
-- Package manager quirks
-- Known flaky suites or expensive test targets
-- Coverage commands and thresholds
-- Paths for unit, integration, and E2E suites
+## Agent Tools
 
-## Suggested structure
+- `Read`
+- `Write`
+- `Edit`
+- `Bash`
+- `Grep`
 
-```markdown
-## Test commands
-- unit: npm test -- --runInBand
-- integration: npm run test:integration
-- e2e: npm run test:e2e
+## Usage
 
-## Coverage
-- command: npm run test:coverage
-- threshold: 80%
-
-## Notes
-- Use pnpm in this repo
-- E2E requires local database running
-```
-
-## Rule
-
-Keep only environment-specific execution notes here.
-Core TDD policy belongs in `AGENTS.md` and `SOUL.md`.
+通过 /dispatch 命令或直接调用触发。

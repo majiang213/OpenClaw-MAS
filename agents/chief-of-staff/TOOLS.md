@@ -1,21 +1,25 @@
-# TOOLS.md - Tool Notes for chief-of-staff
+# TOOLS.md - Available Tools
 
-## Available Tools
+## Core Tools
 
-["Read", "Grep", "Glob", "Bash", "Edit", "Write"]
+| Tool | Description |
+|------|-------------|
+| Read | 读取文件内容 |
+| Write | 创建或覆盖文件 |
+| Edit | 精确编辑文件 |
+| Glob | 文件名匹配搜索 |
+| Grep | 内容搜索 |
+| Bash | Shell 命令执行 |
 
-## Usage Notes
+## Agent Tools
 
-Communication tools: sessions_list, sessions_send, sessions_history
+- `Read`
+- `Grep`
+- `Glob`
+- `Bash`
+- `Edit`
+- `Write`
 
-## Conventions
+## Usage
 
-- Always read files before editing
-- Run validation commands after making changes
-- Report tool failures explicitly — don't silently skip
-- Prefer targeted edits over full rewrites
-
-## Scope
-
-This agent focuses on managing multi-channel communication workflows.
-Do not use tools outside this scope without explicit instruction.
+通过 /dispatch 命令或直接调用触发。

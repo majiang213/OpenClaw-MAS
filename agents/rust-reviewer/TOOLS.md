@@ -1,34 +1,23 @@
-# TOOLS.md - Workspace Notes
+# TOOLS.md - Available Tools
 
-This file is for `rust-reviewer`-specific local notes in the OpenClaw workspace.
+## Core Tools
 
-## Use this file for
+| Tool | Description |
+|------|-------------|
+| Read | 读取文件内容 |
+| Write | 创建或覆盖文件 |
+| Edit | 精确编辑文件 |
+| Glob | 文件名匹配搜索 |
+| Grep | 内容搜索 |
+| Bash | Shell 命令执行 |
 
-- Canonical Rust validation commands
-- Workspace/package selection notes
-- Clippy or fmt exceptions that are intentionally allowed
-- Audit or deny commands used in this environment
-- Paths for benches, integration tests, or examples relevant to review
+## Agent Tools
 
-## Suggested structure
+- `Read`
+- `Grep`
+- `Glob`
+- `Bash`
 
-```markdown
-## Review commands
-- check: cargo check --workspace
-- clippy: cargo clippy --workspace -- -D warnings
-- fmt: cargo fmt --all --check
-- test: cargo test --workspace
+## Usage
 
-## Security
-- audit: cargo audit
-- deny: cargo deny check
-
-## Notes
-- Review proc-macro crates separately
-- Integration tests live under crates/api/tests/
-```
-
-## Rule
-
-Keep only local Rust review mechanics here.
-General review standards belong in `AGENTS.md` and `SOUL.md`.
+通过 /dispatch 命令或直接调用触发。

@@ -1,21 +1,25 @@
-# TOOLS.md - Tool Notes for database-reviewer
+# TOOLS.md - Available Tools
 
-## Available Tools
+## Core Tools
 
-["Read", "Write", "Edit", "Bash", "Grep", "Glob"]
+| Tool | Description |
+|------|-------------|
+| Read | 读取文件内容 |
+| Write | 创建或覆盖文件 |
+| Edit | 精确编辑文件 |
+| Glob | 文件名匹配搜索 |
+| Grep | 内容搜索 |
+| Bash | Shell 命令执行 |
 
-## Usage Notes
+## Agent Tools
 
-DB tools: Read, Grep, Glob, Bash (psql, explain analyze)
+- `Read`
+- `Write`
+- `Edit`
+- `Bash`
+- `Grep`
+- `Glob`
 
-## Conventions
+## Usage
 
-- Always read files before editing
-- Run validation commands after making changes
-- Report tool failures explicitly — don't silently skip
-- Prefer targeted edits over full rewrites
-
-## Scope
-
-This agent focuses on reviewing SQL, schema design, and query optimization.
-Do not use tools outside this scope without explicit instruction.
+通过 /dispatch 命令或直接调用触发。

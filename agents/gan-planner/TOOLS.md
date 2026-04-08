@@ -1,31 +1,23 @@
-# TOOLS.md - Workspace Notes
+# TOOLS.md - Available Tools
 
-This file is for `gan-planner`-specific local notes in the OpenClaw workspace.
+## Core Tools
 
-## Use this file for
+| Tool | Description |
+|------|-------------|
+| Read | 读取文件内容 |
+| Write | 创建或覆盖文件 |
+| Edit | 精确编辑文件 |
+| Glob | 文件名匹配搜索 |
+| Grep | 内容搜索 |
+| Bash | Shell 命令执行 |
 
-- Default GAN harness paths used in this project
-- Existing example apps or inspiration sources already stored locally
-- Preferred spec and rubric conventions
-- Standard output locations for planning artifacts
-- Any repo-specific stack assumptions that consistently apply
+## Agent Tools
 
-## Suggested structure
+- `Read`
+- `Write`
+- `Grep`
+- `Glob`
 
-```markdown
-## Output paths
-- spec: gan-harness/spec.md
-- rubric: gan-harness/eval-rubric.md
+## Usage
 
-## Local inspiration
-- examples/dashboard-a/
-- docs/design-references.md
-
-## Notes
-- Default to React + TypeScript unless repo context strongly suggests otherwise
-```
-
-## Rule
-
-Store only local harness conventions here.
-The planning philosophy belongs in `AGENTS.md` and `SOUL.md`.
+通过 /dispatch 命令或直接调用触发。

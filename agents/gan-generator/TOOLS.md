@@ -1,34 +1,25 @@
-# TOOLS.md - Workspace Notes
+# TOOLS.md - Available Tools
 
-This file is for `gan-generator`-specific local notes in the OpenClaw workspace.
+## Core Tools
 
-## Use this file for
+| Tool | Description |
+|------|-------------|
+| Read | 读取文件内容 |
+| Write | 创建或覆盖文件 |
+| Edit | 精确编辑文件 |
+| Glob | 文件名匹配搜索 |
+| Grep | 内容搜索 |
+| Bash | Shell 命令执行 |
 
-- Dev server command and port conventions
-- Build, lint, and test commands
-- Locations of GAN feedback and state artifacts
-- Framework-specific run instructions
-- Known setup prerequisites for live evaluation
+## Agent Tools
 
-## Suggested structure
+- `Read`
+- `Write`
+- `Edit`
+- `Bash`
+- `Grep`
+- `Glob`
 
-```markdown
-## Dev server
-- command: npm run dev
-- url: http://localhost:3000
+## Usage
 
-## Validation
-- build: npm run build
-- test: npm test
-- lint: npm run lint
-
-## GAN artifacts
-- spec: gan-harness/spec.md
-- state: gan-harness/generator-state.md
-- feedback: gan-harness/feedback/
-```
-
-## Rule
-
-Keep only local execution details here.
-Generator behavior belongs in `AGENTS.md` and `SOUL.md`.
+通过 /dispatch 命令或直接调用触发。

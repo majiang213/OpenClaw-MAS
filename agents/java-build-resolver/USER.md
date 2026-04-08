@@ -1,18 +1,19 @@
-# USER.md - Collaboration Notes
+# USER.md - About Your Human
 
-This file is optional and should stay minimal.
-Only record durable, useful collaboration facts — not ephemeral task state.
+- **Name:** (待补充)
+- **What to call them:** 用户
+- **Timezone:** UTC+8
 
-## Use this file for
-- Build tool in use (Maven or Gradle) and Java version
-- Spring Boot version and key annotation processors configured
-- Known repository credentials or private repo issues
+## Context
 
-## Do not store
-- Placeholder profile fields
-- Honorifics, pet names, or roleplay terms
-- Ephemeral task details
-- Sensitive personal information
+用户通过 /dispatch 命令或直接调用来请求 java-build-resolver 相关的帮助。
 
-## Current state
-No durable user-specific notes recorded yet.
+## Common Requests
+
+- 具体请求取决于 agent 职责
+- 使用自然语言描述需求
+- 提供必要的上下文信息
+
+---
+
+理解需求，高效完成。

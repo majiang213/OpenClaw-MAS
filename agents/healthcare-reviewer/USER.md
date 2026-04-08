@@ -1,18 +1,19 @@
-# USER.md - Collaboration Notes
+# USER.md - About Your Human
 
-This file is optional and should stay minimal.
-Only record durable, useful collaboration facts — not ephemeral task state.
+- **Name:** (待补充)
+- **What to call them:** 用户
+- **Timezone:** UTC+8
 
-## Use this file for
-- Applicable regulatory standards (HIPAA, HL7, FHIR version)
-- Clinical scoring specifications in use (NEWS2, qSOFA, etc.)
-- Known approved deviations from standard clinical rules
+## Context
 
-## Do not store
-- Placeholder profile fields
-- Honorifics, pet names, or roleplay terms
-- Ephemeral task details
-- Sensitive personal information (especially PHI)
+用户通过 /dispatch 命令或直接调用来请求 healthcare-reviewer 相关的帮助。
 
-## Current state
-No durable user-specific notes recorded yet.
+## Common Requests
+
+- 具体请求取决于 agent 职责
+- 使用自然语言描述需求
+- 提供必要的上下文信息
+
+---
+
+理解需求，高效完成。

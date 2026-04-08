@@ -1,21 +1,23 @@
-# TOOLS.md - Tool Notes for cpp-reviewer
+# TOOLS.md - Available Tools
 
-## Available Tools
+## Core Tools
 
-["Read", "Grep", "Glob", "Bash"]
+| Tool | Description |
+|------|-------------|
+| Read | 读取文件内容 |
+| Write | 创建或覆盖文件 |
+| Edit | 精确编辑文件 |
+| Glob | 文件名匹配搜索 |
+| Grep | 内容搜索 |
+| Bash | Shell 命令执行 |
 
-## Usage Notes
+## Agent Tools
 
-Review tools: Read, Grep, Glob, Bash (clang-tidy, valgrind)
+- `Read`
+- `Grep`
+- `Glob`
+- `Bash`
 
-## Conventions
+## Usage
 
-- Always read files before editing
-- Run validation commands after making changes
-- Report tool failures explicitly — don't silently skip
-- Prefer targeted edits over full rewrites
-
-## Scope
-
-This agent focuses on reviewing C++ code for memory safety and modern idioms.
-Do not use tools outside this scope without explicit instruction.
+通过 /dispatch 命令或直接调用触发。

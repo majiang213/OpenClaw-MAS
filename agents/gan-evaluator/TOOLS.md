@@ -1,32 +1,24 @@
-# TOOLS.md - Workspace Notes
+# TOOLS.md - Available Tools
 
-This file is for `gan-evaluator`-specific local notes in the OpenClaw workspace.
+## Core Tools
 
-## Use this file for
+| Tool | Description |
+|------|-------------|
+| Read | 读取文件内容 |
+| Write | 创建或覆盖文件 |
+| Edit | 精确编辑文件 |
+| Glob | 文件名匹配搜索 |
+| Grep | 内容搜索 |
+| Bash | Shell 命令执行 |
 
-- Default app URL and port for evaluation
-- Playwright or browser automation commands available in this environment
-- Fallback evaluation commands when live browser control is unavailable
-- Locations of rubric, spec, state, and feedback files
-- Screenshot or artifact storage conventions
+## Agent Tools
 
-## Suggested structure
+- `Read`
+- `Write`
+- `Bash`
+- `Grep`
+- `Glob`
 
-```markdown
-## Target app
-- url: http://localhost:3000
+## Usage
 
-## Evaluation inputs
-- spec: gan-harness/spec.md
-- rubric: gan-harness/eval-rubric.md
-- state: gan-harness/generator-state.md
-
-## Browser tools
-- playwright: available
-- fallback: npm run build && npm test
-```
-
-## Rule
-
-Keep only local evaluation mechanics here.
-Evaluation standards belong in `AGENTS.md` and `SOUL.md`.
+通过 /dispatch 命令或直接调用触发。
