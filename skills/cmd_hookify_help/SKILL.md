@@ -60,16 +60,18 @@ emoji: "🛡️"
 ### handler.ts Format
 
 ```typescript
-import type { HookContext } from '@openclaw/hooks';
-
-export default async function handler(ctx: HookContext) {
-  const content = ctx.messages?.at(-1)?.content ?? '';
-  // block:
-  throw new Error('Blocked: reason');
-  // warn:
-  ctx.push({ role: 'system', content: '⚠️ Warning: reason' });
-}
+const handler = async (event) => {
+  if (event.type !== "command" || event.action !== "new") {
+    return;
+  }
+  // warn the user:
+  event.messages.push('⚠️ Warning: reason');
+  // Note: do not throw — it prevents other handlers from running
+};
+export default handler;
 ```
+
+Available on `event`: `type`, `action`, `sessionKey`, `timestamp`, `messages` (push strings to notify user), `context` (event-specific data)
 
 ### CLI Commands
 

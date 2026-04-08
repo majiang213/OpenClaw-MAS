@@ -39,7 +39,7 @@ If no description is provided, use the `conversation-analyzer` agent to find beh
 For each behavior to prevent, determine:
 - **Event**: which OpenClaw event to listen on (`command:new`, `message:received`, `message:sent`, `session:patch`, etc.)
 - **Pattern**: what to match (regex against message content, command text, etc.)
-- **Action**: `block` (prevent) or `warn` (notify)
+- **Action**: `warn` only — OpenClaw hooks cannot block actions, they can only push warning messages to the user
 - **Name**: a descriptive kebab-case name
 
 ### Step 3: Generate Hook Files
@@ -69,22 +69,21 @@ Action: <block|warn>
 
 **handler.ts**:
 ```typescript
-import type { HookContext } from '@openclaw/hooks';
-
-export default async function handler(ctx: HookContext) {
-  const content = ctx.messages?.at(-1)?.content ?? '';
+const handler = async (event) => {
+  if (event.type !== "<event-type-prefix>" || event.action !== "<event-type-suffix>") {
+    return;
+  }
+  const content = JSON.stringify(event.context ?? '');
   const pattern = /<regex pattern>/i;
 
   if (pattern.test(content)) {
-    ctx.push({
-      role: 'system',
-      content: '⚠️ Hook triggered: <description of what was blocked/warned>',
-    });
-    // To block: throw new Error('Blocked by hookify rule: <name>');
-    // To warn: just push the message above
+    event.messages.push('⚠️ Warning: <description of unwanted behavior detected>');
   }
-}
+};
+export default handler;
 ```
+
+> Note: Do not throw errors in handlers — it will prevent other handlers from running.
 
 ### Step 4: Register the Hook
 
