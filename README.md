@@ -45,15 +45,15 @@ bash install.sh
 
 ## Quick Start
 
-Once installed, use `/skill <name>` in any OpenClaw chat. Always include the project path so the agent knows where to work:
+Once installed, use `/skill <name>` in any OpenClaw chat. Always include the project path as the first argument:
 
 ```
 /skill cmd_tdd ~/.openclaw/projects/myapp implement a login endpoint with JWT auth
 /skill cmd_code_review ~/.openclaw/projects/myapp
 /skill cmd_build_fix ~/.openclaw/projects/myapp
-/skill cmd_rust_review ~/.openclaw/projects/myapp
-/skill cmd_gan_build ~/.openclaw/projects/myapp build a real-time collaborative whiteboard
 ```
+
+See [docs/started.md](./docs/started.md) for the full skill reference, development workflows, hook authoring, and skill creation.
 
 ---
 
@@ -105,92 +105,9 @@ Then tell the user: "OpenClaw MAS is installed. You can now use `/skill <name>` 
 
 ---
 
-## Usage
-
-Invoke any workflow with `/skill <name>` in your OpenClaw chat. Always pass the project path as the first argument so the agent knows where to work:
-
-```
-/skill cmd_tdd ~/.openclaw/projects/myapp implement a login endpoint with JWT auth
-/skill cmd_code_review ~/.openclaw/projects/myapp
-/skill cmd_build_fix ~/.openclaw/projects/myapp
-/skill cmd_rust_review ~/.openclaw/projects/myapp
-/skill cmd_gan_build ~/.openclaw/projects/myapp build a real-time collaborative whiteboard
-/skill cmd_plan ~/.openclaw/projects/myapp add payment integration
-/skill cmd_security_scan ~/.openclaw/projects/myapp
-```
-
----
-
-## Available Skills
-
-### Development Workflow
-
-```
-/skill cmd_tdd ~/.openclaw/projects/myapp implement a login endpoint with JWT auth
-/skill cmd_feature_dev ~/.openclaw/projects/myapp add payment integration
-/skill cmd_plan ~/.openclaw/projects/myapp add payment integration
-/skill cmd_code_review ~/.openclaw/projects/myapp
-/skill cmd_review_pr ~/.openclaw/projects/myapp multi-agent PR review #42
-/skill cmd_e2e ~/.openclaw/projects/myapp
-/skill cmd_refactor_clean ~/.openclaw/projects/myapp
-/skill cmd_build_fix ~/.openclaw/projects/myapp
-/skill cmd_hookify ~/.openclaw/projects/myapp        # create hook rules
-/skill cmd_hookify_list ~/.openclaw/projects/myapp
-```
-
-### Multi-Agent Workflows
-
-```
-/skill cmd_gan_build ~/.openclaw/projects/myapp build a real-time collaborative whiteboard
-/skill cmd_gan_design ~/.openclaw/projects/myapp
-/skill cmd_santa_loop ~/.openclaw/projects/myapp
-/skill cmd_orchestrate ~/.openclaw/projects/myapp
-/skill cmd_devfleet ~/.openclaw/projects/myapp
-```
-
-### Language-Specific
-
-```
-/skill cmd_rust_build ~/.openclaw/projects/myapp
-/skill cmd_rust_review ~/.openclaw/projects/myapp
-/skill cmd_rust_test ~/.openclaw/projects/myapp
-/skill cmd_go_build ~/.openclaw/projects/myapp
-/skill cmd_go_review ~/.openclaw/projects/myapp
-/skill cmd_go_test ~/.openclaw/projects/myapp
-/skill cmd_cpp_build ~/.openclaw/projects/myapp
-/skill cmd_cpp_review ~/.openclaw/projects/myapp
-/skill cmd_cpp_test ~/.openclaw/projects/myapp
-/skill cmd_kotlin_build ~/.openclaw/projects/myapp
-/skill cmd_kotlin_review ~/.openclaw/projects/myapp
-/skill cmd_kotlin_test ~/.openclaw/projects/myapp
-/skill cmd_gradle_build ~/.openclaw/projects/myapp
-/skill cmd_python_review ~/.openclaw/projects/myapp
-/skill cmd_flutter_review ~/.openclaw/projects/myapp
-/skill cmd_flutter_build ~/.openclaw/projects/myapp
-```
-
-### Docs & Planning
-
-```
-/skill cmd_update_docs ~/.openclaw/projects/myapp
-/skill cmd_prp_prd ~/.openclaw/projects/myapp
-/skill cmd_prp_plan ~/.openclaw/projects/myapp
-/skill cmd_prp_implement ~/.openclaw/projects/myapp
-```
-
-### Session & Learning
-
-```
-/skill cmd_save_session ~/.openclaw/projects/myapp
-/skill cmd_resume_session ~/.openclaw/projects/myapp
-/skill cmd_learn ~/.openclaw/projects/myapp
-/skill cmd_skill_create ~/.openclaw/projects/myapp
-```
-
----
-
 ## Further Reading
 
+- [docs/started.md](./docs/started.md) — Skill invocation, workflows, hooks, and skill creation
 - [docs/architecture.md](./docs/architecture.md) — How the multi-agent system works
 - [docs/flow.md](./docs/flow.md) — End-to-end execution traces
 - [docs/hooks-migration.md](./docs/hooks-migration.md) — Hooks reference
