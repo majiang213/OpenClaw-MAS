@@ -33,17 +33,20 @@ Each hook lives in a directory with two files:
 
 ### Available Events
 
-| Event | When it fires |
-|-------|--------------|
-| `command:new` | A new command is received |
-| `command:reset` | A command is reset |
-| `command:stop` | A command is stopped |
-| `message:received` | A message is received from the user |
-| `message:sent` | A message is sent by the agent |
-| `message:transcribed` | A voice message is transcribed |
-| `session:compact:before` | Before session compaction |
-| `session:compact:after` | After session compaction |
-| `session:patch` | Session state is patched |
+| Event | type | action | When it fires |
+|-------|------|--------|--------------|
+| `command:new` | `command` | `new` | A new command is received |
+| `command:reset` | `command` | `reset` | A command is reset |
+| `command:stop` | `command` | `stop` | A command is stopped |
+| `message:received` | `message` | `received` | A message is received from the user |
+| `message:sent` | `message` | `sent` | A message is sent by the agent |
+| `message:transcribed` | `message` | `transcribed` | A voice message is transcribed |
+| `message:preprocessed` | `message` | `preprocessed` | A message is preprocessed |
+| `session:compact:before` | `session` | `compact:before` | Before session compaction |
+| `session:compact:after` | `session` | `compact:after` | After session compaction |
+| `session:patch` | `session` | `patch` | Session state is patched |
+| `agent:bootstrap` | `agent` | `bootstrap` | Agent bootstrap |
+| `gateway:startup` | `gateway` | `startup` | Gateway startup |
 
 ### HOOK.md Format
 

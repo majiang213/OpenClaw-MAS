@@ -69,8 +69,10 @@ Action: <block|warn>
 
 **handler.ts**:
 ```typescript
+// event names use colon-separated format: "command:new" → type="command", action="new"
+// "session:compact:before" → type="session", action="compact:before"
 const handler = async (event) => {
-  if (event.type !== "<event-type-prefix>" || event.action !== "<event-type-suffix>") {
+  if (event.type !== "command" || event.action !== "new") {
     return;
   }
   const content = JSON.stringify(event.context ?? '');
