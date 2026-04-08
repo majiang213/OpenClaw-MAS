@@ -1,6 +1,6 @@
 ---
 name: cmd_multi_workflow
-description: "multi-workflow workflow"
+description: "Full multi-model collaborative development workflow with intelligent routing: Frontend → Gemini, Backend → Codex."
 user-invocable: true
 origin: openclaw-mas
 argument-hint: "<project-path> <task>"

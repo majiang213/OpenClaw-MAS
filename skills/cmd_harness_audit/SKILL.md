@@ -1,6 +1,6 @@
 ---
 name: cmd_harness_audit
-description: "harness-audit workflow"
+description: "Audit the Claude Code harness configuration for reliability, cost, and throughput via the harness-optimizer agent."
 user-invocable: true
 origin: openclaw-mas
 argument-hint: "<project-path>"

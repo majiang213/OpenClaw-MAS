@@ -1,6 +1,6 @@
 ---
 name: cmd_update_docs
-description: "update-docs workflow"
+description: "Update README, CHANGELOG, API reference, and guides to reflect recent changes via the doc-updater agent."
 user-invocable: true
 origin: openclaw-mas
 argument-hint: "<project-path> [what changed]"

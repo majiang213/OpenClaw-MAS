@@ -1,6 +1,6 @@
 ---
 name: cmd_multi_backend
-description: "multi-backend workflow"
+description: "Backend-focused multi-model workflow: Research → Ideation → Plan → Execute → Optimize → Review, Codex-led."
 user-invocable: true
 origin: openclaw-mas
 argument-hint: "<project-path> <task>"

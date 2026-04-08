@@ -1,6 +1,6 @@
 ---
 name: cmd_refactor_clean
-description: "refactor-clean workflow"
+description: "Remove dead code, unused exports, and stale dependencies via the refactor-cleaner agent."
 user-invocable: true
 origin: openclaw-mas
 argument-hint: "<project-path> [scope]"

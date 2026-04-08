@@ -1,6 +1,6 @@
 ---
 name: cmd_gan_design
-description: "gan-design workflow"
+description: "GAN design pipeline: run gan-generator → gan-evaluator in sequence. Loops until evaluator score ≥ 7.0."
 user-invocable: true
 origin: openclaw-mas
 argument-hint: "<project-path> <design description>"

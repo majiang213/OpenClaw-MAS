@@ -1,6 +1,6 @@
 ---
 name: cmd_multi_plan
-description: "multi-plan workflow"
+description: "Multi-model collaborative planning: context retrieval + dual-model analysis → step-by-step implementation plan."
 user-invocable: true
 origin: openclaw-mas
 argument-hint: "<project-path> <task>"

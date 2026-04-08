@@ -1,6 +1,6 @@
 ---
 name: cmd_update_codemaps
-description: "update-codemaps workflow"
+description: "Regenerate CODEMAPS documentation for the codebase or specific modules via the doc-updater agent."
 user-invocable: true
 origin: openclaw-mas
 argument-hint: "<project-path>"

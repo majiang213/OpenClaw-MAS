@@ -1,6 +1,6 @@
 ---
 name: cmd_multi_execute
-description: "multi-execute workflow"
+description: "Multi-model collaborative execution: prototype from plan → Claude refactors and implements → multi-model audit and delivery."
 user-invocable: true
 origin: openclaw-mas
 argument-hint: "<project-path> <task>"

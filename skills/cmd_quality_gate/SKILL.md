@@ -1,6 +1,6 @@
 ---
 name: cmd_quality_gate
-description: "quality-gate workflow"
+description: "Run the ECC quality pipeline on demand: lint, format, and type-check a file or project scope."
 user-invocable: true
 origin: openclaw-mas
 argument-hint: "<project-path>"

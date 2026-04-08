@@ -1,6 +1,6 @@
 ---
 name: cmd_pm2
-description: "pm2 workflow"
+description: "Auto-analyze project and generate PM2 service configuration and startup commands."
 user-invocable: true
 origin: openclaw-mas
 argument-hint: "<project-path>"

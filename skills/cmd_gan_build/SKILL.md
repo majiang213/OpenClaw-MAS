@@ -1,6 +1,6 @@
 ---
 name: cmd_gan_build
-description: "gan-build workflow"
+description: "GAN pipeline: run gan-planner → gan-generator → gan-evaluator in sequence. Loops until evaluator score ≥ 7.0."
 user-invocable: true
 origin: openclaw-mas
 argument-hint: "<project-path> <build description>"

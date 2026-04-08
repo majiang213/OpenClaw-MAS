@@ -1,6 +1,6 @@
 ---
 name: cmd_build_fix
-description: "build-fix workflow"
+description: "Incrementally fix build and type errors with minimal, safe changes. Detects build system, parses errors, and fixes one at a time."
 user-invocable: true
 origin: openclaw-mas
 argument-hint: "<project-path>"

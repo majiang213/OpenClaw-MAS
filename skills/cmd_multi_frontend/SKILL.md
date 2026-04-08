@@ -1,6 +1,6 @@
 ---
 name: cmd_multi_frontend
-description: "multi-frontend workflow"
+description: "Frontend-focused multi-model workflow: Research → Ideation → Plan → Execute → Optimize → Review, Gemini-led."
 user-invocable: true
 origin: openclaw-mas
 argument-hint: "<project-path> <task>"

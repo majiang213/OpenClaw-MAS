@@ -1,6 +1,6 @@
 ---
 name: cmd_loop_status
-description: "loop-status workflow"
+description: "Inspect active loop state, progress, iteration count, and failure signals."
 user-invocable: true
 origin: openclaw-mas
 argument-hint: "<project-path>"

@@ -2,7 +2,9 @@
 name: session-bootstrap
 description: "Inject previous session memory and latest session summary into agent bootstrap context for cross-session continuity."
 metadata:
-  {"openclaw": {"emoji": "🧠", "events": ["agent:bootstrap"]}}
+  openclaw:
+    emoji: "🧠"
+    events: ["agent:bootstrap"]
 ---
 
 Injects two files into the agent's bootstrap context (if they exist):

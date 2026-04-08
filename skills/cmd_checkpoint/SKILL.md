@@ -1,6 +1,6 @@
 ---
 name: cmd_checkpoint
-description: "checkpoint workflow"
+description: "Create, verify, or list workflow checkpoints to save progress and enable safe resumption of long-running tasks."
 user-invocable: true
 origin: openclaw-mas
 argument-hint: "<project-path>"

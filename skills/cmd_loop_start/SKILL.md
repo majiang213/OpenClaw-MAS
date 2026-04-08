@@ -1,6 +1,6 @@
 ---
 name: cmd_loop_start
-description: "loop-start workflow"
+description: "Start an autonomous agent loop (sequential, continuous-pr, rfc-dag, or infinite) via the loop-operator agent."
 user-invocable: true
 origin: openclaw-mas
 argument-hint: "<project-path> <goal> [--mode loop|single] [--stop condition]"
