@@ -127,57 +127,66 @@ Invoke any workflow with `/skill <name>` in your OpenClaw chat. Always pass the 
 
 ### Development Workflow
 
-| Skill | What it does |
-|-------|-------------|
-| `/skill cmd_tdd` | TDD: scaffold → RED → GREEN → REFACTOR → 80%+ coverage |
-| `/skill cmd_plan` | Create implementation plan before writing code |
-| `/skill cmd_code_review` | Review local changes or a PR (pass PR number as arg) |
-| `/skill cmd_e2e` | Generate and run E2E tests with Playwright |
-| `/skill cmd_refactor_clean` | Remove dead code, consolidate duplicates |
-| `/skill cmd_build_fix` | Incrementally fix build/type errors |
-| `/skill cmd_security_scan` | OWASP Top 10 security review |
-| `/skill cmd_db_review` | PostgreSQL schema and query review |
+```
+/skill cmd_tdd ~/.openclaw/projects/myapp implement a login endpoint with JWT auth
+/skill cmd_plan ~/.openclaw/projects/myapp add payment integration
+/skill cmd_code_review ~/.openclaw/projects/myapp
+/skill cmd_code_review ~/.openclaw/projects/myapp 42  # review GitHub PR #42
+/skill cmd_e2e ~/.openclaw/projects/myapp
+/skill cmd_refactor_clean ~/.openclaw/projects/myapp
+/skill cmd_build_fix ~/.openclaw/projects/myapp
+/skill cmd_security_scan ~/.openclaw/projects/myapp
+/skill cmd_db_review ~/.openclaw/projects/myapp
+```
 
 ### Multi-Agent Workflows
 
-| Skill | What it does |
-|-------|-------------|
-| `/skill cmd_gan_build` | Autonomous build loop: plan → implement → evaluate → repeat until score ≥ 7.0 |
-| `/skill cmd_gan_design` | Design quality loop focused on visual output |
-| `/skill cmd_santa_loop` | Two reviewers in parallel, both must approve |
-| `/skill cmd_orchestrate` | Custom multi-agent workflow |
-| `/skill cmd_devfleet` | Parallel agent fleet for concurrent tasks |
+```
+/skill cmd_gan_build ~/.openclaw/projects/myapp build a real-time collaborative whiteboard
+/skill cmd_gan_design ~/.openclaw/projects/myapp
+/skill cmd_santa_loop ~/.openclaw/projects/myapp
+/skill cmd_orchestrate ~/.openclaw/projects/myapp
+/skill cmd_devfleet ~/.openclaw/projects/myapp
+```
 
 ### Language-Specific
 
-| Language | Build | Review | Test |
-|----------|-------|--------|------|
-| Rust | `/skill cmd_rust_build` | `/skill cmd_rust_review` | `/skill cmd_rust_test` |
-| Go | `/skill cmd_go_build` | `/skill cmd_go_review` | `/skill cmd_go_test` |
-| C++ | `/skill cmd_cpp_build` | `/skill cmd_cpp_review` | `/skill cmd_cpp_test` |
-| Kotlin | `/skill cmd_kotlin_build` | `/skill cmd_kotlin_review` | `/skill cmd_kotlin_test` |
-| Java | `/skill cmd_java_build` | `/skill cmd_java_review` | — |
-| Python | — | `/skill cmd_python_review` | — |
-| Flutter | — | `/skill cmd_flutter_review` | — |
-| PyTorch | `/skill cmd_pytorch_build` | — | — |
+```
+/skill cmd_rust_build ~/.openclaw/projects/myapp
+/skill cmd_rust_review ~/.openclaw/projects/myapp
+/skill cmd_rust_test ~/.openclaw/projects/myapp
+/skill cmd_go_build ~/.openclaw/projects/myapp
+/skill cmd_go_review ~/.openclaw/projects/myapp
+/skill cmd_go_test ~/.openclaw/projects/myapp
+/skill cmd_cpp_build ~/.openclaw/projects/myapp
+/skill cmd_cpp_review ~/.openclaw/projects/myapp
+/skill cmd_cpp_test ~/.openclaw/projects/myapp
+/skill cmd_kotlin_build ~/.openclaw/projects/myapp
+/skill cmd_kotlin_review ~/.openclaw/projects/myapp
+/skill cmd_kotlin_test ~/.openclaw/projects/myapp
+/skill cmd_gradle_build ~/.openclaw/projects/myapp
+/skill cmd_python_review ~/.openclaw/projects/myapp
+/skill cmd_flutter_review ~/.openclaw/projects/myapp
+/skill cmd_flutter_build ~/.openclaw/projects/myapp
+```
 
 ### Docs & Planning
 
-| Skill | What it does |
-|-------|-------------|
-| `/skill cmd_update_docs` | Update project documentation |
-| `/skill cmd_prp_prd` | Generate product requirements doc |
-| `/skill cmd_prp_plan` | Generate implementation plan |
-| `/skill cmd_prp_implement` | Implement from a PRP spec |
+```
+/skill cmd_update_docs ~/.openclaw/projects/myapp
+/skill cmd_prp_prd ~/.openclaw/projects/myapp
+/skill cmd_prp_plan ~/.openclaw/projects/myapp
+/skill cmd_prp_implement ~/.openclaw/projects/myapp
+```
 
 ### Session & Learning
 
-| Skill | What it does |
-|-------|-------------|
-| `/skill cmd_save_session` | Save current session state |
-| `/skill cmd_resume_session` | Resume previous session |
-| `/skill cmd_learn` | Extract reusable patterns from session |
-| `/skill cmd_skill_create` | Generate new skill from git history |
+```
+/skill cmd_save_session ~/.openclaw/projects/myapp
+/skill cmd_resume_session ~/.openclaw/projects/myapp
+/skill cmd_learn ~/.openclaw/projects/myapp
+/skill cmd_skill_create ~/.openclaw/projects/myapp
+```
 
 ---
 
