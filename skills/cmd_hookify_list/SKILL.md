@@ -1,6 +1,6 @@
 ---
 name: cmd_hookify_list
-description: "List all configured hookify rules in the project"
+description: "List all configured OpenClaw hooks for the project"
 user-invocable: true
 origin: openclaw-mas
 ---
@@ -15,15 +15,19 @@ The first argument is the project path. Before doing anything else:
 
 # Hookify List
 
-Find and display all hookify rules in a formatted table.
+Display all OpenClaw hooks configured for this project.
 
 ## Steps
 
-1. Find all `<project-path>/.claude/hookify.*.local.md` files
-2. Read each file's frontmatter: `name`, `enabled`, `event`, `action`, `pattern`
-3. Display as a table:
+1. Run `openclaw hooks list` to get all registered hooks
+2. Also scan `<project-path>/.openclaw/hooks/` for local hook directories
+3. For each hook, read its `HOOK.md` to extract: name, description, events, enabled status
+4. Display as a table:
 
-| Rule | Enabled | Event | Pattern | File |
-|------|---------|-------|---------|------|
+| Hook | Enabled | Events | Description |
+|------|---------|--------|-------------|
 
-4. Show the rule count and remind the user that `/skill cmd_hookify_configure <path>` can change state.
+5. Show total count and remind the user:
+   - `openclaw hooks enable <name>` — enable a hook
+   - `openclaw hooks disable <name>` — disable a hook
+   - `/skill cmd_hookify_configure <path>` — toggle hooks interactively

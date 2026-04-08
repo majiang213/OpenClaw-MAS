@@ -1,6 +1,6 @@
 ---
 name: cmd_hookify_help
-description: "Display comprehensive hookify documentation"
+description: "Display comprehensive OpenClaw hookify documentation"
 user-invocable: true
 origin: openclaw-mas
 ---
@@ -15,45 +15,75 @@ The first argument is the project path. Before doing anything else:
 
 # Hookify Help
 
-Display comprehensive hookify documentation.
+Display comprehensive documentation for the OpenClaw hookify system.
 
-## Hook System Overview
+## OpenClaw Hook System Overview
 
-Hookify creates rule files that integrate with Claude Code's hook system to prevent unwanted behaviors.
+Hooks are automation scripts that execute when specific events occur in the OpenClaw gateway.
 
-### Event Types
+### Hook Structure
 
-- `bash`: triggers on Bash tool use and matches command patterns
-- `file`: triggers on Write/Edit tool use and matches file paths
-- `stop`: triggers when a session ends
-- `prompt`: triggers on user message submission and matches input patterns
-- `all`: triggers on all events
+Each hook lives in a directory with two files:
 
-### Rule File Format
-
-Files are stored as `<project-path>/.claude/hookify.{name}.local.md`:
-
-```yaml
----
-name: descriptive-name
-enabled: true
-event: bash|file|stop|prompt|all
-action: block|warn
-pattern: "regex pattern to match"
----
-Message to display when rule triggers.
-Supports multiple lines.
+```
+.openclaw/hooks/<hook-name>/
+├── HOOK.md       # Metadata: events, description, enabled state
+└── handler.ts    # TypeScript implementation
 ```
 
-### Commands
+### Available Events
 
-- `/skill cmd_hookify <path> [description]` — creates new rules, auto-analyzes conversation when no description given
-- `/skill cmd_hookify_list <path>` — lists configured rules
-- `/skill cmd_hookify_configure <path>` — toggles rules on or off
+| Event | When it fires |
+|-------|--------------|
+| `command:new` | A new command is received |
+| `command:reset` | A command is reset |
+| `command:stop` | A command is stopped |
+| `message:received` | A message is received from the user |
+| `message:sent` | A message is sent by the agent |
+| `message:transcribed` | A voice message is transcribed |
+| `session:compact:before` | Before session compaction |
+| `session:compact:after` | After session compaction |
+| `session:patch` | Session state is patched |
 
-### Pattern Tips
+### HOOK.md Format
 
-- Use regex syntax
-- For `bash`, match against the full command string
-- For `file`, match against the file path
-- Test patterns before deploying
+```markdown
+---
+name: hook-name
+description: "What this hook does"
+events: ["command:new"]
+enabled: true
+emoji: "🛡️"
+---
+```
+
+### handler.ts Format
+
+```typescript
+import type { HookContext } from '@openclaw/hooks';
+
+export default async function handler(ctx: HookContext) {
+  const content = ctx.messages?.at(-1)?.content ?? '';
+  // block:
+  throw new Error('Blocked: reason');
+  // warn:
+  ctx.push({ role: 'system', content: '⚠️ Warning: reason' });
+}
+```
+
+### CLI Commands
+
+```bash
+openclaw hooks list              # list all hooks
+openclaw hooks enable <name>     # enable a hook
+openclaw hooks disable <name>    # disable a hook
+openclaw hooks info <name>       # view hook details
+openclaw hooks check             # verify hook eligibility
+```
+
+### Hookify Skills
+
+- `/skill cmd_hookify <path> [description]` — create new hook rules
+- `/skill cmd_hookify_list <path>` — list all hooks
+- `/skill cmd_hookify_configure <path>` — toggle hooks on/off
+- `/skill cmd_hookify_help <path>` — this help page

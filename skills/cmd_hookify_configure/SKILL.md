@@ -1,6 +1,6 @@
 ---
 name: cmd_hookify_configure
-description: "Enable or disable hookify rules interactively"
+description: "Enable or disable OpenClaw hooks interactively"
 user-invocable: true
 origin: openclaw-mas
 ---
@@ -15,13 +15,15 @@ The first argument is the project path. Before doing anything else:
 
 # Hookify Configure
 
-Interactively enable or disable existing hookify rules.
+Interactively enable or disable OpenClaw hooks.
 
 ## Steps
 
-1. Find all `<project-path>/.claude/hookify.*.local.md` files
-2. Read the current state of each rule
+1. Run `openclaw hooks list` to get all hooks and their current state
+2. Also scan `<project-path>/.openclaw/hooks/` for local hooks
 3. Present the list with current enabled / disabled status
-4. Ask which rules to toggle
-5. Update the `enabled:` field in the selected rule files
-6. Confirm the changes
+4. Ask the user which hooks to toggle
+5. For each selected hook, run:
+   - `openclaw hooks enable <name>` to enable
+   - `openclaw hooks disable <name>` to disable
+6. Confirm the updated state by running `openclaw hooks list` again
