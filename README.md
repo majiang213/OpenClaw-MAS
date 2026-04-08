@@ -130,7 +130,7 @@ Invoke any workflow with `/skill <name>` in your OpenClaw chat. Always pass the 
 /skill cmd_feature_dev ~/.openclaw/projects/myapp add payment integration
 /skill cmd_plan ~/.openclaw/projects/myapp add payment integration
 /skill cmd_code_review ~/.openclaw/projects/myapp
-/skill cmd_review_pr ~/.openclaw/projects/myapp 42   # multi-agent PR review
+/skill cmd_review_pr ~/.openclaw/projects/myapp multi-agent PR review #42
 /skill cmd_e2e ~/.openclaw/projects/myapp
 /skill cmd_refactor_clean ~/.openclaw/projects/myapp
 /skill cmd_build_fix ~/.openclaw/projects/myapp

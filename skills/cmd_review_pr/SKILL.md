@@ -19,7 +19,7 @@ Run a comprehensive multi-perspective review of a pull request.
 
 ## Usage
 
-`/skill cmd_review_pr <project-path> [PR-number-or-URL] [--focus=comments|tests|errors|types|code|simplify]`
+`/skill cmd_review_pr <project-path> multi-agent PR review #<PR-number>`
 
 If no PR is specified, review the current branch's PR. If no focus is specified, run the full review stack.
 
