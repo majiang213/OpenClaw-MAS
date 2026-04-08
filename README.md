@@ -52,7 +52,6 @@ Once installed, use `/skill <name>` in any OpenClaw chat. Always include the pro
 /skill cmd_code_review ~/.openclaw/projects/myapp
 /skill cmd_build_fix ~/.openclaw/projects/myapp
 /skill cmd_rust_review ~/.openclaw/projects/myapp
-/skill cmd_security_scan ~/.openclaw/projects/myapp
 /skill cmd_gan_build ~/.openclaw/projects/myapp build a real-time collaborative whiteboard
 ```
 
@@ -135,8 +134,6 @@ Invoke any workflow with `/skill <name>` in your OpenClaw chat. Always pass the 
 /skill cmd_e2e ~/.openclaw/projects/myapp
 /skill cmd_refactor_clean ~/.openclaw/projects/myapp
 /skill cmd_build_fix ~/.openclaw/projects/myapp
-/skill cmd_security_scan ~/.openclaw/projects/myapp
-/skill cmd_db_review ~/.openclaw/projects/myapp
 ```
 
 ### Multi-Agent Workflows
