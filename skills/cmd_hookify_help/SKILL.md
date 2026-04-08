@@ -76,6 +76,15 @@ export default handler;
 
 Available on `event`: `type`, `action`, `sessionKey`, `timestamp`, `messages` (push strings to notify user), `context` (event-specific data)
 
+### event.context fields by event type
+
+| Event | context fields |
+|-------|---------------|
+| `command:new` | `sessionEntry`, `previousSessionEntry`, `commandSource`, `workspaceDir`, `cfg` |
+| `message:received` | `from`, `content`, `channelId`, `metadata` (senderId, senderName, guildId) |
+| `message:sent` | `to`, `content`, `success`, `channelId` |
+| `session:patch` | `sessionEntry`, `patch` (changed fields only), `cfg` |
+
 ### CLI Commands
 
 ```bash

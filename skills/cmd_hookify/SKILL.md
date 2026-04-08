@@ -75,7 +75,9 @@ const handler = async (event) => {
   if (event.type !== "command" || event.action !== "new") {
     return;
   }
-  const content = JSON.stringify(event.context ?? '');
+  // for message:received use event.context.content
+  // for command:new use event.context.commandSource or event.context.workspaceDir
+  const content = event.context?.content ?? event.context?.commandSource ?? '';
   const pattern = /<regex pattern>/i;
 
   if (pattern.test(content)) {
