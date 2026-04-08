@@ -3,6 +3,7 @@ name: cmd_prp_plan
 description: "Create comprehensive feature implementation plan with codebase analysis and pattern extraction"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> <feature description>"
 ---
 
 ## Project Path

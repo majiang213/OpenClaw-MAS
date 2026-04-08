@@ -3,6 +3,7 @@ name: cmd_instinct_export
 description: "Export instincts from project/global scope to a file"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> [output-file]"
 ---
 
 ## Project Path

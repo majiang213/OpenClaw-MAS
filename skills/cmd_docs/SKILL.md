@@ -3,6 +3,7 @@ name: cmd_docs
 description: "Legacy slash-entry shim for the documentation-lookup skill. Prefer the skill directly."
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> [topic]"
 ---
 
 ## Project Path

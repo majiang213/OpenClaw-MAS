@@ -3,6 +3,7 @@ name: cmd_plan
 description: "Restate requirements, assess risks, and create step-by-step implementation plan. WAIT for user CONFIRM before touching any code."
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> <feature or change description>"
 ---
 
 Delegate to the `planner` agent.

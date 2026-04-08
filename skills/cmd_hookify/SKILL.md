@@ -3,6 +3,7 @@ name: cmd_hookify
 description: "Create OpenClaw hook rules to prevent unwanted agent behaviors"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> [behavior to prevent]"
 ---
 
 ## Project Path

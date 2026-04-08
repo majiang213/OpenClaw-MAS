@@ -3,6 +3,7 @@ name: cmd_multi_workflow
 description: "multi-workflow workflow"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> <task>"
 ---
 
 ## Project Path

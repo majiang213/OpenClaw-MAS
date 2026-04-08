@@ -3,6 +3,7 @@ name: cmd_pm2
 description: "pm2 workflow"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path>"
 ---
 
 ## Project Path

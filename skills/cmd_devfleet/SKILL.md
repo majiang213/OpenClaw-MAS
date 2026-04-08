@@ -3,6 +3,7 @@ name: cmd_devfleet
 description: "Legacy slash-entry shim for the claude-devfleet skill. Prefer the skill directly."
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path>"
 ---
 
 ## Project Path

@@ -3,6 +3,7 @@ name: cmd_evolve
 description: "Analyze instincts and suggest or generate evolved structures"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path>"
 ---
 
 ## Project Path

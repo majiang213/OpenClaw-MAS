@@ -3,6 +3,7 @@ name: cmd_feature_dev
 description: "Guided feature development: explore codebase → design architecture → implement → review"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> <feature description>"
 ---
 
 ## Project Path

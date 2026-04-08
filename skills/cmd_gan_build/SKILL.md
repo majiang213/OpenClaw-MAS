@@ -3,6 +3,7 @@ name: cmd_gan_build
 description: "gan-build workflow"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> <build description>"
 ---
 
 Run specialist agents in sequence: gan-planner → gan-generator → gan-evaluator.

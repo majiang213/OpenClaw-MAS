@@ -3,6 +3,7 @@ name: cmd_instinct_status
 description: "Show learned instincts (project + global) with confidence"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path>"
 ---
 
 ## Project Path

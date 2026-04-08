@@ -3,6 +3,7 @@ name: cmd_santa_loop
 description: "Adversarial dual-review convergence loop — two independent model reviewers must both approve before code ships."
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> [files or glob]"
 ---
 
 Delegate to the `code-reviewer` agent.

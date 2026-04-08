@@ -3,6 +3,7 @@ name: cmd_harness_audit
 description: "harness-audit workflow"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path>"
 ---
 
 Delegate to the `harness-optimizer` agent.

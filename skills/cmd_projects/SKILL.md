@@ -3,6 +3,7 @@ name: cmd_projects
 description: "List known projects and their instinct statistics"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path>"
 ---
 
 ## Project Path

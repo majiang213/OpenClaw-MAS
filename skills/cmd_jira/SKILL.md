@@ -3,6 +3,7 @@ name: cmd_jira
 description: "Retrieve a Jira ticket, analyze requirements, update status, or add comments. Uses the jira-integration skill and MCP or REST API."
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> <ticket-id>"
 ---
 
 ## Project Path

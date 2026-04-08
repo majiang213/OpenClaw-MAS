@@ -3,6 +3,7 @@ name: cmd_go_review
 description: "Comprehensive Go code review for idiomatic patterns, concurrency safety, error handling, and security. Invokes the go-reviewer agent."
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> [files or modules]"
 ---
 
 Delegate to the `go-reviewer` agent.

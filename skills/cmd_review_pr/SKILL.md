@@ -3,6 +3,7 @@ name: cmd_review_pr
 description: "Comprehensive PR review using multiple specialized agents: code-reviewer, comment-analyzer, pr-test-analyzer, silent-failure-hunter, type-design-analyzer, code-simplifier"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> [PR#N or URL]"
 ---
 
 ## Project Path

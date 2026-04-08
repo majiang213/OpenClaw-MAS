@@ -3,6 +3,7 @@ name: cmd_test_coverage
 description: "test-coverage workflow"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path>"
 ---
 
 ## Project Path

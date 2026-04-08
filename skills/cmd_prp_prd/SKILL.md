@@ -3,6 +3,7 @@ name: cmd_prp_prd
 description: "Interactive PRD generator - problem-first, hypothesis-driven product spec with back-and-forth questioning"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> <problem statement>"
 ---
 
 ## Project Path

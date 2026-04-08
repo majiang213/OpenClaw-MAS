@@ -3,6 +3,7 @@ name: cmd_cpp_review
 description: "Comprehensive C++ code review for memory safety, modern C++ idioms, concurrency, and security. Invokes the cpp-reviewer agent."
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> [files or modules]"
 ---
 
 Delegate to the `cpp-reviewer` agent.

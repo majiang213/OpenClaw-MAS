@@ -3,6 +3,7 @@ name: cmd_multi_frontend
 description: "multi-frontend workflow"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> <task>"
 ---
 
 ## Project Path

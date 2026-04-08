@@ -3,6 +3,7 @@ name: cmd_build_fix
 description: "build-fix workflow"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path>"
 ---
 
 ## Project Path

@@ -3,6 +3,7 @@ name: cmd_python_review
 description: "Comprehensive Python code review for PEP 8 compliance, type hints, security, and Pythonic idioms. Invokes the python-reviewer agent."
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> [files or modules]"
 ---
 
 Delegate to the `python-reviewer` agent.

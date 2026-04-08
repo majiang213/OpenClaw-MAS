@@ -3,6 +3,7 @@ name: cmd_resume_session
 description: "Load the most recent session file from ~/.claude/session-data/ and resume work with full context from where the last session ended."
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path>"
 ---
 
 ## Project Path

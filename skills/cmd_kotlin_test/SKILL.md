@@ -3,6 +3,7 @@ name: cmd_kotlin_test
 description: "Enforce TDD workflow for Kotlin. Write Kotest tests first, then implement. Verify 80%+ coverage with Kover."
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> <what to implement>"
 ---
 
 Delegate to the `kotlin-build-resolver` agent.

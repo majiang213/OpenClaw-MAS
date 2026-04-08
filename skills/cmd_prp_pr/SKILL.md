@@ -3,6 +3,7 @@ name: cmd_prp_pr
 description: "Create a GitHub PR from current branch with unpushed commits — discovers templates, analyzes changes, pushes"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "[base-branch] [--draft]"
 ---
 
 # Create Pull Request

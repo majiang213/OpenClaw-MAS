@@ -3,6 +3,7 @@ name: cmd_hookify_list
 description: "List all configured OpenClaw hooks for the project"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path>"
 ---
 
 ## Project Path

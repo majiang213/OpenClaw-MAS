@@ -3,6 +3,7 @@ name: cmd_hookify_configure
 description: "Enable or disable OpenClaw hooks interactively"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path>"
 ---
 
 ## Project Path

@@ -3,6 +3,7 @@ name: cmd_prp_implement
 description: "Execute an implementation plan with rigorous validation loops"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path>"
 ---
 
 ## Project Path

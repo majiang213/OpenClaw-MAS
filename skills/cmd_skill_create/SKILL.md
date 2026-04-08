@@ -3,6 +3,7 @@ name: cmd_skill_create
 description: "Analyze local git history to extract coding patterns and generate SKILL.md files. Local version of the Skill Creator GitHub App."
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> [--commits N] [--instincts]"
 ---
 
 ## Project Path

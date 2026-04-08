@@ -3,6 +3,7 @@ name: cmd_kotlin_build
 description: "Fix Kotlin/Gradle build errors, compiler warnings, and dependency issues incrementally. Invokes the kotlin-build-resolver agent for minimal, surgical fixes."
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path>"
 ---
 
 Delegate to the `kotlin-build-resolver` agent.

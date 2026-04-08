@@ -3,6 +3,7 @@ name: cmd_orchestrate
 description: "Legacy slash-entry shim for dmux-workflows and autonomous-agent-harness. Prefer the skills directly."
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> <task>"
 ---
 
 ## Project Path

@@ -3,6 +3,7 @@ name: cmd_agent_sort
 description: "Classify ECC surfaces as DAILY vs LIBRARY to guide selective agent installation"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path>"
 ---
 
 ## Project Path

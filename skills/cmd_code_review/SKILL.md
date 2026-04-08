@@ -3,6 +3,7 @@ name: cmd_code_review
 description: "Code review — local uncommitted changes or GitHub PR (pass PR number/URL for PR mode)"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> [PR#N or URL]"
 ---
 
 Delegate to the `code-reviewer` agent.

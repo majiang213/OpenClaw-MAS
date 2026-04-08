@@ -3,6 +3,7 @@ name: cmd_cpp_build
 description: "Fix C++ build errors, CMake issues, and linker problems incrementally. Invokes the cpp-build-resolver agent for minimal, surgical fixes."
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path>"
 ---
 
 Delegate to the `cpp-build-resolver` agent.

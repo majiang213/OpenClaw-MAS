@@ -3,6 +3,7 @@ name: cmd_learn
 description: "learn workflow"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path>"
 ---
 
 ## Project Path

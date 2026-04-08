@@ -3,6 +3,7 @@ name: cmd_gradle_build
 description: "Fix Gradle build errors for Android and KMP projects"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path>"
 ---
 
 Delegate to the `java-build-resolver` agent.

@@ -3,6 +3,7 @@ name: cmd_prune
 description: "Delete pending instincts older than 30 days that were never promoted"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path>"
 ---
 
 ## Project Path

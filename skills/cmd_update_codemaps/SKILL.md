@@ -3,6 +3,7 @@ name: cmd_update_codemaps
 description: "update-codemaps workflow"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path>"
 ---
 
 Delegate to the `doc-updater` agent.

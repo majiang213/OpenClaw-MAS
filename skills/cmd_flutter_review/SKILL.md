@@ -3,6 +3,7 @@ name: cmd_flutter_review
 description: "Review Flutter/Dart code for idiomatic patterns, widget best practices, state management, performance, accessibility, and security. Invokes the flutter-reviewer agent."
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> [files or modules]"
 ---
 
 Delegate to the `flutter-reviewer` agent.

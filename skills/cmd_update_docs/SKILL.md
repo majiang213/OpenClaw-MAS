@@ -3,6 +3,7 @@ name: cmd_update_docs
 description: "update-docs workflow"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> [what changed]"
 ---
 
 Delegate to the `doc-updater` agent.

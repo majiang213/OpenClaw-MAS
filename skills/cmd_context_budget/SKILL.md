@@ -3,6 +3,7 @@ name: cmd_context_budget
 description: "Legacy slash-entry shim for the context-budget skill. Prefer the skill directly."
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> [--verbose]"
 ---
 
 Delegate to the `harness-optimizer` agent.

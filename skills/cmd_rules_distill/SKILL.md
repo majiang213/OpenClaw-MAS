@@ -3,6 +3,7 @@ name: cmd_rules_distill
 description: "Legacy slash-entry shim for the rules-distill skill. Prefer the skill directly."
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path>"
 ---
 
 ## Project Path

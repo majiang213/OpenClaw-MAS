@@ -3,6 +3,7 @@ name: cmd_loop_status
 description: "loop-status workflow"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path>"
 ---
 
 ## Project Path

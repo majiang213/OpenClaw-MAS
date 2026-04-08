@@ -3,6 +3,7 @@ name: cmd_quality_gate
 description: "quality-gate workflow"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path>"
 ---
 
 ## Project Path

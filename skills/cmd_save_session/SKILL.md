@@ -3,6 +3,7 @@ name: cmd_save_session
 description: "Save current session state to a dated file in ~/.claude/session-data/ so work can be resumed in a future session with full context."
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path>"
 ---
 
 ## Project Path

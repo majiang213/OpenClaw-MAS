@@ -3,6 +3,7 @@ name: cmd_prompt_optimize
 description: "Legacy slash-entry shim for the prompt-optimizer skill. Prefer the skill directly."
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> <prompt>"
 ---
 
 ## Project Path

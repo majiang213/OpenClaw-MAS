@@ -3,6 +3,7 @@ name: cmd_sessions
 description: "Manage Claude Code session history, aliases, and session metadata."
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path>"
 ---
 
 ## Project Path

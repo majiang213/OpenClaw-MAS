@@ -3,6 +3,7 @@ name: cmd_e2e
 description: "Legacy slash-entry shim for the e2e-testing skill. Prefer the skill directly."
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> [user flow description]"
 ---
 
 Delegate to the `e2e-runner` agent.

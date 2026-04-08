@@ -3,6 +3,7 @@ name: cmd_promote
 description: "Promote project-scoped instincts to global scope"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path>"
 ---
 
 ## Project Path

@@ -3,6 +3,7 @@ name: cmd_model_route
 description: "model-route workflow"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> <task>"
 ---
 
 ## Project Path

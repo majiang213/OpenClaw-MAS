@@ -3,6 +3,7 @@ name: cmd_cpp_test
 description: "Enforce TDD workflow for C++. Write GoogleTest tests first, then implement. Verify coverage with gcov/lcov."
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> <what to implement>"
 ---
 
 Delegate to the `cpp-build-resolver` agent.

@@ -3,6 +3,7 @@ name: cmd_tdd
 description: "Legacy slash-entry shim for the tdd-workflow skill. Prefer the skill directly."
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> <what to build>"
 ---
 
 Delegate to the `tdd-guide` agent.

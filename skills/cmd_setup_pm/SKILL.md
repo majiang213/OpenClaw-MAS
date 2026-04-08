@@ -3,6 +3,7 @@ name: cmd_setup_pm
 description: "Configure your preferred package manager (npm/pnpm/yarn/bun)"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path>"
 ---
 
 ## Project Path

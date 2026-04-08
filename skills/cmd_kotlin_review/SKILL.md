@@ -3,6 +3,7 @@ name: cmd_kotlin_review
 description: "Comprehensive Kotlin code review for idiomatic patterns, null safety, coroutine safety, and security. Invokes the kotlin-reviewer agent."
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> [files or modules]"
 ---
 
 Delegate to the `kotlin-reviewer` agent.

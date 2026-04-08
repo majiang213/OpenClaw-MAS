@@ -3,6 +3,7 @@ name: cmd_rust_test
 description: "Enforce TDD workflow for Rust. Write tests first, then implement. Verify 80%+ coverage with cargo-llvm-cov."
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> <what to implement>"
 ---
 
 Delegate to the `rust-build-resolver` agent.

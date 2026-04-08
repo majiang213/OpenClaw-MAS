@@ -3,6 +3,7 @@ name: cmd_prp_commit
 description: "Quick commit with natural language file targeting — describe what to commit in plain English"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> <what to commit>"
 ---
 
 ## Project Path

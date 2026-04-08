@@ -3,6 +3,7 @@ name: cmd_refactor_clean
 description: "refactor-clean workflow"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> [scope]"
 ---
 
 Delegate to the `refactor-cleaner` agent.

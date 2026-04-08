@@ -3,6 +3,7 @@ name: cmd_loop_start
 description: "loop-start workflow"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> <goal> [--mode loop|single] [--stop condition]"
 ---
 
 Delegate to the `loop-operator` agent.

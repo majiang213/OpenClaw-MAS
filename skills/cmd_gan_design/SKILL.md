@@ -3,6 +3,7 @@ name: cmd_gan_design
 description: "gan-design workflow"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path> <design description>"
 ---
 
 Run specialist agents in sequence: gan-generator → gan-evaluator.

@@ -3,6 +3,7 @@ name: cmd_hookify_help
 description: "Display comprehensive OpenClaw hookify documentation"
 user-invocable: true
 origin: openclaw-mas
+argument-hint: "<project-path>"
 ---
 
 ## Project Path
