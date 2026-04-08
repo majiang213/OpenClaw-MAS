@@ -27,28 +27,25 @@ This guide covers how to use OpenClaw MAS after installation: skill invocation, 
 
 The project path is almost always required as the first argument — it tells the agent where to work.
 
-### Skill types
+### How skills execute
 
-Skills fall into two categories:
+Some skills delegate to a specialist agent and return when it finishes:
 
-| Type | Execution | Behavior |
-|------|-----------|----------|
-| **Type A** | Delegates to a specialist agent via `sessions_spawn` | Async — main agent waits for the `announce` callback |
-| **Type B** | Main agent executes directly | Synchronous — result returned immediately |
-
-**Type A examples:**
 ```
 /skill cmd_tdd ~/.openclaw/projects/myapp implement JWT login
 /skill cmd_code_review ~/.openclaw/projects/myapp
 /skill cmd_plan ~/.openclaw/projects/myapp add payment integration
 ```
 
-**Type B examples:**
+Others run directly in the main agent without spawning a subagent:
+
 ```
 /skill cmd_build_fix ~/.openclaw/projects/myapp
 /skill cmd_save_session ~/.openclaw/projects/myapp
 /skill cmd_hookify ~/.openclaw/projects/myapp prevent direct edits to eslint config
 ```
+
+The distinction is transparent — invoke any skill the same way regardless.
 
 ### Multi-agent pipelines (GAN)
 
@@ -320,7 +317,7 @@ The first argument is the project path. Before doing anything else:
 <Steps>
 ```
 
-### Type A skill (delegate to specialist agent)
+### Delegating skill (spawns a specialist agent)
 
 ```markdown
 Delegate to the `<agent-id>` agent.
@@ -346,7 +343,7 @@ Then call sessions_spawn:
 After sessions_spawn returns, relay the result to the user. Do not output anything after the spawn call until the result arrives.
 ```
 
-### Type B skill (direct execution)
+### Direct skill (main agent executes)
 
 Describe the steps directly. No `sessions_spawn` call.
 
@@ -372,79 +369,79 @@ Describe the steps directly. No `sessions_spawn` call.
 
 ### Development
 
-| Skill | Type | Purpose |
-|-------|------|---------|
-| `cmd_plan` | A | Plan implementation — waits for approval before writing code |
-| `cmd_tdd` | A | TDD workflow (RED → GREEN → REFACTOR) |
-| `cmd_feature_dev` | A (multi) | Full feature cycle: explore → design → implement → review |
-| `cmd_build_fix` | B | Fix build/type errors incrementally |
-| `cmd_refactor_clean` | B | Remove dead code and clean up |
+| Skill | Purpose |
+|-------|---------|
+| `cmd_plan` | Plan implementation — waits for approval before writing code |
+| `cmd_tdd` | TDD workflow (RED → GREEN → REFACTOR) |
+| `cmd_feature_dev` | Full feature cycle: explore → design → implement → review |
+| `cmd_build_fix` | Fix build/type errors incrementally |
+| `cmd_refactor_clean` | Remove dead code and clean up |
 
 ### Review & Security
 
-| Skill | Type | Purpose |
-|-------|------|---------|
-| `cmd_code_review` | A | Review local changes or a GitHub PR |
-| `cmd_review_pr` | A | PR review with test analysis |
-| `cmd_security_scan` | A | Security vulnerability scan |
-| `cmd_rust_review`, `cmd_go_review`, `cmd_kotlin_review`, etc. | A | Language-specific review |
+| Skill | Purpose |
+|-------|---------|
+| `cmd_code_review` | Review local changes or a GitHub PR |
+| `cmd_review_pr` | PR review with test analysis |
+| `cmd_security_scan` | Security vulnerability scan |
+| `cmd_rust_review`, `cmd_go_review`, `cmd_kotlin_review`, etc. | Language-specific review |
 
 ### Testing
 
-| Skill | Type | Purpose |
-|-------|------|---------|
-| `cmd_e2e` | A | Generate and run E2E tests |
-| `cmd_test_coverage` | B | Check test coverage |
-| `cmd_rust_test`, `cmd_go_test`, `cmd_kotlin_test`, etc. | A | Language-specific test runner |
+| Skill | Purpose |
+|-------|---------|
+| `cmd_e2e` | Generate and run E2E tests |
+| `cmd_test_coverage` | Check test coverage |
+| `cmd_rust_test`, `cmd_go_test`, `cmd_kotlin_test`, etc. | Language-specific test runner |
 
 ### Build
 
-| Skill | Type | Purpose |
-|-------|------|---------|
-| `cmd_build_fix` | B | General build error fixing |
-| `cmd_gradle_build`, `cmd_kotlin_build`, `cmd_rust_build`, etc. | A | Language-specific build fixing |
+| Skill | Purpose |
+|-------|---------|
+| `cmd_build_fix` | General build error fixing |
+| `cmd_gradle_build`, `cmd_kotlin_build`, `cmd_rust_build`, etc. | Language-specific build fixing |
 
 ### Session
 
-| Skill | Type | Purpose |
-|-------|------|---------|
-| `cmd_save_session` | B | Save session state |
-| `cmd_resume_session` | B | Restore session state |
-| `cmd_sessions` | B | List sessions |
-| `cmd_checkpoint` | B | Create a checkpoint |
-| `cmd_context_budget` | B | Check context window usage |
+| Skill | Purpose |
+|-------|---------|
+| `cmd_save_session` | Save session state |
+| `cmd_resume_session` | Restore session state |
+| `cmd_sessions` | List sessions |
+| `cmd_checkpoint` | Create a checkpoint |
+| `cmd_context_budget` | Check context window usage |
 
 ### Hooks
 
-| Skill | Type | Purpose |
-|-------|------|---------|
-| `cmd_hookify` | B | Create hook rules from conversation or description |
-| `cmd_hookify_list` | B | List installed hooks |
-| `cmd_hookify_configure` | B | Configure a hook |
+| Skill | Purpose |
+|-------|---------|
+| `cmd_hookify` | Create hook rules from conversation or description |
+| `cmd_hookify_list` | List installed hooks |
+| `cmd_hookify_configure` | Configure a hook |
 
 ### Knowledge & Rules
 
-| Skill | Type | Purpose |
-|-------|------|---------|
-| `cmd_skill_create` | B | Generate skills from git history |
-| `cmd_learn` | B | Extract reusable patterns from current session |
-| `cmd_rules_distill` | B | Distill rules from session patterns |
-| `cmd_update_docs` | A | Update documentation |
+| Skill | Purpose |
+|-------|---------|
+| `cmd_skill_create` | Generate skills from git history |
+| `cmd_learn` | Extract reusable patterns from current session |
+| `cmd_rules_distill` | Distill rules from session patterns |
+| `cmd_update_docs` | Update documentation |
 
 ### Orchestration
 
-| Skill | Type | Purpose |
-|-------|------|---------|
-| `cmd_orchestrate` | B | Coordinate multi-agent workflows |
-| `cmd_devfleet` | B | Multi-project, multi-instance orchestration |
-| `cmd_gan_build` | A (multi) | GAN pipeline: plan → generate → evaluate |
-| `cmd_gan_design` | A (multi) | GAN design pipeline |
+| Skill | Purpose |
+|-------|---------|
+| `cmd_orchestrate` | Coordinate multi-agent workflows |
+| `cmd_devfleet` | Multi-project, multi-instance orchestration |
+| `cmd_gan_build` | GAN pipeline: plan → generate → evaluate (serial, loops until score ≥ 7.0) |
+| `cmd_gan_design` | GAN design pipeline |
 
 ---
 
 ## Core Rules
 
-1. **Type A skills must name the agent explicitly** — the main agent should not guess which agent to spawn.
+1. **Delegating skills must name the agent explicitly** — the main agent should not guess which agent to spawn.
 2. **GAN pipelines must be serial** — never spawn the next agent before receiving the previous `announce`.
 3. **All workflow logic goes in `AGENTS.md`** — subagents do not load `SOUL.md`.
 4. **`task` payloads must be self-contained** — subagents cannot see the calling conversation.
