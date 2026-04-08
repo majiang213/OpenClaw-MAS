@@ -25,13 +25,13 @@ A multi-agent development system that brings [Everything Claude Code](https://gi
 
 ### Option 1: Let your AI agent install it
 
-Clone the repo, then send this to your OpenClaw agent:
+Send this to your OpenClaw agent:
 
 ```
-Read the README in the OpenClaw-MAS repo I just cloned and follow the installation instructions.
+Clone https://github.com/majiang213/OpenClaw-MAS.git to ~/.openclaw/projects/OpenClaw-MAS, then read the README and follow the installation instructions.
 ```
 
-The agent will read this file, run the install script, verify the result, and report back when done.
+The agent will clone the repo, run the install script, verify the result, and report back when done.
 
 ### Option 2: Install manually
 
