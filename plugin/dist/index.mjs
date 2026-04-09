@@ -124,7 +124,22 @@ export default definePluginEntry({
                     };
                 }
             }
-            // 5. doc-file-warning（只记录，不阻止）
+            // 5. sessions_spawn path validation
+            if (toolName === "sessions_spawn") {
+                const task = String(params.task ?? "");
+                // Skills include "Project path: /absolute/path" in the task payload
+                const pathMatch = task.match(/[Pp]roject\s+(?:path|directory)[:\s]+([^\s\n,;]+)/);
+                if (pathMatch) {
+                    const projectPath = pathMatch[1];
+                    if (!fs.existsSync(projectPath)) {
+                        return {
+                            block: true,
+                            blockReason: `🚫 Path not found: "${projectPath}". Please provide a valid project directory before spawning an agent.`,
+                        };
+                    }
+                }
+            }
+            // 6. doc-file-warning（只记录，不阻止）
             if (toolName === "Write" && filePath) {
                 const normalized = filePath.replace(/\\/g, "/");
                 const basename = path.basename(normalized);
