@@ -2,7 +2,7 @@
 
 ## Available Agents
 
-Located in `~/.openclaw/agents/`:
+Agents are defined by their workspace files (`AGENTS.md`, `SOUL.md`, etc.) and registered in `~/.openclaw/openclaw.json` under `agents.list`:
 
 | Agent | Purpose | When to Use |
 |-------|---------|-------------|

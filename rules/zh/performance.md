@@ -30,21 +30,17 @@
 - 文档更新
 - 简单 bug 修复
 
-## 扩展思考 + 规划模式
-
-扩展思考默认启用，为内部推理保留最多 31,999 个 token。
+## 扩展思考
 
 通过以下方式控制扩展思考：
-- **切换**：Option+T（macOS）/ Alt+T（Windows/Linux）
-- **配置**：在 `~/.openclaw/openclaw.json` 中设置 `alwaysThinkingEnabled`
-- **预算上限**：`export MAX_THINKING_TOKENS=10000`
-- **详细模式**：Ctrl+O 查看思考输出
+- **单条消息**：发送 `/think:<level>` 或 `/t <level>`（如 `/think:high`、`/t off`）
+- **默认级别**：在 `~/.openclaw/openclaw.json` 中设置 `agents.defaults.thinkingDefault`
+- **支持的级别**：`off`、`minimal`、`low`、`medium`、`high`、`xhigh`、`adaptive`
 
 对于需要深度推理的复杂任务：
-1. 确保扩展思考已启用（默认开启）
-2. 启用**规划模式**进行结构化方法
-3. 使用多轮审查进行彻底分析
-4. 使用分角色子代理获得多样化视角
+1. 将思考级别设置为 `high` 或 `xhigh`
+2. 使用多轮审查进行彻底分析
+3. 使用分角色子代理获得多样化视角
 
 ## 构建排查
 

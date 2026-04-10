@@ -2,7 +2,7 @@
 
 ## 可用代理
 
-位于 `~/.openclaw/agents/`：
+Agent 通过工作区文件（`AGENTS.md`、`SOUL.md` 等）定义，并在 `~/.openclaw/openclaw.json` 的 `agents.list` 中注册：
 
 | 代理 | 用途 | 何时使用 |
 |-------|---------|------------|
