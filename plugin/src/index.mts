@@ -149,19 +149,11 @@ export default definePluginEntry({
           }
         }
 
-        // 5. sessions_spawn path validation
+        // 5. sessions_spawn param validation
         if (toolName === "sessions_spawn") {
-          const task = String((params as Record<string, unknown>).task ?? "");
-          // Skills include "Project path: /absolute/path" in the task payload
-          const pathMatch = task.match(/[Pp]roject\s+(?:path|directory)[:\s]+([^\s\n,;]+)/);
-          if (pathMatch) {
-            const projectPath = pathMatch[1];
-            if (!fs.existsSync(projectPath)) {
-              return {
-                block: true,
-                blockReason: `🚫 Path not found: "${projectPath}". Please provide a valid project directory before spawning an agent.`,
-              };
-            }
+          const validationError = validateSessionsSpawnParams(params as Record<string, unknown>);
+          if (validationError) {
+            return { block: true, blockReason: validationError };
           }
         }
 
@@ -404,4 +396,42 @@ function runBatchFormatCheck(files: string[]): void {
       `${new Date().toISOString()} tsc errors:\n${result.stdout}`
     );
   }
+}
+
+// ── sessions_spawn 参数校验 ───────────────────────────────────
+
+type SpawnParamRule = (params: Record<string, unknown>) => string | null;
+
+// Rule 1: task 不能为空
+function ruleTaskNotEmpty(params: Record<string, unknown>): string | null {
+  const task = String(params.task ?? "").trim();
+  if (!task) {
+    return "🚫 sessions_spawn requires a non-empty task.";
+  }
+  return null;
+}
+
+// Rule 2: runTimeoutSeconds 如果提供，必须 >= 0
+function ruleTimeoutNonNegative(params: Record<string, unknown>): string | null {
+  const timeout = params.runTimeoutSeconds;
+  if (timeout === undefined || timeout === null) return null;
+  const n = Number(timeout);
+  if (isNaN(n) || n < 0) {
+    return `🚫 runTimeoutSeconds must be >= 0, got: ${timeout}`;
+  }
+  return null;
+}
+
+const SESSIONS_SPAWN_RULES: SpawnParamRule[] = [
+  ruleTaskNotEmpty,
+  ruleProjectPathExists,
+  ruleTimeoutNonNegative,
+];
+
+function validateSessionsSpawnParams(params: Record<string, unknown>): string | null {
+  for (const rule of SESSIONS_SPAWN_RULES) {
+    const error = rule(params);
+    if (error) return error;
+  }
+  return null;
 }

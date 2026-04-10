@@ -124,19 +124,11 @@ export default definePluginEntry({
                     };
                 }
             }
-            // 5. sessions_spawn path validation
+            // 5. sessions_spawn param validation
             if (toolName === "sessions_spawn") {
-                const task = String(params.task ?? "");
-                // Skills include "Project path: /absolute/path" in the task payload
-                const pathMatch = task.match(/[Pp]roject\s+(?:path|directory)[:\s]+([^\s\n,;]+)/);
-                if (pathMatch) {
-                    const projectPath = pathMatch[1];
-                    if (!fs.existsSync(projectPath)) {
-                        return {
-                            block: true,
-                            blockReason: `🚫 Path not found: "${projectPath}". Please provide a valid project directory before spawning an agent.`,
-                        };
-                    }
+                const validationError = validateSessionsSpawnParams(params);
+                if (validationError) {
+                    return { block: true, blockReason: validationError };
                 }
             }
             // 6. doc-file-warning（只记录，不阻止）
@@ -330,4 +322,48 @@ function runBatchFormatCheck(files) {
     if (result.status !== 0 && result.stdout) {
         appendLog("typecheck.log", `${new Date().toISOString()} tsc errors:\n${result.stdout}`);
     }
+}
+// Rule 1: task 不能为空
+function ruleTaskNotEmpty(params) {
+    const task = String(params.task ?? "").trim();
+    if (!task) {
+        return "🚫 sessions_spawn requires a non-empty task.";
+    }
+    return null;
+}
+// Rule 2: 从 task 文本中提取项目路径，校验路径存在
+function ruleProjectPathExists(params) {
+    const task = String(params.task ?? "");
+    const match = task.match(/[Pp]roject\s+(?:path|directory)[:\s]+([^\s\n,;]+)/);
+    if (!match)
+        return null;
+    const projectPath = match[1];
+    if (!fs.existsSync(projectPath)) {
+        return `🚫 Path not found: "${projectPath}". Please provide a valid project directory before spawning an agent.`;
+    }
+    return null;
+}
+// Rule 3: runTimeoutSeconds 如果提供，必须 >= 0
+function ruleTimeoutNonNegative(params) {
+    const timeout = params.runTimeoutSeconds;
+    if (timeout === undefined || timeout === null)
+        return null;
+    const n = Number(timeout);
+    if (isNaN(n) || n < 0) {
+        return `🚫 runTimeoutSeconds must be >= 0, got: ${timeout}`;
+    }
+    return null;
+}
+const SESSIONS_SPAWN_RULES = [
+    ruleTaskNotEmpty,
+    ruleProjectPathExists,
+    ruleTimeoutNonNegative,
+];
+function validateSessionsSpawnParams(params) {
+    for (const rule of SESSIONS_SPAWN_RULES) {
+        const error = rule(params);
+        if (error)
+            return error;
+    }
+    return null;
 }
